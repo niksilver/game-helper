@@ -8,6 +8,7 @@ from openpyxl import Workbook as OPWorkbook
 
 class Workbook(object):
 
+
     @classmethod
     def load(cls, filename):
         wb = openpyxl.reader.excel.load_workbook(filename)
@@ -29,6 +30,7 @@ class Workbook(object):
         else:
             __setattr__(self._wb, attr, val)
 
+
     def find(self, value, column = 100, row = 100):
         """
         Find the cell with the given value in the active workbook,
@@ -42,6 +44,23 @@ class Workbook(object):
                     return cell
 
         raise LookupError(f'Could not find {val} within {col} columns and {row} rows')
+
+
+    def find_value_beside(self, value, column = 100, row = 100):
+        """
+        Find the cell with the given value in the active workbook, and return
+        the value of the cell to its right.
+        Will search from the top left as far as the given row and column.
+        """
+        for c in range(1, column+1):
+            ws = self.active
+            for r in range(1, row+1):
+                cell = ws.cell(column = c, row = r)
+                if cell.value == value:
+                    return ws.cell(row = r, column = c+1).value
+
+        raise LookupError(f'Could not find {val} within {col} columns and {row} rows')
+
 
     def find_non_blank_below(self, coordinate_or_cell):
         """

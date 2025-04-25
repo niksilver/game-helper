@@ -31,7 +31,19 @@ class TestWorkbook:
         assert wb.find('And again!', 5, 5).coordinate == 'B3'
 
         with pytest.raises(Exception):
-            wb.find(3, 3, 'Here I am!')
+            wb.find('Here I am!', 3, 3)
+
+
+    def test_find_value_beside(self):
+        wb = Workbook()
+        ws = wb.active
+        ws['C4'] = 'Here I am!'
+        ws['D4'] = 333
+
+        assert wb.find_value_beside('Here I am!', 5, 5) == 333
+
+        with pytest.raises(Exception):
+            wb.find_value_beside('Here I am!', 3, 3)
 
 
     def test_find_non_blank_below(self):
