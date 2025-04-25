@@ -11,6 +11,12 @@ class TestWorkbook:
         assert type(wb) is Workbook
 
 
+    def test_can_get_a_sheet_by_subscript(self):
+        wb = Workbook.load('tests/workbook_simple.xlsx')
+        ws = wb['Sheet2']
+        assert ws['A1'].value == 'This is sheet 2'
+
+
     def test_can_use_op_workbook_methods(self):
         wb = Workbook()
 

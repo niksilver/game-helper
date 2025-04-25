@@ -30,6 +30,9 @@ class Workbook(object):
         else:
             __setattr__(self._wb, attr, val)
 
+    def __getitem__(self, key):
+        return self._wb.__getitem__(key)
+
 
     def find(self, value, column = 100, row = 100):
         """
