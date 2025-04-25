@@ -1,0 +1,132 @@
+import pytest
+
+from workbook import Workbook
+
+
+class TestWorkbook:
+
+    def test_can_load_workbook(self):
+        wb = Workbook.load('tests/workbook_simple.xlsx')
+        assert type(wb) is Workbook
+
+    def test_can_use_op_workbook_methods(self):
+        wb = Workbook()
+
+        assert type(wb) is Workbook
+
+        ws = wb.active
+        ws['A2'] = 55
+        assert ws['A2'].value == 55
+
+    def test_can_find_cell(self):
+        wb = Workbook()
+        ws = wb.active
+        ws['C4'] = 'Here I am!'
+        ws['B3'] = 'And again!'
+
+        assert wb.find(5, 5, 'Here I am!').coordinate == 'C4'
+        assert wb.find(5, 5, 'And again!').coordinate == 'B3'
+
+        with pytest.raises(Exception):
+            wb.find(3, 3, 'Here I am!')
+
+    def test_can_find_non_blank_below(self):
+        wb = Workbook()
+        ws = wb.active
+
+        ws['C4'] = 'One'
+        ws['C5'] = 'Two'
+        ws['C6'] = 'Three'
+        ws['C7'] = 'Four'
+        # Miss a row here
+        ws['C9'] = 'Six'
+
+        cell = wb.find_non_blank_below('C2')
+
+        assert cell.coordinate == 'C4'
+
+    def test_find_non_blank_below_limits_search(self):
+        wb = Workbook()
+        ws = wb.active
+
+        ws['C104'] = 'One'
+        ws['C105'] = 'Two'
+        ws['C106'] = 'Three'
+        ws['C107'] = 'Four'
+
+        with pytest.raises(Exception):
+            wb.find_non_blank_below('C2')
+
+    def test_can_find_values_below(self):
+        wb = Workbook()
+        ws = wb.active
+
+        ws['C4'] = 'One'
+        ws['C5'] = 'Two'
+        ws['C6'] = 'Three'
+        ws['C7'] = 'Four'
+        # Miss a row here
+        ws['C9'] = 'Six'
+
+        arr = wb.find_values_below('C2')
+
+        assert arr == ['One', 'Two', 'Three', 'Four']
+
+    def test_find_values_below_limits_its_search(self):
+        wb = Workbook()
+        ws = wb.active
+
+        ws['C104'] = 'One'
+        ws['C105'] = 'Two'
+        ws['C106'] = 'Three'
+        ws['C107'] = 'Four'
+
+        with pytest.raises(Exception):
+            wb.find_values_below('C2')
+
+    def test_can_put_values_below(self):
+        wb = Workbook()
+        wb.put_values_below('D3', ['Aaa', 'Bbb', 'Ccc'])
+
+        ws = wb.active
+        assert ws['D4'].value == 'Aaa'
+        assert ws['D5'].value == 'Bbb'
+        assert ws['D6'].value == 'Ccc'
+
+    def test_can_find_values_beside(self):
+        wb = Workbook()
+        ws = wb.active
+
+        ws['B2'] = 'Numbers'  # Title of row
+
+        ws['E2'] = 'One'
+        ws['F2'] = 'Two'
+        ws['G2'] = 'Three'
+        ws['H2'] = 'Four'
+        # Miss a row here
+        ws['J2'] = 'Six'
+
+        arr = wb.find_values_beside('B2')
+
+        assert arr == ['One', 'Two', 'Three', 'Four']
+
+    def test_find_values_below_limits_its_search(self):
+        wb = Workbook()
+        ws = wb.active
+
+        ws['E104'] = 'One'
+        ws['F104'] = 'Two'
+        ws['G104'] = 'Three'
+        ws['H104'] = 'Four'
+
+        with pytest.raises(Exception):
+            wb.find_values_beside('E2')
+
+    def test_can_put_values_beside(self):
+        wb = Workbook()
+        wb.put_values_beside('D3', ['Aaa', 'Bbb', 'Ccc'])
+
+        ws = wb.active
+        assert ws['E3'].value == 'Aaa'
+        assert ws['F3'].value == 'Bbb'
+        assert ws['G3'].value == 'Ccc'
