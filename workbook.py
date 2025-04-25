@@ -43,10 +43,14 @@ class Workbook(object):
 
         raise LookupError(f'Could not find {val} within {col} columns and {row} rows')
 
-    def find_non_blank_below(self, coord):
+    def find_non_blank_below(self, coord_or_cell):
         """
-        Find the first non-blank cell below the given coordinate.
+        Find the first non-blank cell below the given coordinate or cell.
         """
+
+        coord = coord_or_cell
+        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coord_or_cell.coordinate
 
         ws = self.active
         row = ws[coord].row
@@ -71,15 +75,15 @@ class Workbook(object):
 
         return cell
 
-    def find_values_below(self, coord):
+    def find_values_below(self, coord_or_cell):
         """
-        Find an array of values that sit strictly below the given coordinate.
+        Find an array of values that sit strictly below the given coordinate or cell.
         Will start at the first non-blank, and stop before the first blank after
         some values.
         """
 
         ws = self._wb.active
-        cell = self.find_non_blank_below(coord)
+        cell = self.find_non_blank_below(coord_or_cell)
         row = cell.row
         col = cell.column
         out = []
@@ -96,7 +100,12 @@ class Workbook(object):
 
         return out
 
-    def put_values_below(self, coord, arr):
+
+    def put_values_below(self, coord_or_cell, arr):
+        coord = coord_or_cell
+        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coord_or_cell.coordinate
+
         ws = self.active
         row = ws[coord].row
         col = ws[coord].column
@@ -105,12 +114,18 @@ class Workbook(object):
             row += 1
             ws.cell(column = col, row = row, value = val)
 
-    def find_values_beside(self, coord):
+
+    def find_values_beside(self, coord_or_cell):
         """
-        Find an array of values that sit strictly to the right of the given coordinate.
+        Find an array of values that sit strictly to the right of the given coordinate
+        or cell.
         Will start at the first non-blank, and stop before the first blank after
         some values.
         """
+
+        coord = coord_or_cell
+        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coord_or_cell.coordinate
 
         ws = self.active
         row = ws[coord].row
@@ -145,7 +160,12 @@ class Workbook(object):
 
         return out
 
-    def put_values_beside(self, coord, arr):
+
+    def put_values_beside(self, coord_or_cell, arr):
+        coord = coord_or_cell
+        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coord_or_cell.coordinate
+
         ws = self.active
         row = ws[coord].row
         col = ws[coord].column
@@ -154,11 +174,16 @@ class Workbook(object):
             col += 1
             ws.cell(column = col, row = row, value = val)
 
-    def find_value_in_table(self, coord, row_name, column_name):
+
+    def find_value_in_table(self, coord_or_cell, row_name, column_name):
         """
-        Given a coordinate search down for the cell with the row name, across for
-        the cell with the column name, and return the value in that cell.
+        Given a coordinate or cell, search down for the cell with the row name, across
+        for the cell with the column name, and return the value in that cell.
         """
+
+        coord = coord_or_cell
+        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coord_or_cell.coordinate
 
         ws = self.active
         cell = ws[coord]

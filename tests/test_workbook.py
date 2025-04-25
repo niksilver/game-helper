@@ -50,6 +50,22 @@ class TestWorkbook:
         assert cell.coordinate == 'C4'
 
 
+    def test_can_find_non_blank_below_allows_cell(self):
+        wb = Workbook()
+        ws = wb.active
+
+        ws['C4'] = 'One'
+        ws['C5'] = 'Two'
+        ws['C6'] = 'Three'
+        ws['C7'] = 'Four'
+        # Miss a row here
+        ws['C9'] = 'Six'
+
+        cell = wb.find_non_blank_below(ws['C2'])
+
+        assert cell.coordinate == 'C4'
+
+
     def test_find_non_blank_below_limits_search(self):
         wb = Workbook()
         ws = wb.active
@@ -79,6 +95,22 @@ class TestWorkbook:
         assert arr == ['One', 'Two', 'Three', 'Four']
 
 
+    def test_can_find_values_below_allows_cell(self):
+        wb = Workbook()
+        ws = wb.active
+
+        ws['C4'] = 'One'
+        ws['C5'] = 'Two'
+        ws['C6'] = 'Three'
+        ws['C7'] = 'Four'
+        # Miss a row here
+        ws['C9'] = 'Six'
+
+        arr = wb.find_values_below(ws['C2'])
+
+        assert arr == ['One', 'Two', 'Three', 'Four']
+
+
     def test_find_values_below_limits_its_search(self):
         wb = Workbook()
         ws = wb.active
@@ -102,7 +134,18 @@ class TestWorkbook:
         assert ws['D6'].value == 'Ccc'
 
 
-    def test_can_find_values_beside(self):
+    def test_can_put_values_below_allows_cell(self):
+        wb = Workbook()
+        ws = wb.active
+        wb.put_values_below(ws['D3'], ['Aaa', 'Bbb', 'Ccc'])
+
+        ws = wb.active
+        assert ws['D4'].value == 'Aaa'
+        assert ws['D5'].value == 'Bbb'
+        assert ws['D6'].value == 'Ccc'
+
+
+    def test_find_values_beside(self):
         wb = Workbook()
         ws = wb.active
 
@@ -120,6 +163,24 @@ class TestWorkbook:
         assert arr == ['One', 'Two', 'Three', 'Four']
 
 
+    def test_find_values_beside_allows_cell(self):
+        wb = Workbook()
+        ws = wb.active
+
+        ws['B2'] = 'Numbers'  # Title of row
+
+        ws['E2'] = 'One'
+        ws['F2'] = 'Two'
+        ws['G2'] = 'Three'
+        ws['H2'] = 'Four'
+        # Miss a row here
+        ws['J2'] = 'Six'
+
+        arr = wb.find_values_beside(ws['B2'])
+
+        assert arr == ['One', 'Two', 'Three', 'Four']
+
+
     def test_find_values_below_limits_its_search(self):
         wb = Workbook()
         ws = wb.active
@@ -133,9 +194,20 @@ class TestWorkbook:
             wb.find_values_beside('E2')
 
 
-    def test_can_put_values_beside(self):
+    def test_put_values_beside(self):
         wb = Workbook()
         wb.put_values_beside('D3', ['Aaa', 'Bbb', 'Ccc'])
+
+        ws = wb.active
+        assert ws['E3'].value == 'Aaa'
+        assert ws['F3'].value == 'Bbb'
+        assert ws['G3'].value == 'Ccc'
+
+
+    def test_put_values_beside_allows_cell(self):
+        wb = Workbook()
+        ws = wb.active
+        wb.put_values_beside(ws['D3'], ['Aaa', 'Bbb', 'Ccc'])
 
         ws = wb.active
         assert ws['E3'].value == 'Aaa'
@@ -185,3 +257,25 @@ class TestWorkbook:
         assert 'Cannot find' in str(excinfo.value)
 
 
+
+    def test_find_in_table_allows_cell(self):
+        wb = Workbook()
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score'],
+                ['Alice', 11    , 100],
+                ['Bob'  , 12    , 101],
+                ['Chris', 13    , 102]]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row = r+8,
+                        column = c+4,
+                        value = data[r][c])
+
+        # Check it's set up okay
+
+        assert ws['D8'].value == 'Name'
+
+        # Check the method finds data that's there
+
+        assert wb.find_value_in_table(ws['D8'], 'Alice', 'Age') == 11
