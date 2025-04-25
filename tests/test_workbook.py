@@ -21,20 +21,20 @@ class TestWorkbook:
         assert ws['A2'].value == 55
 
 
-    def test_can_find_cell(self):
+    def test_find(self):
         wb = Workbook()
         ws = wb.active
         ws['C4'] = 'Here I am!'
         ws['B3'] = 'And again!'
 
-        assert wb.find(5, 5, 'Here I am!').coordinate == 'C4'
-        assert wb.find(5, 5, 'And again!').coordinate == 'B3'
+        assert wb.find('Here I am!', 5, 5).coordinate == 'C4'
+        assert wb.find('And again!', 5, 5).coordinate == 'B3'
 
         with pytest.raises(Exception):
             wb.find(3, 3, 'Here I am!')
 
 
-    def test_can_find_non_blank_below(self):
+    def test_find_non_blank_below(self):
         wb = Workbook()
         ws = wb.active
 
@@ -50,7 +50,7 @@ class TestWorkbook:
         assert cell.coordinate == 'C4'
 
 
-    def test_can_find_non_blank_below_allows_cell(self):
+    def test_find_non_blank_below_allows_cell(self):
         wb = Workbook()
         ws = wb.active
 
@@ -79,7 +79,7 @@ class TestWorkbook:
             wb.find_non_blank_below('C2')
 
 
-    def test_can_find_values_below(self):
+    def test_find_values_below(self):
         wb = Workbook()
         ws = wb.active
 
@@ -95,7 +95,7 @@ class TestWorkbook:
         assert arr == ['One', 'Two', 'Three', 'Four']
 
 
-    def test_can_find_values_below_allows_cell(self):
+    def test_find_values_below_allows_cell(self):
         wb = Workbook()
         ws = wb.active
 
@@ -124,7 +124,7 @@ class TestWorkbook:
             wb.find_values_below('C2')
 
 
-    def test_can_put_values_below(self):
+    def test_put_values_below(self):
         wb = Workbook()
         wb.put_values_below('D3', ['Aaa', 'Bbb', 'Ccc'])
 
@@ -134,7 +134,7 @@ class TestWorkbook:
         assert ws['D6'].value == 'Ccc'
 
 
-    def test_can_put_values_below_allows_cell(self):
+    def test_put_values_below_allows_cell(self):
         wb = Workbook()
         ws = wb.active
         wb.put_values_below(ws['D3'], ['Aaa', 'Bbb', 'Ccc'])

@@ -29,28 +29,28 @@ class Workbook(object):
         else:
             __setattr__(self._wb, attr, val)
 
-    def find(self, col, row, val):
+    def find(self, value, column = 100, row = 100):
         """
-        Find the cell in the active workbook, searching from the top left
-        as far as the given row and column.
+        Find the cell with the given value in the active workbook,
+        searching from the top left as far as the given row and column.
         """
-        for c in range(1, col+1):
+        for c in range(1, column+1):
             ws = self.active
             for r in range(1, row+1):
                 cell = ws.cell(column = c, row = r)
-                if cell.value == val:
+                if cell.value == value:
                     return cell
 
         raise LookupError(f'Could not find {val} within {col} columns and {row} rows')
 
-    def find_non_blank_below(self, coord_or_cell):
+    def find_non_blank_below(self, coordinate_or_cell):
         """
         Find the first non-blank cell below the given coordinate or cell.
         """
 
-        coord = coord_or_cell
-        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coord_or_cell.coordinate
+        coord = coordinate_or_cell
+        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coordinate_or_cell.coordinate
 
         ws = self.active
         row = ws[coord].row
@@ -75,7 +75,7 @@ class Workbook(object):
 
         return cell
 
-    def find_values_below(self, coord_or_cell):
+    def find_values_below(self, coordinate_or_cell):
         """
         Find an array of values that sit strictly below the given coordinate or cell.
         Will start at the first non-blank, and stop before the first blank after
@@ -83,7 +83,7 @@ class Workbook(object):
         """
 
         ws = self._wb.active
-        cell = self.find_non_blank_below(coord_or_cell)
+        cell = self.find_non_blank_below(coordinate_or_cell)
         row = cell.row
         col = cell.column
         out = []
@@ -101,21 +101,21 @@ class Workbook(object):
         return out
 
 
-    def put_values_below(self, coord_or_cell, arr):
-        coord = coord_or_cell
-        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coord_or_cell.coordinate
+    def put_values_below(self, coordinate_or_cell, array):
+        coord = coordinate_or_cell
+        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coordinate_or_cell.coordinate
 
         ws = self.active
         row = ws[coord].row
         col = ws[coord].column
 
-        for val in arr:
+        for val in array:
             row += 1
             ws.cell(column = col, row = row, value = val)
 
 
-    def find_values_beside(self, coord_or_cell):
+    def find_values_beside(self, coordinate_or_cell):
         """
         Find an array of values that sit strictly to the right of the given coordinate
         or cell.
@@ -123,9 +123,9 @@ class Workbook(object):
         some values.
         """
 
-        coord = coord_or_cell
-        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coord_or_cell.coordinate
+        coord = coordinate_or_cell
+        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coordinate_or_cell.coordinate
 
         ws = self.active
         row = ws[coord].row
@@ -161,29 +161,29 @@ class Workbook(object):
         return out
 
 
-    def put_values_beside(self, coord_or_cell, arr):
-        coord = coord_or_cell
-        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coord_or_cell.coordinate
+    def put_values_beside(self, coordinate_or_cell, array):
+        coord = coordinate_or_cell
+        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coordinate_or_cell.coordinate
 
         ws = self.active
         row = ws[coord].row
         col = ws[coord].column
 
-        for val in arr:
+        for val in array:
             col += 1
             ws.cell(column = col, row = row, value = val)
 
 
-    def find_value_in_table(self, coord_or_cell, row_name, column_name):
+    def find_value_in_table(self, coordinate_or_cell, row_name, column_name):
         """
         Given a coordinate or cell, search down for the cell with the row name, across
         for the cell with the column name, and return the value in that cell.
         """
 
-        coord = coord_or_cell
-        if type(coord_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coord_or_cell.coordinate
+        coord = coordinate_or_cell
+        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
+            coord = coordinate_or_cell.coordinate
 
         ws = self.active
         cell = ws[coord]
