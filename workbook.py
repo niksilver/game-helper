@@ -43,7 +43,7 @@ class Workbook(object):
                 if cell.value == value:
                     return cell
 
-        raise LookupError(f'Could not find {val} within {col} columns and {row} rows')
+        raise LookupError(f'Could not find {value} within {col}umn columns and {row} rows')
 
 
     def find_value_beside(self, value, column = 100, row = 100):
@@ -59,7 +59,7 @@ class Workbook(object):
                 if cell.value == value:
                     return ws.cell(row = r, column = c+1).value
 
-        raise LookupError(f'Could not find {val} within {col} columns and {row} rows')
+        raise LookupError(f'Could not find {value} within {column} columns and {row} rows')
 
 
     def find_non_blank_below(self, coordinate_or_cell):
