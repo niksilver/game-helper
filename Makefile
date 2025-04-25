@@ -6,4 +6,4 @@ endif
 
 test:
 	@echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-	python -m pytest --tb=short -q
+	python -m pytest --tb=short

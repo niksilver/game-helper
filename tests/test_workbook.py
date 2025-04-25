@@ -5,9 +5,11 @@ from workbook import Workbook
 
 class TestWorkbook:
 
+
     def test_can_load_workbook(self):
         wb = Workbook.load('tests/workbook_simple.xlsx')
         assert type(wb) is Workbook
+
 
     def test_can_use_op_workbook_methods(self):
         wb = Workbook()
@@ -17,6 +19,7 @@ class TestWorkbook:
         ws = wb.active
         ws['A2'] = 55
         assert ws['A2'].value == 55
+
 
     def test_can_find_cell(self):
         wb = Workbook()
@@ -29,6 +32,7 @@ class TestWorkbook:
 
         with pytest.raises(Exception):
             wb.find(3, 3, 'Here I am!')
+
 
     def test_can_find_non_blank_below(self):
         wb = Workbook()
@@ -45,6 +49,7 @@ class TestWorkbook:
 
         assert cell.coordinate == 'C4'
 
+
     def test_find_non_blank_below_limits_search(self):
         wb = Workbook()
         ws = wb.active
@@ -56,6 +61,7 @@ class TestWorkbook:
 
         with pytest.raises(Exception):
             wb.find_non_blank_below('C2')
+
 
     def test_can_find_values_below(self):
         wb = Workbook()
@@ -72,6 +78,7 @@ class TestWorkbook:
 
         assert arr == ['One', 'Two', 'Three', 'Four']
 
+
     def test_find_values_below_limits_its_search(self):
         wb = Workbook()
         ws = wb.active
@@ -84,6 +91,7 @@ class TestWorkbook:
         with pytest.raises(Exception):
             wb.find_values_below('C2')
 
+
     def test_can_put_values_below(self):
         wb = Workbook()
         wb.put_values_below('D3', ['Aaa', 'Bbb', 'Ccc'])
@@ -92,6 +100,7 @@ class TestWorkbook:
         assert ws['D4'].value == 'Aaa'
         assert ws['D5'].value == 'Bbb'
         assert ws['D6'].value == 'Ccc'
+
 
     def test_can_find_values_beside(self):
         wb = Workbook()
@@ -110,6 +119,7 @@ class TestWorkbook:
 
         assert arr == ['One', 'Two', 'Three', 'Four']
 
+
     def test_find_values_below_limits_its_search(self):
         wb = Workbook()
         ws = wb.active
@@ -122,6 +132,7 @@ class TestWorkbook:
         with pytest.raises(Exception):
             wb.find_values_beside('E2')
 
+
     def test_can_put_values_beside(self):
         wb = Workbook()
         wb.put_values_beside('D3', ['Aaa', 'Bbb', 'Ccc'])
@@ -130,3 +141,47 @@ class TestWorkbook:
         assert ws['E3'].value == 'Aaa'
         assert ws['F3'].value == 'Bbb'
         assert ws['G3'].value == 'Ccc'
+
+
+    def test_find_in_table(self):
+        wb = Workbook()
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score'],
+                ['Alice', 11    , 100],
+                ['Bob'  , 12    , 101],
+                ['Chris', 13    , 102]]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row = r+8,
+                        column = c+4,
+                        value = data[r][c])
+
+        # Check it's set up okay
+
+        assert ws['D8'].value == 'Name'
+
+        # Check the method finds data that's there
+
+        assert wb.find_value_in_table('D8', 'Alice', 'Age') == 11
+        assert wb.find_value_in_table('D8', 'Bob',   'Age') == 12
+        assert wb.find_value_in_table('D8', 'Chris', 'Age') == 13
+        assert wb.find_value_in_table('D8', 'Alice', 'Score') == 100
+        assert wb.find_value_in_table('D8', 'Bob',   'Score') == 101
+        assert wb.find_value_in_table('D8', 'Chris', 'Score') == 102
+
+        # Check the method raises an exception otherwise
+
+        with pytest.raises(Exception) as excinfo:
+            wb.find_value_in_table('D8', 'Alice', 'Nonsense')
+        assert 'Cannot find' in str(excinfo.value)
+
+        with pytest.raises(Exception) as excinfo:
+            wb.find_value_in_table('D8', 'Noone', 'Age')
+        assert 'Cannot find' in str(excinfo.value)
+
+        with pytest.raises(Exception):
+            wb.find_value_in_table('D8', 'Noone', 'Nonesense')
+        assert 'Cannot find' in str(excinfo.value)
+
+
