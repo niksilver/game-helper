@@ -27,6 +27,46 @@ class TestWorkbook:
         assert ws['A2'].value == 55
 
 
+    def test_down(self):
+        wb = Workbook()
+
+        # Check it works with coordinates
+
+        cell = wb.down('C5')
+        assert cell.coordinate == 'C6'
+
+        cell = wb.down('E1', 3)
+        assert cell.coordinate == 'E4'
+
+        # Check it works with cells
+
+        cell = wb.down(wb.active['C5'])
+        assert cell.coordinate == 'C6'
+
+        cell = wb.down(wb.active['E1'], 3)
+        assert cell.coordinate == 'E4'
+
+
+    def test_left(self):
+        wb = Workbook()
+
+        # Check it works with coordinates
+
+        cell = wb.left('C5')
+        assert cell.coordinate == 'D5'
+
+        cell = wb.left('E1', 3)
+        assert cell.coordinate == 'H1'
+
+        # Check it works with cells
+
+        cell = wb.left(wb.active['C5'])
+        assert cell.coordinate == 'D5'
+
+        cell = wb.left(wb.active['E1'], 3)
+        assert cell.coordinate == 'H1'
+
+
     def test_find(self):
         wb = Workbook()
         ws = wb.active

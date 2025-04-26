@@ -34,6 +34,37 @@ class Workbook(object):
         return self._wb.__getitem__(key)
 
 
+    def cc(self, coordinate_or_cell):
+        """
+        Given a coordinate (string) or cell (object) return both the
+        coordinate and the cell.
+        """
+        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
+            return (coordinate_or_cell.coordinate, coordinate_or_cell)
+        else:
+            return (coordinate_or_cell, self.active[coordinate_or_cell])
+
+
+    def down(self, coordinate_or_cell, count = 1):
+        """
+        Get the cell that is down one (or some other count) from the give cell
+        in the active worksheet.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+        return self.active.cell(row = cell.row + count, column = cell.column)
+
+
+    def left(self, coordinate_or_cell, count = 1):
+        """
+        Get the cell that is left one (or some other count) from the give cell
+        in the active worksheet.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+        return self.active.cell(row = cell.row, column = cell.column + count)
+
+
     def find(self, value, column = 100, row = 100):
         """
         Find the cell with the given value in the active workbook,
