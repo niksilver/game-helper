@@ -258,3 +258,15 @@ class Workbook(object):
             raise(LookupError(f'Cannot find cell for ({row_name},{column_name}( in table at {coord}'))
 
         return ws.cell(row = r, column = c).value
+
+
+    def value_from(self, coordinate_or_cell, row = 0, column = 0):
+        """
+        Given starting coordinate or cell in the active workbook, get the value of the
+        cell some number of rows and columns relative to this.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+        ws = self.active
+
+        return ws.cell(row = cell.row + row, column = cell.column + column).value

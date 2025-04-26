@@ -315,7 +315,6 @@ class TestWorkbook:
         assert 'Cannot find' in str(excinfo.value)
 
 
-
     def test_find_in_table_allows_cell(self):
         wb = Workbook()
         ws = wb.active
@@ -337,3 +336,24 @@ class TestWorkbook:
         # Check the method finds data that's there
 
         assert wb.find_value_in_table(ws['D8'], 'Alice', 'Age') == 11
+
+
+    def test_value_from(self):
+        wb = Workbook()
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score'],
+                ['Alice', 11    , 100],
+                ['Bob'  , 12    , 101],
+                ['Chris', 13    , 102]]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row = r+8,
+                        column = c+4,
+                        value = data[r][c])
+
+        assert wb.value_from('D8', 0, 0) == 'Name'
+        assert wb.value_from('D8', 1, 0) == 'Alice'
+        assert wb.value_from('D8', 2, 0) == 'Bob'
+        assert wb.value_from('D8', 2, 1) == 12
+        assert wb.value_from('D8', 2, 2) == 101
