@@ -101,13 +101,11 @@ class Workbook(object):
         Find the first non-blank cell below the given coordinate or cell.
         """
 
-        coord = coordinate_or_cell
-        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coordinate_or_cell.coordinate
+        coord, cell = self.cc(coordinate_or_cell)
 
         ws = self.active
-        row = ws[coord].row
-        col = ws[coord].column
+        row = cell.row
+        col = cell.column
 
         limit = 100
         max_row = row + limit
@@ -127,6 +125,7 @@ class Workbook(object):
             raise(LookupError(f'No values found within {limit} rows of {coord}'))
 
         return cell
+
 
     def find_values_below(self, coordinate_or_cell):
         """
@@ -155,13 +154,16 @@ class Workbook(object):
 
 
     def put_values_below(self, coordinate_or_cell, array):
-        coord = coordinate_or_cell
-        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coordinate_or_cell.coordinate
+        """
+        Put an array of values directly below the given coordinate or cell in the
+        active workbook.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
 
         ws = self.active
-        row = ws[coord].row
-        col = ws[coord].column
+        row = cell.row
+        col = cell.column
 
         for val in array:
             row += 1
@@ -176,13 +178,11 @@ class Workbook(object):
         some values.
         """
 
-        coord = coordinate_or_cell
-        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coordinate_or_cell.coordinate
+        coord, cell = self.cc(coordinate_or_cell)
 
         ws = self.active
-        row = ws[coord].row
-        col = ws[coord].column
+        row = cell.row
+        col = cell.column
 
         limit = 100
         max_col = col + limit
@@ -215,13 +215,16 @@ class Workbook(object):
 
 
     def put_values_beside(self, coordinate_or_cell, array):
-        coord = coordinate_or_cell
-        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coordinate_or_cell.coordinate
+        """
+        Put an array of values directly to the left of the given coordinate or cell
+        in the active workbook.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
 
         ws = self.active
-        row = ws[coord].row
-        col = ws[coord].column
+        row = cell.row
+        col = cell.column
 
         for val in array:
             col += 1
@@ -234,12 +237,8 @@ class Workbook(object):
         for the cell with the column name, and return the value in that cell.
         """
 
-        coord = coordinate_or_cell
-        if type(coordinate_or_cell) is openpyxl.cell.cell.Cell:
-            coord = coordinate_or_cell.coordinate
-
+        coord, cell = self.cc(coordinate_or_cell)
         ws = self.active
-        cell = ws[coord]
         row = None
         column = None
 
