@@ -143,3 +143,45 @@ class TestExcelHelper:
         arr = xh.find_values_below('C2')
 
         assert arr == ['One', 'Two', 'Three', 'Four']
+
+
+    def test_find_values_below_allows_cell(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        ws['C4'] = 'One'
+        ws['C5'] = 'Two'
+        ws['C6'] = 'Three'
+        ws['C7'] = 'Four'
+        # Miss a row here
+        ws['C9'] = 'Six'
+
+        arr = xh.find_values_below(ws['C2'])
+
+        assert arr == ['One', 'Two', 'Three', 'Four']
+
+
+    def test_find_values_below_limits_its_search(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        ws['C104'] = 'One'
+        ws['C105'] = 'Two'
+        ws['C106'] = 'Three'
+        ws['C107'] = 'Four'
+
+        with pytest.raises(Exception):
+            xh.find_values_below('C2')
+
+
+    def test_put_values_below(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        xh.put_values_below('D3', ['Aaa', 'Bbb', 'Ccc'])
+
+        ws = wb.active
+        assert ws['D4'].value == 'Aaa'
+        assert ws['D5'].value == 'Bbb'
+        assert ws['D6'].value == 'Ccc'

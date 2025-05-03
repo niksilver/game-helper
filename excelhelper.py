@@ -127,3 +127,20 @@ class ExcelHelper(object):
             found_blank = (cell.value is None)
 
         return out
+
+
+    def put_values_below(self, coordinate_or_cell, array):
+        """
+        Put an array of values directly below the given coordinate or cell in the
+        active workbook.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+
+        ws = self._wb.active
+        row = cell.row
+        col = cell.column
+
+        for val in array:
+            row += 1
+            ws.cell(column = col, row = row, value = val)
