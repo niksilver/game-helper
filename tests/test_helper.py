@@ -64,3 +64,17 @@ class TestExcelHelper:
 
         with pytest.raises(Exception):
             xh.find('Here I am!', 3, 3)
+
+
+    def test_find_value_beside(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+
+        ws = wb.active
+        ws['C4'] = 'Here I am!'
+        ws['D4'] = 333
+
+        assert xh.find_value_beside('Here I am!', 5, 5) == 333
+
+        with pytest.raises(Exception):
+            xh.find_value_beside('Here I am!', 3, 3)
