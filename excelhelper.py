@@ -29,3 +29,13 @@ class ExcelHelper(object):
 
         coord, cell = self.cc(coordinate_or_cell)
         return self._wb.active.cell(row = cell.row + count, column = cell.column)
+
+
+    def left(self, coordinate_or_cell, count = 1):
+        """
+        Get the cell that is left one (or some other count) from the give cell
+        in the active worksheet.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+        return self._wb.active.cell(row = cell.row, column = cell.column + count)
