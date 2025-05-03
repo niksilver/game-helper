@@ -49,3 +49,18 @@ class TestExcelHelper:
 
         cell = xh.left(wb.active['E1'], 3)
         assert cell.coordinate == 'H1'
+
+
+    def test_find(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+
+        ws = wb.active
+        ws['C4'] = 'Here I am!'
+        ws['B3'] = 'And again!'
+
+        assert xh.find('Here I am!', 5, 5).coordinate == 'C4'
+        assert xh.find('And again!', 5, 5).coordinate == 'B3'
+
+        with pytest.raises(Exception):
+            xh.find('Here I am!', 3, 3)

@@ -39,3 +39,18 @@ class ExcelHelper(object):
 
         coord, cell = self.cc(coordinate_or_cell)
         return self._wb.active.cell(row = cell.row, column = cell.column + count)
+
+
+    def find(self, value, column = 100, row = 100):
+        """
+        Find the cell with the given value in the active workbook,
+        searching from the top left as far as the given row and column.
+        """
+        for c in range(1, column+1):
+            ws = self._wb.active
+            for r in range(1, row+1):
+                cell = ws.cell(column = c, row = r)
+                if cell.value == value:
+                    return cell
+
+        raise LookupError(f'Could not find {value} within {col}umn columns and {row} rows')
