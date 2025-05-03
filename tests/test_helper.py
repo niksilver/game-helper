@@ -78,3 +78,20 @@ class TestExcelHelper:
 
         with pytest.raises(Exception):
             xh.find_value_beside('Here I am!', 3, 3)
+
+
+    def test_find_non_blank_below(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        ws['C4'] = 'One'
+        ws['C5'] = 'Two'
+        ws['C6'] = 'Three'
+        ws['C7'] = 'Four'
+        # Miss a row here
+        ws['C9'] = 'Six'
+
+        cell = xh.find_non_blank_below('C2')
+
+        assert cell.coordinate == 'C4'

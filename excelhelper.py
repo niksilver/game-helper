@@ -70,3 +70,34 @@ class ExcelHelper(object):
                     return ws.cell(row = r, column = c+1).value
 
         raise LookupError(f'Could not find {value} within {column} columns and {row} rows')
+
+
+    def find_non_blank_below(self, coordinate_or_cell):
+        """
+        Find the first non-blank cell below the given coordinate or cell.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+
+        ws = self._wb.active
+        row = cell.row
+        col = cell.column
+
+        limit = 100
+        max_row = row + limit
+        out = []
+
+        # Move down to find where the first value is
+
+        found_value = False
+        cell = None
+
+        while not(found_value) and row < max_row:
+            row += 1
+            cell = ws.cell(row = row, column = col)
+            found_value = not(cell.value is None)
+
+        if row == max_row:
+            raise(LookupError(f'No values found within {limit} rows of {coord}'))
+
+        return cell
