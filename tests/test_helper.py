@@ -340,3 +340,25 @@ class TestExcelHelper:
         # Check the method finds data that's there
 
         assert xh.find_value_in_table(ws['D8'], 'Alice', 'Age') == 11
+
+
+    def test_value_from(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score'],
+                ['Alice', 11    , 100],
+                ['Bob'  , 12    , 101],
+                ['Chris', 13    , 102]]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row = r+8,
+                        column = c+4,
+                        value = data[r][c])
+
+        assert xh.value_from('D8', 0, 0) == 'Name'
+        assert xh.value_from('D8', 1, 0) == 'Alice'
+        assert xh.value_from('D8', 2, 0) == 'Bob'
+        assert xh.value_from('D8', 2, 1) == 12
+        assert xh.value_from('D8', 2, 2) == 101
