@@ -101,3 +101,29 @@ class ExcelHelper(object):
             raise(LookupError(f'No values found within {limit} rows of {coord}'))
 
         return cell
+
+
+    def find_values_below(self, coordinate_or_cell):
+        """
+        Find an array of values that sit strictly below the given coordinate or cell.
+        Will start at the first non-blank, and stop before the first blank after
+        some values.
+        """
+
+        ws = self._wb.active
+        cell = self.find_non_blank_below(coordinate_or_cell)
+        row = cell.row
+        col = cell.column
+        out = []
+
+        # Move down, adding to our output, until we get an empty cell
+
+        found_blank = False
+
+        while not(found_blank):
+            out.append(cell.value)
+            row += 1
+            cell = ws.cell(row = row, column = col)
+            found_blank = (cell.value is None)
+
+        return out

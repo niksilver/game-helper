@@ -95,3 +95,51 @@ class TestExcelHelper:
         cell = xh.find_non_blank_below('C2')
 
         assert cell.coordinate == 'C4'
+
+
+    def test_find_non_blank_below_allows_cell(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        ws['C4'] = 'One'
+        ws['C5'] = 'Two'
+        ws['C6'] = 'Three'
+        ws['C7'] = 'Four'
+        # Miss a row here
+        ws['C9'] = 'Six'
+
+        cell = xh.find_non_blank_below(ws['C2'])
+
+        assert cell.coordinate == 'C4'
+
+
+    def test_find_non_blank_below_limits_search(self):
+        wb = Workbook()
+        hx = ExcelHelper(wb)
+        ws = wb.active
+
+        ws['C104'] = 'One'
+        ws['C105'] = 'Two'
+        ws['C106'] = 'Three'
+        ws['C107'] = 'Four'
+
+        with pytest.raises(Exception):
+            xh.find_non_blank_below('C2')
+
+
+    def test_find_values_below(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        ws['C4'] = 'One'
+        ws['C5'] = 'Two'
+        ws['C6'] = 'Three'
+        ws['C7'] = 'Four'
+        # Miss a row here
+        ws['C9'] = 'Six'
+
+        arr = xh.find_values_below('C2')
+
+        assert arr == ['One', 'Two', 'Three', 'Four']
