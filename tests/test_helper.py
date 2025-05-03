@@ -185,3 +185,35 @@ class TestExcelHelper:
         assert ws['D4'].value == 'Aaa'
         assert ws['D5'].value == 'Bbb'
         assert ws['D6'].value == 'Ccc'
+
+
+    def test_put_values_below_allows_cell(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        xh.put_values_below(ws['D3'], ['Aaa', 'Bbb', 'Ccc'])
+
+        ws = wb.active
+        assert ws['D4'].value == 'Aaa'
+        assert ws['D5'].value == 'Bbb'
+        assert ws['D6'].value == 'Ccc'
+
+
+    def test_find_values_beside(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        ws['B2'] = 'Numbers'  # Title of row
+
+        ws['E2'] = 'One'
+        ws['F2'] = 'Two'
+        ws['G2'] = 'Three'
+        ws['H2'] = 'Four'
+        # Miss a row here
+        ws['J2'] = 'Six'
+
+        arr = xh.find_values_beside('B2')
+
+        assert arr == ['One', 'Two', 'Three', 'Four']

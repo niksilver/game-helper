@@ -144,3 +144,47 @@ class ExcelHelper(object):
         for val in array:
             row += 1
             ws.cell(column = col, row = row, value = val)
+
+
+    def find_values_beside(self, coordinate_or_cell):
+        """
+        Find an array of values that sit strictly to the right of the given coordinate
+        or cell.
+        Will start at the first non-blank, and stop before the first blank after
+        some values.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+
+        ws = self._wb.active
+        row = cell.row
+        col = cell.column
+
+        limit = 100
+        max_col = col + limit
+        out = []
+
+        # Move down to find where the first value is
+
+        found_value = False
+        cell = None
+
+        while not(found_value) and col < max_col:
+            col += 1
+            cell = ws.cell(row = row, column = col)
+            found_value = not(cell.value is None)
+
+        if col == max_col:
+            raise(LookupError(f'No values found within {limit} columns of {coord}'))
+
+        # Move down, adding to our output, until we get an empty cell
+
+        found_blank = False
+
+        while not(found_blank):
+            out.append(cell.value)
+            col += 1
+            cell = ws.cell(row = row, column = col)
+            found_blank = (cell.value is None)
+
+        return out
