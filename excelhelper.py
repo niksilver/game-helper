@@ -205,3 +205,32 @@ class ExcelHelper(object):
         for val in array:
             col += 1
             ws.cell(column = col, row = row, value = val)
+
+
+    def find_value_in_table(self, coordinate_or_cell, row_name, column_name):
+        """
+        Given a coordinate or cell, search down for the cell with the row name, across
+        for the cell with the column name, and return the value in that cell.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+        ws = self._wb.active
+        row = None
+        column = None
+
+        for r in range(cell.row, cell.row + 100):
+            here = ws.cell(row = r, column = cell.column)
+            if here.value == row_name:
+                row = r
+                break
+
+        for c in range(cell.column, cell.column + 100):
+            here = ws.cell(row = cell.row, column = c)
+            if here.value == column_name:
+                column = c
+                break
+
+        if row == None or column == None:
+            raise(LookupError(f'Cannot find cell for ({row_name},{column_name}( in table at {coord}'))
+
+        return ws.cell(row = r, column = c).value

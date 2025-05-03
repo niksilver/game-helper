@@ -273,3 +273,70 @@ class TestExcelHelper:
         assert ws['E3'].value == 'Aaa'
         assert ws['F3'].value == 'Bbb'
         assert ws['G3'].value == 'Ccc'
+
+
+    def test_find_in_table(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score'],
+                ['Alice', 11    , 100],
+                ['Bob'  , 12    , 101],
+                ['Chris', 13    , 102]]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row = r+8,
+                        column = c+4,
+                        value = data[r][c])
+
+        # Check it's set up okay
+
+        assert ws['D8'].value == 'Name'
+
+        # Check the method finds data that's there
+
+        assert xh.find_value_in_table('D8', 'Alice', 'Age') == 11
+        assert xh.find_value_in_table('D8', 'Bob',   'Age') == 12
+        assert xh.find_value_in_table('D8', 'Chris', 'Age') == 13
+        assert xh.find_value_in_table('D8', 'Alice', 'Score') == 100
+        assert xh.find_value_in_table('D8', 'Bob',   'Score') == 101
+        assert xh.find_value_in_table('D8', 'Chris', 'Score') == 102
+
+        # Check the method raises an exception otherwise
+
+        with pytest.raises(Exception) as excinfo:
+            xh.find_value_in_table('D8', 'Alice', 'Nonsense')
+        assert 'Cannot find' in str(excinfo.value)
+
+        with pytest.raises(Exception) as excinfo:
+            xh.find_value_in_table('D8', 'Noone', 'Age')
+        assert 'Cannot find' in str(excinfo.value)
+
+        with pytest.raises(Exception):
+            xh.find_value_in_table('D8', 'Noone', 'Nonesense')
+        assert 'Cannot find' in str(excinfo.value)
+
+
+    def test_find_in_table_allows_cell(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score'],
+                ['Alice', 11    , 100],
+                ['Bob'  , 12    , 101],
+                ['Chris', 13    , 102]]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row = r+8,
+                        column = c+4,
+                        value = data[r][c])
+
+        # Check it's set up okay
+
+        assert ws['D8'].value == 'Name'
+
+        # Check the method finds data that's there
+
+        assert xh.find_value_in_table(ws['D8'], 'Alice', 'Age') == 11
