@@ -217,3 +217,59 @@ class TestExcelHelper:
         arr = xh.find_values_beside('B2')
 
         assert arr == ['One', 'Two', 'Three', 'Four']
+
+
+    def test_find_values_beside_allows_cell(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        ws['B2'] = 'Numbers'  # Title of row
+
+        ws['E2'] = 'One'
+        ws['F2'] = 'Two'
+        ws['G2'] = 'Three'
+        ws['H2'] = 'Four'
+        # Miss a row here
+        ws['J2'] = 'Six'
+
+        arr = xh.find_values_beside(ws['B2'])
+
+        assert arr == ['One', 'Two', 'Three', 'Four']
+
+
+    def test_find_values_below_limits_its_search(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        ws['E104'] = 'One'
+        ws['F104'] = 'Two'
+        ws['G104'] = 'Three'
+        ws['H104'] = 'Four'
+
+        with pytest.raises(Exception):
+            xh.find_values_beside('E2')
+
+
+    def test_put_values_beside(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        xh.put_values_beside('D3', ['Aaa', 'Bbb', 'Ccc'])
+
+        ws = wb.active
+        assert ws['E3'].value == 'Aaa'
+        assert ws['F3'].value == 'Bbb'
+        assert ws['G3'].value == 'Ccc'
+
+
+    def test_put_values_beside_allows_cell(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+        xh.put_values_beside(ws['D3'], ['Aaa', 'Bbb', 'Ccc'])
+
+        ws = wb.active
+        assert ws['E3'].value == 'Aaa'
+        assert ws['F3'].value == 'Bbb'
+        assert ws['G3'].value == 'Ccc'
