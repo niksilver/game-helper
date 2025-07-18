@@ -66,6 +66,7 @@ class CardMaker:
              ):
         """
         Add some text to the card.
+        The font must be an ImageFont object.
         """
         x_pos, y_pos       = None, None
         h_anchor, v_anchor = None, None
