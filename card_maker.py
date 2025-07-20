@@ -23,6 +23,8 @@ class CardMaker:
                               size = (int(width), int(height)),
                               color = colour,
                               )
+        else:
+            image = image.copy()
         self.card_im = image
 
 
