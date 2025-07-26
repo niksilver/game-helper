@@ -9,6 +9,9 @@ class CardMaker:
     A class that allows us to create a card image.
     """
 
+    width  = None
+    height = None
+
     def __init__(self,
                  width = None, height = None,
                  image = None,
@@ -16,11 +19,15 @@ class CardMaker:
                  ):
         """
         A maker for card with the given dimensions.
-        It will be transparent by default.
+        These are converted to ints.
+        The cards will be transparent by default.
         """
+        self.width  = int(width)
+        self.height = int(height)
+
         if image is None:
             image = Image.new(mode = 'RGBA',
-                              size = (int(width), int(height)),
+                              size = (self.width, self.height),
                               color = colour,
                               )
         else:

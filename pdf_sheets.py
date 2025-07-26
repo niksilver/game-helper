@@ -125,14 +125,17 @@ class PDFSheets:
             ):
         """
         Add an image to the card, offset from the origin, which includes the gutters.
+        The image will be centred.
         The back image/file may be None.
         """
+        im_width  = self.card_width  + 2*self.gutter - 2*x_offset
+        im_height = self.card_height + 2*self.gutter - 2*y_offset
         self._inc_xy()
         self.pdf.image(image_or_file,
                        x = self.x + x_offset,
                        y = self.y + y_offset,
-                       w = self.card_width,
-                       h = self.card_height,
+                       w = im_width,
+                       h = im_height,
                        )
         self._gutter_corners(self.x, self.y)
         self.backs.append((back_image_or_file, self.x, self.y))
