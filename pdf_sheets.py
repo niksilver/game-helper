@@ -1,8 +1,8 @@
 from fpdf import FPDF
 
 
-left_margin_fronts_page = 10
-top_margin_fronts_page = 10
+left_margin_fronts_page = 7
+top_margin_fronts_page = 8
 a4_short_length = 210
 a4_long_length = 297
 
