@@ -76,6 +76,8 @@ class CardMaker:
         """
         Add some text to the card.
         The font must be an ImageFont object.
+        Returns the bounding box, as per
+        https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.textbbox
         """
         x_pos, y_pos       = None, None
         h_anchor, v_anchor = None, None
@@ -122,6 +124,13 @@ class CardMaker:
                   align   = align,
                   spacing = spacing,
                   )
+        return draw.textbbox(xy      = (int(x_pos), int(y_pos)),
+                             anchor  = h_anchor + v_anchor,
+                             text    = text,
+                             font    = font,
+                             align   = align,
+                             spacing = spacing,
+                             )
 
 
     def image(self):
