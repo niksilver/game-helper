@@ -1,6 +1,7 @@
 import math
 
 from fpdf import FPDF
+from PIL import Image
 
 
 left_margin_fronts_page = 7
@@ -163,6 +164,22 @@ class PDFSheets:
             raise ValueError(f'Shape defined as unknown "{self.shape}"')
 
 
+    def _reflect(self, image_or_file):
+        """
+        Reflect a card back image east-west.
+        """
+        im = image_or_file
+        if isinstance(im, str):
+            im = Image.open(image_or_file)
+
+        # Data drawn from
+        # https://pillow.readthedocs.io/en/stable/reference/ImageTransform.html#PIL.ImageTransform.AffineTransform
+        return im.transform(size = (im.width, im.height),
+                            method = Image.Transform.AFFINE,
+                            data = (-1, 0, im.width, 0, 1, 0),
+                            )
+
+
     def add(self,
             image_or_file,
             x_offset = 0,
@@ -221,9 +238,12 @@ class PDFSheets:
         self._inc_xy()
         x_origin = a4_long_length / 2
         y_origin = a4_short_length / 2
+
+        # We need to mirror the whole page, then mirror each card back again
         with self.pdf.mirror(origin = (x_origin, y_origin), angle = 'EAST'):
             if not(image_or_file is None):
-                self.pdf.image(image_or_file,
+                reflected_im = self._reflect(image_or_file)
+                self.pdf.image(reflected_im,
                                x = self.x,
                                y = self.y, 
                                w = gutter + card_width + gutter,
