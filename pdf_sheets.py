@@ -166,7 +166,7 @@ class PDFSheets:
 
     def _reflect(self, image_or_file):
         """
-        Reflect a card back image east-west.
+        Reflect an image east-west.
         """
         im = image_or_file
         if isinstance(im, str):
