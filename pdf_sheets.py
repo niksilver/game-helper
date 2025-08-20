@@ -1,3 +1,5 @@
+import math
+
 from fpdf import FPDF
 
 
@@ -15,9 +17,12 @@ class PDFSheets:
     def __init__(self,
                  card_width,
                  card_height,
-                 gutter = 4):
+                 gutter = 4,
+                 shape = 'rectangle',
+                 ):
         """
         Create a new series of A4 sheets with cards, for printing.
+        Shape may be "rectangle" (default) or "circle".
         """
         self.pdf = FPDF(orientation = 'landscape', unit = 'mm', format = 'A4')
         self.pdf.set_margin(0)
@@ -25,6 +30,7 @@ class PDFSheets:
         self.card_width  = card_width
         self.card_height = card_height
         self.gutter      = gutter
+        self.shape       = shape
 
         self.x = None
         self.y = None
@@ -104,6 +110,7 @@ class PDFSheets:
     def _gutter_corners(self, x, y):
         """
         Draw all the gutter squares at the corner of a card positioned at x, y.
+        These coordinates include the gutters.
         """
 
         # For convenience
@@ -115,6 +122,45 @@ class PDFSheets:
         self._gutter_square(x + gutter + card_width , y)
         self._gutter_square(x + gutter + card_width , y + gutter + card_height)
         self._gutter_square(x                       , y + gutter + card_height)
+
+
+    def _gutter_ring(self, x, y):
+        """
+        Draw all the gutter ring at the corner of a card positioned at x, y.
+        These coordinates include the gutters.
+        """
+
+        # For convenience
+        gutter = self.gutter
+        pdf    = self.pdf
+
+        centre_x = x + (gutter + self.card_width + gutter) // 2
+        centre_y = y + (gutter + self.card_height + gutter) // 2
+        r1       = self.card_width // 2
+        r2       = r1 + gutter
+
+
+        for i in range(0, 40):
+            radians = 2 * math.pi / 40 * i
+
+            pdf.line(x1 = centre_x + r1 * math.sin(radians),
+                     y1 = centre_y + r1 * math.cos(radians),
+                     x2 = centre_x + r2 * math.sin(radians),
+                     y2 = centre_y + r2 * math.cos(radians),
+                     )
+
+
+    def _gutter_marks(self, x, y):
+        """
+        Add the gutter marks, which will be either corners for a rectangle or
+        a ring for a circle.
+        """
+        if self.shape == 'rectangle':
+            self._gutter_corners(x, y)
+        elif self.shape == 'circle':
+            self._gutter_ring(x,y)
+        else:
+            raise ValueError(f'Shape defined as unknown "{self.shape}"')
 
 
     def add(self,
@@ -137,7 +183,7 @@ class PDFSheets:
                        w = im_width,
                        h = im_height,
                        )
-        self._gutter_corners(self.x, self.y)
+        self._gutter_marks(self.x, self.y)
         self.backs.append((back_image_or_file, self.x, self.y))
 
         if self._last_xy():
@@ -183,7 +229,7 @@ class PDFSheets:
                                w = gutter + card_width + gutter,
                                h = gutter + card_height + gutter
                                )
-            self._gutter_corners(self.x, self.y)
+            self._gutter_marks(self.x, self.y)
 
 
     def _add_page(self):
