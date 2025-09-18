@@ -304,7 +304,6 @@ class ExcelHelper(object):
             row = []
             for i in range(cols):
                 val = self.right(start_cell, i).value
-                print(f"Found value '{val}'")
                 row.append(val)
 
                 if not(val is None):
