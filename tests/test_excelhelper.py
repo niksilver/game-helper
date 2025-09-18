@@ -364,6 +364,32 @@ class TestExcelHelper:
         assert xh.value_from('D8', 2, 2) == 101
 
 
+    def test_vertical_table(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score'],
+                [None   , 11    , None   , 'Not in table'],
+                ['Bob'  , None  , None   ],
+                ['Dave' , 13    , 104    , 'Still not'   ],
+                [None   , None  , 102    ],
+               ]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row = r+10,
+                        column = c+5,
+                        value = data[r][c])
+
+        table = xh.vertical_table('E10')
+
+        assert table[0] == [None   , 11    , None   ]
+        assert table[1] == ['Bob'  , None  , None   ]
+        assert table[2] == ['Dave' , 13    , 104    ]
+        assert table[3] == [None   , None  , 102    ]
+        assert len(table) == 4
+
+
     def test_workbook_property(self):
         wb = Workbook()
         xh = ExcelHelper(wb)

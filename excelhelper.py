@@ -273,3 +273,49 @@ class ExcelHelper(object):
         ws = self._wb.active
 
         return ws.cell(row = cell.row + row, column = cell.column + column).value
+
+
+    def vertical_table(self, coordinate_or_cell):
+        """
+        Given a starting cell, which is the first cell of a table header,
+        return a table of cells below that. Each element of the table is a
+        row of the table. These are the length of the header. The table
+        stops just before the first row of all empty cells.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+
+        # How many columns in the table?
+
+        header_cell = cell
+        cols = 0
+        while not(header_cell.value is None):
+            cols += 1
+            header_cell = self.left(header_cell)
+
+        # Read the rows, stop when we have our first blank
+
+        table         = []
+        got_blank_row = False
+        start_cell    = self.down(cell)
+
+        while not(got_blank_row):
+            found_cell_content = False
+            row = []
+            for i in range(cols):
+                val = self.left(start_cell, i).value
+                print(f"Found value '{val}'")
+                row.append(val)
+
+                if not(val is None):
+                    found_cell_content = True
+
+            table.append(row)
+            start_cell = self.down(start_cell)
+            got_blank_row = not(found_cell_content)
+
+        # We've appended a blank row, so fix that
+
+        table = table[:-1]
+
+        return table
