@@ -30,24 +30,24 @@ class TestExcelHelper:
         assert cell.coordinate == 'E4'
 
 
-    def test_left(self):
+    def test_right(self):
         wb = Workbook()
         xh = ExcelHelper(wb)
 
         # Check it works with coordinates
 
-        cell = xh.left('C5')
+        cell = xh.right('C5')
         assert cell.coordinate == 'D5'
 
-        cell = xh.left('E1', 3)
+        cell = xh.right('E1', 3)
         assert cell.coordinate == 'H1'
 
         # Check it works with cells
 
-        cell = xh.left(wb.active['C5'])
+        cell = xh.right(wb.active['C5'])
         assert cell.coordinate == 'D5'
 
-        cell = xh.left(wb.active['E1'], 3)
+        cell = xh.right(wb.active['E1'], 3)
         assert cell.coordinate == 'H1'
 
 

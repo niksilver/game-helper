@@ -58,9 +58,9 @@ class ExcelHelper(object):
         return self._wb.active.cell(row = cell.row + count, column = cell.column)
 
 
-    def left(self, coordinate_or_cell, count = 1):
+    def right(self, coordinate_or_cell, count = 1):
         """
-        Get the cell that is left one (or some other count) from the give cell
+        Get the cell that is right one (or some other count) from the give cell
         in the active worksheet.
         """
 
@@ -219,7 +219,7 @@ class ExcelHelper(object):
 
     def put_values_beside(self, coordinate_or_cell, array):
         """
-        Put an array of values directly to the left of the given coordinate or cell
+        Put an array of values directly to the right of the given coordinate or cell
         in the active workbook.
         """
 
@@ -291,7 +291,7 @@ class ExcelHelper(object):
         cols = 0
         while not(header_cell.value is None):
             cols += 1
-            header_cell = self.left(header_cell)
+            header_cell = self.right(header_cell)
 
         # Read the rows, stop when we have our first blank
 
@@ -303,7 +303,7 @@ class ExcelHelper(object):
             found_cell_content = False
             row = []
             for i in range(cols):
-                val = self.left(start_cell, i).value
+                val = self.right(start_cell, i).value
                 print(f"Found value '{val}'")
                 row.append(val)
 
