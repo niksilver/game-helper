@@ -139,7 +139,7 @@ class CardMaker:
 
 
     @staticmethod
-    def _insert_new_lines(self, text, len):
+    def _insert_new_lines(text, len):
         """
         Given a text string and a line length, replace spaces with new line
         characters to fit the length.
