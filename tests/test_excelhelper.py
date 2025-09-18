@@ -362,3 +362,23 @@ class TestExcelHelper:
         assert xh.value_from('D8', 2, 0) == 'Bob'
         assert xh.value_from('D8', 2, 1) == 12
         assert xh.value_from('D8', 2, 2) == 101
+
+
+    def test_workbook_property(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        prop = xh.wb
+        assert prop is wb
+
+        # Should be read-only
+
+        with pytest.raises(AttributeError):
+            xh.wb = None
+
+
+    def test_init_with_filename(self):
+        xh = ExcelHelper('tests/test.xlsx')
+        wb = xh.wb
+
+        assert wb.active['A1'].value == 'This is cell A1'
+
