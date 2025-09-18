@@ -72,10 +72,12 @@ class CardMaker:
              fill = (0, 0, 0),
              font = None,
              spacing = 4,
+             chrs_per_line = None,
              ):
         """
         Add some text to the card.
         The font must be an ImageFont object.
+        If given, newlines will be inserted at chrs_per_line
         Returns the bounding box, as per
         https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.textbbox
         """
@@ -115,6 +117,9 @@ class CardMaker:
             y_pos    = y_descender
             v_anchor = "d"
 
+        if chrs_per_line:
+            text = insert_new_lines(text, chrs_per_line)
+
         draw = ImageDraw.Draw(self.card_im)
         draw.text(xy      = (int(x_pos), int(y_pos)),
                   anchor  = h_anchor + v_anchor,
@@ -131,6 +136,25 @@ class CardMaker:
                              align   = align,
                              spacing = spacing,
                              )
+
+
+    def _insert_new_lines(self, text, len):
+        """
+        Given a text string and a line length, replace spaces with new line
+        characters to fit the length.
+        """
+        space = 0    # Index of last space
+        count = 0    # Number of characters consumed
+
+        for i, char in enumerate(text):
+            count = count + 1
+            if char == ' ':
+                space = i
+            if count+1 == len:
+                text = text[:space] + '\n' + text[space+1:]
+                count = i - space
+
+        return text
 
 
     def image(self):
