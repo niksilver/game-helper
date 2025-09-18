@@ -374,3 +374,11 @@ class TestExcelHelper:
 
         with pytest.raises(AttributeError):
             xh.wb = None
+
+
+    def test_init_with_filename(self):
+        xh = ExcelHelper('tests/test.xlsx')
+        wb = xh.wb
+
+        assert wb.active['A1'].value == 'This is cell A1'
+

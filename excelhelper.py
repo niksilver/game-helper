@@ -6,12 +6,24 @@ from openpyxl import Workbook
 class ExcelHelper(object):
 
 
-    def __init__(self, wb):
-        self._wb = wb
+    def __init__(self, wb_or_filename):
+        """
+        Call this with an OpenPyXL Workbook object or a string filename.
+        """
+        if type(wb_or_filename) is str:
+            filename = wb_or_filename
+            wb       = openpyxl.reader.excel.load_workbook(filename)
+            self._wb = wb
+        else:
+            wb       = wb_or_filename
+            self._wb = wb
 
 
     @property
     def wb(self):
+        """
+        The underlying workbook (read-only).
+        """
         return self._wb
 
 
