@@ -4,6 +4,16 @@ from openpyxl import Workbook
 
 
 class ExcelHelper(object):
+    """
+    import openpyxl
+    from excelhelper import ExcelHelper
+
+    wb = openpyxl.reader.excel.load_workbook('workbook.xlsx')
+    xh = ExcelHelper(wb)
+    wb.active = wb['Book 1']
+
+    # Then use the methods of the ExcelHelper.
+    """
 
 
     def __init__(self, wb):
