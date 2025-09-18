@@ -10,6 +10,11 @@ class ExcelHelper(object):
         self._wb = wb
 
 
+    @property
+    def wb(self):
+        return self._wb
+
+
     def cc(self, coordinate_or_cell):
         """
         Given a coordinate (string) or cell (object) return both the
