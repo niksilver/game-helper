@@ -118,7 +118,7 @@ class CardMaker:
             v_anchor = "d"
 
         if chrs_per_line:
-            text = insert_new_lines(text, chrs_per_line)
+            text = self._insert_new_lines(text, chrs_per_line)
 
         draw = ImageDraw.Draw(self.card_im)
         draw.text(xy      = (int(x_pos), int(y_pos)),
@@ -138,6 +138,7 @@ class CardMaker:
                              )
 
 
+    @staticmethod
     def _insert_new_lines(self, text, len):
         """
         Given a text string and a line length, replace spaces with new line
