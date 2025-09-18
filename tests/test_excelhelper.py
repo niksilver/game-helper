@@ -390,6 +390,45 @@ class TestExcelHelper:
         assert len(table) == 4
 
 
+    def test_vertical_table_handles_no_rows(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score'],
+               ]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row = r+10,
+                        column = c+5,
+                        value = data[r][c])
+
+        table = xh.vertical_table('E10')
+
+        assert len(table) == 0
+
+
+    def test_vertical_table_handles_no_columns(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [[None],
+                [11],
+                [22],
+                [33],
+               ]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row = r+10,
+                        column = c+5,
+                        value = data[r][c])
+
+        table = xh.vertical_table('E10')
+
+        assert len(table) == 0
+
+
     def test_workbook_property(self):
         wb = Workbook()
         xh = ExcelHelper(wb)
