@@ -20,18 +20,21 @@ class PDFSheets:
                  card_height,
                  gutter = 4,
                  shape = 'rectangle',
+                 include_backs = True,
                  ):
         """
         Create a new series of A4 sheets with cards, for printing.
         Shape may be "rectangle" (default) or "circle".
+        By default card backs will be included on alternate sheets..
         """
         self.pdf = FPDF(orientation = 'landscape', unit = 'mm', format = 'A4')
         self.pdf.set_margin(0)
 
-        self.card_width  = card_width
-        self.card_height = card_height
-        self.gutter      = gutter
-        self.shape       = shape
+        self.card_width    = card_width
+        self.card_height   = card_height
+        self.gutter        = gutter
+        self.shape         = shape
+        self.include_backs = include_backs
 
         self.x = None
         self.y = None
@@ -204,12 +207,12 @@ class PDFSheets:
         self.backs.append((back_image_or_file, self.x, self.y))
 
         if self._last_xy():
-            self.add_backs()
+            self.add_backs_page()
 
 
-    def add_backs(self):
+    def add_backs_page(self):
         """
-        Add a new pack of card backs.
+        Add a new page of card backs.
         This will normally be called as part of the add() process, but the
         user will need to call it themselves at after adding the last card.
         """
@@ -218,8 +221,9 @@ class PDFSheets:
         self.x = None
         self.y = None
 
-        for im_x_y in self.backs:
-            self._add_back(im_x_y[0], im_x_y[1], im_x_y[2])
+        if self.include_backs:
+            for im_x_y in self.backs:
+                self._add_back(im_x_y[0], im_x_y[1], im_x_y[2])
 
         self.backs = []
 
