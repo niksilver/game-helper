@@ -14,10 +14,12 @@ class ImageSheet:
         """
         A sheet of cards, white by default.
         """
-        self.width   = card_width * columns
-        self.height  = card_height * rows
-        self.columns = columns
-        self.rows    = rows
+        self.card_width     = card_width
+        self.card_height    = card_height
+        self.width          = card_width * columns
+        self.height         = card_height * rows
+        self.columns        = columns
+        self.rows           = rows
         self.current_column = 0
         self.current_row    = 0
         self.base_im = Image.new(mode  = 'RGBA',
@@ -35,9 +37,10 @@ class ImageSheet:
         slot_height = int(self.height / self.rows)
         x_pos       = self.current_column * slot_width
         y_pos       = self.current_row * slot_height
-        self.base_im.paste(im   = im,
+        scaled_im   = im.resize(size = (self.card_width, self.card_height))
+        self.base_im.paste(im   = scaled_im,
                            box  = (x_pos, y_pos),
-                           mask = im,
+                           mask = scaled_im,
                            )
 
         self.current_column = (self.current_column + 1) % self.columns
