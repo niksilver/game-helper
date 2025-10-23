@@ -91,43 +91,6 @@ class PDFSheets:
         return last_on_row and last_on_column
 
 
-    def _gutter_one_corner(self, x, y):
-        """
-        Draw a square for cutting at x, y.
-        """
-        pdf = self.pdf
-        pdf.set_draw_color(0, 0, 0)
-        pdf.set_line_width(0.25)
-
-        gap   = 1    # Gap at edge of each square
-        x_lhs = x
-        x_rhs = x + self.gutter
-        y_top = y
-        y_bot = y + self.gutter
-
-        pdf.line(x1 = x_lhs + gap , y1 = y_top       , x2 = x_rhs - gap , y2 = y_top)
-        pdf.line(x1 = x_rhs       , y1 = y_top + gap , x2 = x_rhs       , y2 = y_bot - gap)
-        pdf.line(x1 = x_lhs + gap , y1 = y_bot       , x2 = x_rhs - gap , y2 = y_bot)
-        pdf.line(x1 = x_lhs       , y1 = y_top + gap , x2 = x_lhs       , y2 = y_bot - gap)
-
-
-    def _gutter_corners(self, x, y):
-        """
-        Draw all the gutter squares at the corner of a card positioned at x, y.
-        These coordinates include the gutters.
-        """
-
-        # For convenience
-        card_width  = self.card_width
-        card_height = self.card_height
-        gutter      = self.gutter
-
-        self._gutter_one_corner(x                       , y)
-        self._gutter_one_corner(x + gutter + card_width , y)
-        self._gutter_one_corner(x + gutter + card_width , y + gutter + card_height)
-        self._gutter_one_corner(x                       , y + gutter + card_height)
-
-
     def _gutter_lines(self, x, y):
         """
         Draw little lines around the edge of a card positioned at x, y.
@@ -223,7 +186,6 @@ class PDFSheets:
         a ring for a circle.
         """
         if self.shape == 'rectangle' and self.gutter > 0:
-            # self._gutter_corners(x, y)
             self._gutter_lines(x, y)
         elif self.shape == 'rectangle' and self.gutter == 0:
             self._zero_gutter_edges(x, y)
