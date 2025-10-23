@@ -128,6 +128,53 @@ class PDFSheets:
         self._gutter_one_corner(x                       , y + gutter + card_height)
 
 
+    def _gutter_lines(self, x, y):
+        """
+        Draw little lines around the edge of a card positioned at x, y.
+        These coordinates include the gutters.
+        """
+
+        # For convenience
+        card_width  = self.card_width
+        card_height = self.card_height
+        gutter      = self.gutter
+
+        self._gutter_h_line(x,                       y,                        gutter + card_width + gutter)
+        self._gutter_h_line(x,                       y + gutter + card_height, gutter + card_width + gutter)
+        self._gutter_v_line(x,                       y,                        gutter + card_height + gutter)
+        self._gutter_v_line(x + gutter + card_width, y,                        gutter + card_height + gutter)
+
+
+    def _gutter_h_line(self, x, y, width):
+        """
+        Draw a row of horizontal gutter marks with top left at x, y
+        (which includes the gutters).
+        """
+        pdf = self.pdf
+        pdf.set_draw_color(0, 0, 0)
+        pdf.set_line_width(0.25)
+
+        gap = 1    # Gap either side of the marks
+
+        for delta in range(0, width, self.gutter):
+            pdf.line(x1 = x + delta, y1 = y + gap, x2 = x + delta, y2 = y + self.gutter - gap)
+
+
+    def _gutter_v_line(self, x, y, height):
+        """
+        Draw a row of vertical gutter marks with top left at x, y
+        (which includes the gutters).
+        """
+        pdf = self.pdf
+        pdf.set_draw_color(0, 0, 0)
+        pdf.set_line_width(0.25)
+
+        gap = 1    # Gap either side of the marks
+
+        for delta in range(0, height, self.gutter):
+            pdf.line(x1 = x + gap, y1 = y + delta, x2 = x + self.gutter - gap, y2 = y + delta)
+
+
     def _zero_gutter_edges(self, x, y):
         """
         Draw a line around the edge of the card card positioned at x, y.
@@ -176,7 +223,8 @@ class PDFSheets:
         a ring for a circle.
         """
         if self.shape == 'rectangle' and self.gutter > 0:
-            self._gutter_corners(x, y)
+            # self._gutter_corners(x, y)
+            self._gutter_lines(x, y)
         elif self.shape == 'rectangle' and self.gutter == 0:
             self._zero_gutter_edges(x, y)
         elif self.shape == 'circle':
