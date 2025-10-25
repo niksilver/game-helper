@@ -25,19 +25,44 @@ class CardMaker:
         Values are converted to ints.
         The cards will be transparent by default.
         """
-        self.width  = int(width)
-        self.height = int(height)
-        self.gutter = int(gutter)
+        self._width  = int(width)
+        self._height = int(height)
+        self._gutter = int(gutter)
 
         if image is None:
             image = Image.new(mode = 'RGBA',
-                              size = (2 * self.gutter + self.width,
-                                      2 * self.gutter + self.height),
+                              size = (2 * self._gutter + self._width,
+                                      2 * self._gutter + self._height),
                               color = colour,
                               )
         else:
             image = image.copy()
-        self.card_im = image
+
+        self._card_im = image
+
+
+    @property
+    def width(self):
+        """
+        The width of the card, including gutters.
+        """
+        return self._width
+
+
+    @property
+    def height(self):
+        """
+        The height of the card, including gutters.
+        """
+        return self._height
+
+
+    @property
+    def gutter(self):
+        """
+        The gutter size of the card.
+        """
+        return self._gutter
 
 
     def paste(self,
@@ -50,20 +75,20 @@ class CardMaker:
         x_pos, y_pos = None, None
 
         if not(x_left is None):
-            x_pos = x_left + self.gutter
+            x_pos = x_left + self._gutter
         if not(x_right is None):
-            x_pos = x_right - im.width + self.gutter
+            x_pos = x_right - im.width + self._gutter
         if not(x_centre is None):
-            x_pos = int(x_centre - int(im.width / 2)) + self.gutter
+            x_pos = int(x_centre - int(im.width / 2)) + self._gutter
 
         if not(y_top is None):
-            y_pos = y_top + self.gutter
+            y_pos = y_top + self._gutter
         if not(y_bottom is None):
-            y_pos = y_bottom - im.height + self.gutter
+            y_pos = y_bottom - im.height + self._gutter
         if not(y_middle is None):
-            y_pos = int(y_middle - (im.height / 2)) + self.gutter
+            y_pos = int(y_middle - (im.height / 2)) + self._gutter
 
-        self.card_im.paste(im = im,
+        self._card_im.paste(im = im,
                            box = (int(x_pos), int(y_pos)),
                            mask = im,
                            )
@@ -92,41 +117,41 @@ class CardMaker:
         align              = None
 
         if not(x_left is None):
-            x_pos    = x_left + self.gutter
+            x_pos    = x_left + self._gutter
             h_anchor = "l"
             align    = "left"
         if not(x_centre is None):
-            x_pos    = x_centre + self.gutter
+            x_pos    = x_centre + self._gutter
             h_anchor = "m"
             align    = "center"
         if not(x_right is None):
-            x_pos    = x_right + self.gutter
+            x_pos    = x_right + self._gutter
             h_anchor = "r"
             align    = "right"
         
         if not(y_ascender is None):
-            y_pos    = y_ascender + self.gutter
+            y_pos    = y_ascender + self._gutter
             v_anchor = "a"
         if not(y_top is None):
-            y_pos    = y_top + self.gutter
+            y_pos    = y_top + self._gutter
             v_anchor = "t"
         if not(y_middle is None):
-            y_pos    = y_middle + self.gutter
+            y_pos    = y_middle + self._gutter
             v_anchor = "m"
         if not(y_baseline is None):
-            y_pos    = y_baseline + self.gutter
+            y_pos    = y_baseline + self._gutter
             v_anchor = "s"
         if not(y_bottom is None):
-            y_pos    = y_bottom + self.gutter
+            y_pos    = y_bottom + self._gutter
             v_anchor = "b"
         if not(y_descender is None):
-            y_pos    = y_descender + self.gutter
+            y_pos    = y_descender + self._gutter
             v_anchor = "d"
 
         if chrs_per_line:
             text = self._insert_new_lines(text, chrs_per_line)
 
-        draw = ImageDraw.Draw(self.card_im)
+        draw = ImageDraw.Draw(self._card_im)
         draw.text(xy      = (int(x_pos), int(y_pos)),
                   anchor  = h_anchor + v_anchor,
                   text    = text,
@@ -142,10 +167,10 @@ class CardMaker:
                              align   = align,
                              spacing = spacing,
                              )
-        return (bbox[0] - self.gutter,
-                bbox[1] - self.gutter,
-                bbox[2] - self.gutter,
-                bbox[3] - self.gutter)
+        return (bbox[0] - self._gutter,
+                bbox[1] - self._gutter,
+                bbox[2] - self._gutter,
+                bbox[3] - self._gutter)
 
 
     @staticmethod
@@ -174,7 +199,7 @@ class CardMaker:
         This includes the gutters, so if the gutter is > 0 then its width
         and height will be greater than the width and height originally given.
         """
-        return self.card_im
+        return self._card_im
 
 
     def colour_wash(self, colour):
@@ -183,7 +208,7 @@ class CardMaker:
         Transparency will be preserved.
         """
 
-        self.card_im = self.colour_wash_image(self.card_im, colour)
+        self._card_im = self.colour_wash_image(self._card_im, colour)
 
 
     @staticmethod
