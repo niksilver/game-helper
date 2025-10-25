@@ -14,20 +14,25 @@ class CardMaker:
 
     def __init__(self,
                  width = None, height = None,
+                 gutter = 0,
                  image = None,
                  colour = (0, 0, 0, 0)    # Transparent background
                  ):
         """
-        A maker for card with the given dimensions.
-        These are converted to ints.
+        A maker for card with the given dimensions, excluding the gutter.
+        (0, 0) is the top left of the card, excluding the gutter, and
+        (width, height) is the bottom right of the card, excluding the gutter.
+        Values are converted to ints.
         The cards will be transparent by default.
         """
         self.width  = int(width)
         self.height = int(height)
+        self.gutter = int(gutter)
 
         if image is None:
             image = Image.new(mode = 'RGBA',
-                              size = (self.width, self.height),
+                              size = (2 * self.gutter + self.width,
+                                      2 * self.gutter + self.height),
                               color = colour,
                               )
         else:
@@ -45,18 +50,18 @@ class CardMaker:
         x_pos, y_pos = None, None
 
         if not(x_left is None):
-            x_pos = x_left
+            x_pos = x_left + self.gutter
         if not(x_right is None):
-            x_pos = x_right - im.width
+            x_pos = x_right - im.width + self.gutter
         if not(x_centre is None):
-            x_pos = int(x_centre - int(im.width / 2))
+            x_pos = int(x_centre - int(im.width / 2)) + self.gutter
 
         if not(y_top is None):
-            y_pos = y_top
+            y_pos = y_top + self.gutter
         if not(y_bottom is None):
-            y_pos = y_bottom - im.height
+            y_pos = y_bottom - im.height + self.gutter
         if not(y_middle is None):
-            y_pos = int(y_middle - (im.height / 2))
+            y_pos = int(y_middle - (im.height / 2)) + self.gutter
 
         self.card_im.paste(im = im,
                            box = (int(x_pos), int(y_pos)),
@@ -80,41 +85,42 @@ class CardMaker:
         If given, newlines will be inserted at chrs_per_line
         Returns the bounding box, as per
         https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.textbbox
+        This is relative to the top of the card content, excluding the gutter.
         """
         x_pos, y_pos       = None, None
         h_anchor, v_anchor = None, None
         align              = None
 
         if not(x_left is None):
-            x_pos    = x_left
+            x_pos    = x_left + self.gutter
             h_anchor = "l"
             align    = "left"
         if not(x_centre is None):
-            x_pos    = x_centre
+            x_pos    = x_centre + self.gutter
             h_anchor = "m"
             align    = "center"
         if not(x_right is None):
-            x_pos    = x_right
+            x_pos    = x_right + self.gutter
             h_anchor = "r"
             align    = "right"
         
         if not(y_ascender is None):
-            y_pos    = y_ascender
+            y_pos    = y_ascender + self.gutter
             v_anchor = "a"
         if not(y_top is None):
-            y_pos    = y_top
+            y_pos    = y_top + self.gutter
             v_anchor = "t"
         if not(y_middle is None):
-            y_pos    = y_middle
+            y_pos    = y_middle + self.gutter
             v_anchor = "m"
         if not(y_baseline is None):
-            y_pos    = y_baseline
+            y_pos    = y_baseline + self.gutter
             v_anchor = "s"
         if not(y_bottom is None):
-            y_pos    = y_bottom
+            y_pos    = y_bottom + self.gutter
             v_anchor = "b"
         if not(y_descender is None):
-            y_pos    = y_descender
+            y_pos    = y_descender + self.gutter
             v_anchor = "d"
 
         if chrs_per_line:
@@ -129,13 +135,17 @@ class CardMaker:
                   align   = align,
                   spacing = spacing,
                   )
-        return draw.textbbox(xy      = (int(x_pos), int(y_pos)),
+        bbox = draw.textbbox(xy      = (int(x_pos), int(y_pos)),
                              anchor  = h_anchor + v_anchor,
                              text    = text,
                              font    = font,
                              align   = align,
                              spacing = spacing,
                              )
+        return (bbox[0] - self.gutter,
+                bbox[1] - self.gutter,
+                bbox[2] - self.gutter,
+                bbox[3] - self.gutter)
 
 
     @staticmethod
@@ -161,6 +171,8 @@ class CardMaker:
     def image(self):
         """
         Return the card image.
+        This includes the gutters, so if the gutter is > 0 then its width
+        and height will be greater than the width and height originally given.
         """
         return self.card_im
 
