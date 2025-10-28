@@ -41,7 +41,11 @@ def simple(wording, gutter):
 def html(content):
     maker = CardMaker(width  = card_width,
                       height = card_height,
+                      colour = (255, 255, 0, 255),
                       )
-    maker.html(content)
+    maker.html(content,
+               width  = 50,
+               height = 100,
+               )
 
     return maker.image()

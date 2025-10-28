@@ -99,23 +99,32 @@ class CardMaker:
 
     def html(self,
              content,
+             width, height,    # pixels
              ):
-        pdf = FPDF()
+        """
+        Render some HTML content in a box of the given width and height.
+        """
+        pdf = FPDF(format = (width, height))    # Actually mm by default
         pdf.add_page()
+        pdf.set_margin(0)
         pdf.write_html(content)
         byte_array = pdf.output()
         print(f"Length of pdf byte arrage is {len(byte_array)}")
 
-        ims = pdf2image.convert_from_bytes(pdf_file = byte_array)
-        # ims = pdf2image.convert_from_path(pdf_path = 'tmp.pdf')
+        ims = pdf2image.convert_from_bytes(pdf_file = byte_array,
+                                           # transparent = True,
+                                           # fmt = 'png',
+                                           )
         print(f"Type of ims is {type(ims)}")
         print(f"Length of ims is {len(ims)}")
         print(f"Type of ims[0] is {type(ims[0])}")
-        # print(f"Length of ims[0] is {len(ims[0])}")
         im = ims[0]
         print(f"Image is {im.width} x {im.height}")
+
+        im_ratio = im.height / im.width
         im = im.convert(mode = 'RGBA')
-        self.paste(im, x_left = 0, y_top = 0)
+        im = im.resize(size = (200, int(200 * im_ratio)))
+        self.paste(im, x_left = 10, y_top = 10)
 
 
     def text(self,
