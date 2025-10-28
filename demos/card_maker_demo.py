@@ -14,7 +14,7 @@ font = ImageFont.truetype(font = font_file,
                           )
 
 
-def simple(gutter = 0):
+def simple(wording, gutter):
     maker = CardMaker(width  = card_width,
                       height = card_height,
                       gutter = gutter,
@@ -30,7 +30,7 @@ def simple(gutter = 0):
     maker.paste(im     = im,
                 x_left = 0,
                 y_top  = 0)
-    maker.text('One!',
+    maker.text(text     = wording,
                x_centre = maker.width / 2,
                y_middle = maker.height / 2,
                font     = font,

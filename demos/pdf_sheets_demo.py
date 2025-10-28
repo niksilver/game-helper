@@ -14,11 +14,14 @@ pdf = PDFSheets(card_width  = 63,    # Units are mm
                 gutter      = gutter,
                 )
 
-pdf.add(card_maker_demo.simple(gutter),
+pdf.add(card_maker_demo.simple('One!', gutter),
+        back_image_or_file = 'demos/assets/card-back.png',
+        )
+pdf.add(card_maker_demo.simple('Two!', gutter),
         back_image_or_file = 'demos/assets/card-back.png',
         )
 
-pdf.add_backs_page()
+pdf.add_backs_page()    # Only needed at the end
 
 
 outdir  = 'demos/out'
