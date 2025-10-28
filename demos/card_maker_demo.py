@@ -20,7 +20,11 @@ def simple(gutter = 0):
                       gutter = gutter,
                       )
 
-    im = Image.open(assets_dir + '/card-border.png')
+    im = None
+    if gutter == 0:
+        im = Image.open(assets_dir + '/card-border-no-gutter.png')
+    else:
+        im = Image.open(assets_dir + '/card-border-with-gutter.png')
     im = im.resize(size = (card_width, card_height))
 
     maker.paste(im     = im,

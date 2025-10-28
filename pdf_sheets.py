@@ -218,8 +218,10 @@ class PDFSheets:
             back_image_or_file = None,
             ):
         """
-        Add an image to the card, offset from the origin, which includes the gutters.
-        The image will be centred.
+        Add a card image to the sheet.
+        Its top left may be offset from the origin, which includes the gutters.
+        The image will be placed in the centre of the card space, so an offset
+        will reduce its size.
         The back image/file may be None.
         """
         im_width  = self.card_width  + 2*self.gutter - 2*x_offset
