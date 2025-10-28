@@ -17,6 +17,7 @@ sheet = ImageSheet(card_width  = card_maker_demo.card_width,    # Units are pixe
 
 sheet.add(card_maker_demo.simple('One!', gutter))
 sheet.add(card_maker_demo.simple('Two!', gutter))
+sheet.add(card_maker_demo.html('Oh, <i>hi</i>'))
 
 
 outdir  = 'demos/out'

@@ -36,3 +36,12 @@ def simple(wording, gutter):
                font     = font,
                )
     return maker.image()
+
+
+def html(content):
+    maker = CardMaker(width  = card_width,
+                      height = card_height,
+                      )
+    maker.html(content)
+
+    return maker.image()

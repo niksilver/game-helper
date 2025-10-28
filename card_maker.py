@@ -3,6 +3,10 @@ from PIL import ImageDraw
 from PIL import ImageFont
 from PIL import ImageChops
 
+from fpdf import FPDF
+
+import pdf2image
+
 
 class CardMaker:
     """
@@ -92,6 +96,26 @@ class CardMaker:
                            box = (int(x_pos), int(y_pos)),
                            mask = im,
                            )
+
+    def html(self,
+             content,
+             ):
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.write_html(content)
+        byte_array = pdf.output()
+        print(f"Length of pdf byte arrage is {len(byte_array)}")
+
+        ims = pdf2image.convert_from_bytes(pdf_file = byte_array)
+        # ims = pdf2image.convert_from_path(pdf_path = 'tmp.pdf')
+        print(f"Type of ims is {type(ims)}")
+        print(f"Length of ims is {len(ims)}")
+        print(f"Type of ims[0] is {type(ims[0])}")
+        # print(f"Length of ims[0] is {len(ims[0])}")
+        im = ims[0]
+        print(f"Image is {im.width} x {im.height}")
+        im = im.convert(mode = 'RGBA')
+        self.paste(im, x_left = 0, y_top = 0)
 
 
     def text(self,
