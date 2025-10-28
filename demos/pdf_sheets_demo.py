@@ -9,18 +9,17 @@ import card_maker_demo
 
 gutter = 4
 
-pdf = PDFSheets(card_width = 63,    # Units are mm
+pdf = PDFSheets(card_width  = 63,    # Units are mm
                 card_height = 88,
-                gutter = gutter,
+                gutter      = gutter,
                 )
 
 pdf.add(card_maker_demo.simple(gutter),
-        x_offset = 0,
-        y_offset = 0,
         back_image_or_file = 'demos/assets/card-back.png',
         )
 
 pdf.add_backs_page()
+
 
 outdir  = 'demos/out'
 outfile = outdir + '/demo.pdf'
