@@ -107,9 +107,11 @@ class CardMaker:
 
         card_width_mm = 63
         card_width_px = self._width
+        print(f"Card with is {card_width_px} px")
         px_per_mm     = card_width_px / card_width_mm
 
         box_width_mm  = width_px  / px_per_mm
+        print(f"Box with is {box_width_mm} mm")
         box_height_mm = height_px / px_per_mm
 
         pdf = FPDF(format = (box_width_mm, box_height_mm))
@@ -117,21 +119,24 @@ class CardMaker:
         pdf.set_margin(0)
         pdf.write_html(content)
         byte_array = pdf.output()
-        print(f"Length of pdf byte arrage is {len(byte_array)}")
+
+        dots_per_mm = card_width_px / card_width_mm
+        mm_per_in   = 25.4
+        dots_per_in = dots_per_mm * mm_per_in
+        print(f"Dots per mm = {dots_per_mm}")
+        print(f"Dots per in = {dots_per_in}")
 
         ims = pdf2image.convert_from_bytes(pdf_file = byte_array,
                                            # transparent = True,
                                            # fmt = 'png',
+                                           dpi = dots_per_in,
                                            )
-        print(f"Type of ims is {type(ims)}")
-        print(f"Length of ims is {len(ims)}")
-        print(f"Type of ims[0] is {type(ims[0])}")
-        im = ims[0]
-        print(f"Image is {im.width} x {im.height}")
+        im = ims[0]    # First page. A PPMImage by defaul
+        print(f"Image width is {im.width} px")
 
         im_ratio = im.height / im.width
         im = im.convert(mode = 'RGBA')
-        im = im.resize(size = (200, int(200 * im_ratio)))
+        # im = im.resize(size = (200, int(200 * im_ratio)))
         self.paste(im, x_left = 10, y_top = 10)
 
 
