@@ -99,12 +99,20 @@ class CardMaker:
 
     def html(self,
              content,
-             width, height,    # pixels
+             width_px, height_px,    # pixels
              ):
         """
-        Render some HTML content in a box of the given width and height.
+        Render some HTML content in a box of the given width and height in pixels.
         """
-        pdf = FPDF(format = (width, height))    # Actually mm by default
+
+        card_width_mm = 63
+        card_width_px = self._width
+        px_per_mm     = card_width_px / card_width_mm
+
+        box_width_mm  = width_px  / px_per_mm
+        box_height_mm = height_px / px_per_mm
+
+        pdf = FPDF(format = (box_width_mm, box_height_mm))
         pdf.add_page()
         pdf.set_margin(0)
         pdf.write_html(content)

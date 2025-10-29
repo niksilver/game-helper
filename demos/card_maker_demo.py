@@ -44,8 +44,8 @@ def html(content):
                       colour = (255, 255, 0, 255),
                       )
     maker.html(content,
-               width  = 50,
-               height = 100,
+               width_px  = 200,
+               height_px = 300,
                )
 
     return maker.image()
