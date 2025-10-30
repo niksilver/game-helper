@@ -18,6 +18,7 @@ class CardMaker:
 
     def __init__(self,
                  width = None, height = None,
+                 width_mm = None,
                  gutter = 0,
                  image = None,
                  colour = (0, 0, 0, 0),    # Transparent background
@@ -29,13 +30,19 @@ class CardMaker:
         (width, height) is the bottom right of the card, excluding the gutter.
         Values are converted to ints.
         The cards will be transparent by default.
+        We specify the default unit of these and other measurements.
+        'px' is used if None is given.
         """
-        if not(unit is None) and not(unit == 'px'):
+        if not(unit == 'px'):
             raise ValueError(f"unit must be None or mm, but got '{unit}'")
 
-        self._width  = int(width)
-        self._height = int(height)
-        self._gutter = int(gutter)
+        self._width    = int(width)
+        self._height   = int(height)
+        self._gutter   = int(gutter)
+        self._unit     = unit
+
+        self._width_mm = width_mm
+        self._set_unit_properties()
 
         if image is None:
             image = Image.new(mode = 'RGBA',
@@ -49,28 +56,92 @@ class CardMaker:
         self._card_im = image
 
 
+    def _set_unit_properties(self):
+        """
+        Set the various _mm and _px properties appropriately
+        """
+        assert self._unit == 'px'
+
+        px_per_mm = self._width / self._width_mm
+
+        self._width_px  = self._width
+        self._width_mm  = self._width_px / px_per_mm
+        self._height_px = self._height
+        self._height_mm = self._height_px / px_per_mm
+        self._gutter_px = self._gutter
+        self._gutter_mm = self._gutter_px / px_per_mm
+
+
     @property
     def width(self):
         """
-        The width of the card, including gutters.
+        The width of the card, including gutters, in the default unit.
         """
         return self._width
 
 
     @property
+    def width_px(self):
+        """
+        The width of the card, including gutters, in pixels.
+        """
+        return self._width_px
+
+
+    @property
+    def width_mm(self):
+        """
+        The width of the card, including gutters, in millimetres.
+        """
+        return self._width_mm
+
+
+    @property
     def height(self):
         """
-        The height of the card, including gutters.
+        The height of the card, including gutters, in the default unit.
         """
         return self._height
 
 
     @property
+    def height_px(self):
+        """
+        The height of the card, including gutters, in pixels.
+        """
+        return self._height_px
+
+
+    @property
+    def height_mm(self):
+        """
+        The height of the card, including gutters, in millimetres.
+        """
+        return self._height_mm
+
+
+    @property
     def gutter(self):
         """
-        The gutter size of the card.
+        The gutter size of the card, in the default unit.
         """
         return self._gutter
+
+
+    @property
+    def gutter_px(self):
+        """
+        The gutter size of the card, in pixels.
+        """
+        return self._gutter_px
+
+
+    @property
+    def gutter_mm(self):
+        """
+        The gutter size of the card, in millimetres.
+        """
+        return self._gutter_mm
 
 
     def paste(self,
