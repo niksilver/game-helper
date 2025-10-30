@@ -20,7 +20,8 @@ class CardMaker:
                  width = None, height = None,
                  gutter = 0,
                  image = None,
-                 colour = (0, 0, 0, 0)    # Transparent background
+                 colour = (0, 0, 0, 0),    # Transparent background
+                 unit = 'px',
                  ):
         """
         A maker for card with the given dimensions, excluding the gutter.
@@ -29,6 +30,9 @@ class CardMaker:
         Values are converted to ints.
         The cards will be transparent by default.
         """
+        if not(unit is None) and not(unit == 'px'):
+            raise ValueError(f"unit must be None or mm, but got '{unit}'")
+
         self._width  = int(width)
         self._height = int(height)
         self._gutter = int(gutter)
