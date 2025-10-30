@@ -186,6 +186,9 @@ class CardMaker:
             count = count + 1
             if char == ' ':
                 space = i
+            elif char == '\n':
+                text = text[:i] + '\n' + text[i+1:]
+                count = 0
             if count+1 == len:
                 text = text[:space] + '\n' + text[space+1:]
                 count = i - space
