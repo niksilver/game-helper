@@ -1,3 +1,9 @@
+if __name__ == '__main__':
+    print("This is a module, not a standalone script")
+    import sys
+    sys.exit(0)
+
+
 from PIL import Image
 from PIL import ImageFont
 from card_maker import CardMaker
