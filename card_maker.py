@@ -99,6 +99,9 @@ class CardMaker:
                 raise ValueError(f"Cannot convert from unit '{self._unit}'")
 
 
+    # ------------ Width -------------
+
+
     @property
     def width(self):
         """
@@ -124,6 +127,33 @@ class CardMaker:
 
 
     @property
+    def width_with_gutters(self):
+        """
+        The width of the card, including gutters, in the default unit.
+        """
+        return self._gutter + self._width + self._gutter
+
+
+    @property
+    def width_with_gutters_px(self):
+        """
+        The width of the card, including gutters, in pixels.
+        """
+        return self._gutter_px + self._width_px + self._gutter_px
+
+
+    @property
+    def width_with_gutters_mm(self):
+        """
+        The width of the card, including gutters, in millimetres.
+        """
+        return self._gutter_mm + self._width_mm + self._gutter_mm
+
+
+    # ------------ Height -------------
+
+
+    @property
     def height(self):
         """
         The height of the card, excluding gutters, in the default unit.
@@ -145,6 +175,33 @@ class CardMaker:
         The height of the card, excluding gutters, in millimetres.
         """
         return self._height_mm
+
+
+    @property
+    def height_with_gutters(self):
+        """
+        The height of the card, including gutters, in the default unit.
+        """
+        return self._gutter + self._height + self._gutter
+
+
+    @property
+    def height_with_gutters_px(self):
+        """
+        The height of the card, including gutters, in pixels.
+        """
+        return self._gutter_px + self._height_px + self._gutter_px
+
+
+    @property
+    def height_with_gutters_mm(self):
+        """
+        The height of the card, including gutters, in millimetres.
+        """
+        return self._gutter_mm + self._height_mm + self._gutter_mm
+
+
+    # ------------ Gutter -------------
 
 
     @property

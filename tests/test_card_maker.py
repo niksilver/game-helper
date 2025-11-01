@@ -13,26 +13,6 @@ class TestCardMaker:
                           width_mm = 205,
                           )
 
-        """
-        xh = ExcelHelper(wb)
-
-        # Check it works with coordinates
-
-        cell = xh.down('C5')
-        assert cell.coordinate == 'C6'
-
-        cell = xh.down('E1', 3)
-        assert cell.coordinate == 'E4'
-
-        # Check it works with cells
-
-        cell = xh.down(wb.active['C5'])
-        assert cell.coordinate == 'C6'
-
-        cell = xh.down(wb.active['E1'], 3)
-        assert cell.coordinate == 'E4'
-
-        """
 
     def test_convert_px_to_mm(self):
 
@@ -53,6 +33,13 @@ class TestCardMaker:
         assert maker1.gutter_px == 4
         assert maker1.gutter_mm == 16
 
+        assert maker1.width_with_gutters     == 4 + 250 + 4
+        assert maker1.width_with_gutters_px  == 4 + 250 + 4
+        assert maker1.width_with_gutters_mm  == 16 + 1000 + 16
+        assert maker1.height_with_gutters    == 4 + 350 + 4
+        assert maker1.height_with_gutters_px == 4 + 350 + 4
+        assert maker1.height_with_gutters_mm == 16 + 1400 + 16
+
         # Higher resolution
         maker2 = CardMaker(width  = 1000,
                            height = 1200,
@@ -69,6 +56,13 @@ class TestCardMaker:
         assert maker2.gutter    == 2
         assert maker2.gutter_px == 2
         assert maker2.gutter_mm == 1
+
+        assert maker2.width_with_gutters     == 2 + 1000 + 2
+        assert maker2.width_with_gutters_px  == 2 + 1000 + 2
+        assert maker2.width_with_gutters_mm  == 1 + 500 + 1
+        assert maker2.height_with_gutters    == 2 + 1200 + 2
+        assert maker2.height_with_gutters_px == 2 + 1200 + 2
+        assert maker2.height_with_gutters_mm == 1 + 600 + 1
 
         # Floating point
         maker2 = CardMaker(width  = 1001,
