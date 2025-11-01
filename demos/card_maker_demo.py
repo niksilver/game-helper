@@ -9,8 +9,9 @@ from PIL import ImageFont
 from card_maker import CardMaker
 
 
-card_width  = 400
-card_height = 560
+card_width_px  = 400
+card_height_px = 560
+card_width_mm  = 40
 
 assets_dir  = 'demos/assets'
 
@@ -21,21 +22,21 @@ font = ImageFont.truetype(font = font_file,
 
 
 def simple(wording, gutter):
-    maker = CardMaker(width    = card_width,
-                      height   = card_height,
+    maker = CardMaker(width    = card_width_px,
+                      height   = card_height_px,
                       unit     = 'px',
                       gutter   = gutter,
-                      width_mm = card_width,    # 1px to 1mm for simplicity
+                      width_mm = card_width_mm,
                       )
 
     im = None
     if gutter == 0:
-        im = Image.open(assets_dir + '/card-border-no-gutter.png')
+        border_im = Image.open(assets_dir + '/card-border-no-gutter.png')
     else:
-        im = Image.open(assets_dir + '/card-border-with-gutter.png')
-    im = im.resize(size = (card_width, card_height))
+        border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
+    border_im = border_im.resize(size = (card_width_px, card_height_px))
 
-    maker.paste(im     = im,
+    maker.paste(im     = border_im,
                 x_left = 0,
                 y_top  = 0)
     maker.text(text     = wording,
@@ -47,10 +48,10 @@ def simple(wording, gutter):
 
 
 def html(content):
-    maker = CardMaker(width  = card_width,
-                      height = card_height,
+    maker = CardMaker(width  = card_width_px,
+                      height = card_height_px,
                       unit     = 'px',
-                      width_mm = card_width,    # 1px to 1mm for simplicity
+                      width_mm = card_width_mm,
                       colour = (255, 255, 0, 255),
                       )
     maker.html(content,

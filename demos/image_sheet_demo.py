@@ -14,8 +14,8 @@ if not(os.path.exists(outdir)):
 
 gutter = 0    # No gutter for image sheets
 
-sheet = ImageSheet(card_width  = card_maker_demo.card_width,    # Units are pixels
-                   card_height = card_maker_demo.card_height,
+sheet = ImageSheet(card_width  = card_maker_demo.card_width_px,    # Units are pixels
+                   card_height = card_maker_demo.card_height_px,
                    columns     = 6,
                    rows        = 2,
                    )
