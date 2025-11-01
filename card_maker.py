@@ -23,7 +23,7 @@ class CardMaker:
                  gutter = 0,
                  image = None,
                  colour = (0, 0, 0, 0),    # Transparent background
-                 unit = 'px',
+                 unit = None,
                  ):
         """
         A maker for card with the given dimensions, excluding the gutter.
@@ -31,9 +31,11 @@ class CardMaker:
         (width, height) is the bottom right of the card, excluding the gutter.
         Values are converted to ints.
         The cards will be transparent by default.
-        We specify the default unit of these and other measurements.
-        'px' is used if None is given.
+        We must specify the default unit of these and future length parameters.
         """
+
+        if unit is None:
+            raise ValueError('Must specify the unit being used')
         if not(unit in ['px', 'mm']):
             raise ValueError(f"Unit must be px or mm, but got '{unit}'")
 
@@ -64,6 +66,9 @@ class CardMaker:
         """
         Set the various _mm and _px properties appropriately
         """
+
+        if self._width_px is None and self._width_mm is None:
+            raise ValueError('Must specify width_mm or width_px')
         if not(self._width_px is None) and not(self._width_mm is None):
             raise ValueError('Cannot specify width of both mm and px')
         if self._unit == 'px' and not(self._width_px is None):

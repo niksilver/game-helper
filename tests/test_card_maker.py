@@ -9,6 +9,7 @@ class TestCardMaker:
     def test_basically_runs(self):
         maker = CardMaker(width    = 250,
                           height   = 350,
+                          unit     = 'px',
                           width_mm = 205,
                           )
 
@@ -109,6 +110,15 @@ class TestCardMaker:
 
     def test_constructor_unit_combinations(self):
 
+        # Must specify the unit
+
+        with pytest.raises(ValueError, match = 'Must'):
+            maker = CardMaker(width  = 250,
+                              height = 350,
+                              gutter = 4,
+                              width_px = 1000,
+                              )
+
         # Shouldn't be able to specify a nonsense unit
 
         with pytest.raises(ValueError, match = 'Unit'):
@@ -117,6 +127,15 @@ class TestCardMaker:
                               gutter = 4,
                               unit   = '__',
                               width_px = 1000,
+                              )
+
+        # Must specify a width of either mm or px
+
+        with pytest.raises(ValueError, match = 'Must'):
+            maker = CardMaker(width  = 250,
+                              height = 350,
+                              gutter = 4,
+                              unit   = 'mm',
                               )
 
         # Shouldn't be able to specify a width of px and mm
