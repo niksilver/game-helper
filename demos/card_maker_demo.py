@@ -61,11 +61,14 @@ def html(content):
 
     maker = CardMaker(width    = base_maker.width_px,
                       height   = base_maker.height_px,
+                      gutter   = base_maker.gutter_px,
                       unit     = 'px',
                       width_mm = base_maker.width_mm,
                       colour = (255, 255, 0, 255),    # Yellow
                       )
     maker.html(content,
+               x_left = 10,
+               y_top  = 10,
                width  = maker.width / 2,
                height = maker.height / 2,
                )

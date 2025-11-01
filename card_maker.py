@@ -368,6 +368,7 @@ class CardMaker:
 
     def html(self,
              content,
+             x_left, y_top,
              width, height,
              ):
         """
@@ -386,8 +387,6 @@ class CardMaker:
         dots_per_mm = self._width_px / self._width_mm
         mm_per_in   = 25.4
         dots_per_in = dots_per_mm * mm_per_in
-        print(f"Dots per mm = {dots_per_mm}")
-        print(f"Dots per in = {dots_per_in}")
 
         ims = pdf2image.convert_from_bytes(pdf_file = byte_array,
                                            # transparent = True,
@@ -395,12 +394,13 @@ class CardMaker:
                                            dpi = dots_per_in,
                                            )
         im = ims[0]    # First page. A PPMImage by default
-        print(f"Image width is {im.width} px")
 
         im_ratio = im.height / im.width
         im = im.convert(mode = 'RGBA')
-        # im = im.resize(size = (200, int(200 * im_ratio)))
-        self.paste(im, x_left = 10, y_top = 10)
+        self.paste(im,
+                   x_left = x_left,
+                   y_top = y_top,
+                   )
 
 
     def text(self,
