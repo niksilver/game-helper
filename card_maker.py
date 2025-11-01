@@ -62,6 +62,8 @@ class CardMaker:
         """
         Set the various _mm and _px properties appropriately
         """
+        if not(self._width_px is None) and not(self._width_mm is None):
+            raise ValueError('Cannot specify width of both mm and px')
         match self._unit:
             case 'px':
                 px_per_mm = self._width / self._width_mm
