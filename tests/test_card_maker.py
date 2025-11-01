@@ -34,11 +34,13 @@ class TestCardMaker:
         """
 
     def test_convert_px_to_mm(self):
+
+        # Low resolution
         maker1 = CardMaker(width  = 250,
                            height = 350,
                            gutter = 4,
                            unit   = 'px',
-                           width_mm = 1000,    # 0.25px per mm, or 4px per mm
+                           width_mm = 1000,    # 0.25mm per px, or 4px per mm
                            )
         assert maker1.width     == 250
         assert maker1.width_px  == 250
@@ -49,4 +51,38 @@ class TestCardMaker:
         assert maker1.gutter    == 4
         assert maker1.gutter_px == 4
         assert maker1.gutter_mm == 16
+
+        # Higher resolution
+        maker2 = CardMaker(width  = 1000,
+                           height = 1200,
+                           gutter = 2,
+                           unit   = 'px',
+                           width_mm = 500,    # 2mm per px, or 0.5px per mm
+                           )
+        assert maker2.width     == 1000
+        assert maker2.width_px  == 1000
+        assert maker2.width_mm  == 500
+        assert maker2.height    == 1200
+        assert maker2.height_px == 1200
+        assert maker2.height_mm == 600
+        assert maker2.gutter    == 2
+        assert maker2.gutter_px == 2
+        assert maker2.gutter_mm == 1
+
+        # Floating point
+        maker2 = CardMaker(width  = 1001,
+                           height = 1201,
+                           gutter = 3,
+                           unit   = 'px',
+                           width_mm = 500,    # 2.002mm per px, or 0.4995px per mm
+                           )
+        assert maker2.width     == 1001
+        assert maker2.width_px  == 1001
+        assert maker2.width_mm  == pytest.approx(500, abs = 0.01)
+        assert maker2.height    == 1201
+        assert maker2.height_px == 1201
+        assert maker2.height_mm == pytest.approx(599.90, abs = 0.01)
+        assert maker2.gutter    == 3
+        assert maker2.gutter_px == 3
+        assert maker2.gutter_mm == pytest.approx(1.499, abs = 0.01)
 
