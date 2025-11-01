@@ -14,7 +14,7 @@ if not(os.path.exists(outdir)):
 
 pdf = PDFSheets(card_width  = base_maker.width_with_gutters_mm,
                 card_height = base_maker.height_with_gutters_mm,
-                gutter      = 8,    # Also mm
+                gutter      = 4,    # Also mm
                 )
 
 pdf.add(card_maker_demo.simple('One!').image_with_gutters(),
