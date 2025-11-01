@@ -47,9 +47,11 @@ class CardMaker:
         self._set_unit_properties()
 
         if image is None:
+            w_px = 2 * self._gutter_px + self._width_px
+            h_px = 2 * self._gutter_px + self._height_px
             image = Image.new(mode = 'RGBA',
-                              size = (2 * self._gutter + self._width,
-                                      2 * self._gutter + self._height),
+                              size = (int(w_px),
+                                      int(h_px)),
                               color = colour,
                               )
         else:

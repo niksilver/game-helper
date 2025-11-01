@@ -151,3 +151,34 @@ class TestCardMaker:
                               )
 
 
+    def test_card_image_size_with_different_units(self):
+
+        # Image size when default units are px
+
+        maker1 = CardMaker(width  = 1000,
+                           height = 1200,
+                           gutter = 2,
+                           unit   = 'px',
+                           width_mm = 500,    # 2px per mm, or 0.5mm per px
+                           )
+        assert maker1.image().width  == 2 + 1000 + 2
+        assert maker1.image().height == 2 + 1200 + 2
+
+
+        # Image size when default units are mm
+
+        maker2 = CardMaker(width  = 1000,
+                           height = 1200,
+                           gutter = 2,
+                           unit   = 'mm',
+                           width_px = 500,    # 2mm per px, or 0.5px per mm
+                           )
+
+        px_per_mm = 0.5
+        full_width_px  = (2 + 1000 + 2) * px_per_mm
+        full_height_px = (2 + 1200 + 2) * px_per_mm
+
+        assert maker2.image().width  == pytest.approx(full_width_px,  abs = 0.1)
+        assert maker2.image().height == pytest.approx(full_height_px, abs = 0.1)
+
+
