@@ -34,7 +34,7 @@ class CardMaker:
         'px' is used if None is given.
         """
         if not(unit == 'px'):
-            raise ValueError(f"unit must be None or mm, but got '{unit}'")
+            raise ValueError(f"unit must be None or px, but got '{unit}'")
 
         self._width    = int(width)
         self._height   = int(height)
