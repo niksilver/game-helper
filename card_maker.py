@@ -312,6 +312,20 @@ class CardMaker:
                 return x * self._width_px / self._width_mm
 
 
+    def to_mm(self, x):
+        """
+        Convert from a number in the default unit to mm.
+        """
+        if x is None:
+            return None
+
+        match self._unit:
+            case 'mm':
+                return x
+            case 'px':
+                return x * self._width_mm / self._width_px
+
+
     def paste(self,
               im,
               x_left = None, x_centre = None, x_right = None,
@@ -354,20 +368,14 @@ class CardMaker:
 
     def html(self,
              content,
-             width_px, height_px,    # pixels
+             width, height,
              ):
         """
-        Render some HTML content in a box of the given width and height in pixels.
+        Render some HTML content in a box of the given size.
         """
 
-        card_width_mm = 63
-        card_width_px = self._width
-        print(f"Card with is {card_width_px} px")
-        px_per_mm     = card_width_px / card_width_mm
-
-        box_width_mm  = width_px  / px_per_mm
-        print(f"Box with is {box_width_mm} mm")
-        box_height_mm = height_px / px_per_mm
+        box_width_mm  = self.to_mm(width)
+        box_height_mm = self.to_mm(height)
 
         pdf = FPDF(format = (box_width_mm, box_height_mm))
         pdf.add_page()
@@ -375,7 +383,7 @@ class CardMaker:
         pdf.write_html(content)
         byte_array = pdf.output()
 
-        dots_per_mm = card_width_px / card_width_mm
+        dots_per_mm = self._width_px / self._width_mm
         mm_per_in   = 25.4
         dots_per_in = dots_per_mm * mm_per_in
         print(f"Dots per mm = {dots_per_mm}")
@@ -386,7 +394,7 @@ class CardMaker:
                                            # fmt = 'png',
                                            dpi = dots_per_in,
                                            )
-        im = ims[0]    # First page. A PPMImage by defaul
+        im = ims[0]    # First page. A PPMImage by default
         print(f"Image width is {im.width} px")
 
         im_ratio = im.height / im.width

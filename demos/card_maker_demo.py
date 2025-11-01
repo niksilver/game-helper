@@ -55,15 +55,19 @@ def simple(wording):
 
 
 def html(content):
-    maker = CardMaker(width  = card_width_px,
-                      height = card_height_px,
+    """
+    Return a yellow card with some HTML content.
+    """
+
+    maker = CardMaker(width    = base_maker.width_px,
+                      height   = base_maker.height_px,
                       unit     = 'px',
-                      width_mm = card_width_mm,
-                      colour = (255, 255, 0, 255),
+                      width_mm = base_maker.width_mm,
+                      colour = (255, 255, 0, 255),    # Yellow
                       )
     maker.html(content,
-               width_px  = 200,
-               height_px = 300,
+               width  = maker.width / 2,
+               height = maker.height / 2,
                )
 
-    return maker.image()
+    return maker

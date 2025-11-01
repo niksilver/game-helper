@@ -295,3 +295,36 @@ class TestCardMaker:
         assert maker1.to_px(None) is None
 
 
+    def test_to_mm(self):
+
+        # When default unit is mm
+        maker1 = CardMaker(width  = 1000,
+                           height = 1200,
+                           unit   = 'mm',
+                           width_px = 500,    # 2mm per px, or 0.5px per mm
+                           )
+        assert maker1.to_mm(1)    == 1
+        assert maker1.to_mm(10.5) == 10.5
+
+        # When default unit is px
+        maker1 = CardMaker(width  = 500,
+                           height = 600,
+                           unit   = 'px',
+                           width_mm = 1000,    # 0.5px per mm, or 2mm per px
+                           )
+        assert maker1.to_mm(1)    == 2
+        assert maker1.to_mm(10.5) == 21
+
+        # When default unit is px and we need floating point
+        maker1 = CardMaker(width  = 1000,
+                           height = 1200,
+                           unit   = 'px',
+                           width_mm = 500,    # 2px per mm, or 0.5mm per px
+                           )
+        assert maker1.to_mm(1)    == 0.5
+        assert maker1.to_mm(10.5) == 5.25
+
+        # Handle None
+        assert maker1.to_mm(None) is None
+
+
