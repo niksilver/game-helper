@@ -13,7 +13,7 @@ assets_dir  = 'demos/assets'
 
 font_file = '/usr/share/fonts/opentype/urw-base35/URWBookman-LightItalic.otf'
 font_tiny  = ImageFont.truetype(font = font_file,
-                                size = 24,
+                                size = 20,    # Pixels, same as the gutter
                                 )
 font_large = ImageFont.truetype(font = font_file,
                                 size = 58,
@@ -21,7 +21,7 @@ font_large = ImageFont.truetype(font = font_file,
 
 base_maker = CardMaker(width    = 400,
                        height   = 500,
-                       gutter   = 10,
+                       gutter   = 20,
                        unit     = 'px',
                        width_mm = 60,
                        )
@@ -40,10 +40,11 @@ def simple(wording):
 
     maker.paste(im     = border_im,
                 x_left = -maker.gutter,
-                y_top  = -maker.gutter)
+                y_top  = -maker.gutter,
+                )
     maker.text(text   = 'This is top left (and in a bit)',
-               x_left = 24,
-               y_top  = 24,
+               x_left = 20,
+               y_top  = 20,
                font   = font_tiny,
                )
     maker.text(text     = wording,
