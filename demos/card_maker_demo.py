@@ -28,6 +28,11 @@ base_maker = CardMaker(width    = 400,
 
 
 def simple(wording):
+    """
+    Return a card with a border and some wording.
+    Our border image includes a gutter, so we'll paste it accordingly.
+    """
+
     maker = base_maker.copy()
 
     border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
@@ -46,7 +51,7 @@ def simple(wording):
                y_middle = maker.height / 2,
                font     = font_large,
                )
-    return maker.image()
+    return maker
 
 
 def html(content):

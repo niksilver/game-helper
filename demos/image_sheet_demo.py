@@ -2,15 +2,14 @@ import sys
 sys.path.append('.')     # So that we can run this from the top directory
 
 import os
+from   image_sheet     import ImageSheet
+import card_maker_demo
+from   card_maker_demo import base_maker
+
 
 outdir  = 'demos/out'
 if not(os.path.exists(outdir)):
     os.mkdir('demos/out')
-
-
-from   image_sheet     import ImageSheet
-import card_maker_demo
-from   card_maker_demo import base_maker
 
 
 sheet = ImageSheet(card_width  = base_maker.width_px,    # Units are pixels
@@ -19,8 +18,12 @@ sheet = ImageSheet(card_width  = base_maker.width_px,    # Units are pixels
                    rows        = 2,
                    )
 
-sheet.add(card_maker_demo.simple('One!'))
-sheet.add(card_maker_demo.simple('Two!'))
+# For our first two cards we'll get them and extract the image,
+# which exludes gutters.
+
+sheet.add(card_maker_demo.simple('One!').image())
+sheet.add(card_maker_demo.simple('Two!').image())
+
 # sheet.add(card_maker_demo.html('Oh, <i>hi</i>'))
 
 
