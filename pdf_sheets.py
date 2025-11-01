@@ -119,8 +119,10 @@ class PDFSheets:
 
         gap = 1    # Gap either side of the marks
 
-        for delta in range(0, width, self.gutter):
+        delta = 0
+        while delta <= width:
             pdf.line(x1 = x + delta, y1 = y + gap, x2 = x + delta, y2 = y + self.gutter - gap)
+            delta = delta + self.gutter
 
 
     def _gutter_v_line(self, x, y, height):
@@ -134,8 +136,10 @@ class PDFSheets:
 
         gap = 1    # Gap either side of the marks
 
-        for delta in range(0, height, self.gutter):
+        delta = 0
+        while delta <= height:
             pdf.line(x1 = x + gap, y1 = y + delta, x2 = x + self.gutter - gap, y2 = y + delta)
+            delta = delta + self.gutter
 
 
     def _zero_gutter_edges(self, x, y):

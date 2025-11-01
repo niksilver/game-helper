@@ -2,22 +2,25 @@ import sys
 sys.path.append('.')     # So that we can run this from the top directory
 
 import os
-
-from pdf_sheets import PDFSheets
+from   pdf_sheets      import PDFSheets
 import card_maker_demo
+from   card_maker_demo import base_maker
 
 
-gutter = 4
+outdir  = 'demos/out'
+if not(os.path.exists(outdir)):
+    os.mkdir('demos/out')
 
-pdf = PDFSheets(card_width  = 63,    # Units are mm
-                card_height = 88,
-                gutter      = gutter,
+
+pdf = PDFSheets(card_width  = base_maker.width_with_gutters_mm,
+                card_height = base_maker.height_with_gutters_mm,
+                gutter      = 8,    # Also mm
                 )
 
-pdf.add(card_maker_demo.simple('One!', gutter),
+pdf.add(card_maker_demo.simple('One!').image_with_gutters(),
         back_image_or_file = 'demos/assets/card-back.png',
         )
-pdf.add(card_maker_demo.simple('Two!', gutter),
+pdf.add(card_maker_demo.simple('Two!').image_with_gutters(),
         back_image_or_file = 'demos/assets/card-back.png',
         )
 

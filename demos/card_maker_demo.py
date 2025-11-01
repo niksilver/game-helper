@@ -23,7 +23,7 @@ base_maker = CardMaker(width    = 400,
                        height   = 500,
                        gutter   = 10,
                        unit     = 'px',
-                       width_mm = 40,
+                       width_mm = 60,
                        )
 
 
