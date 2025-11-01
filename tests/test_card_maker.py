@@ -86,3 +86,32 @@ class TestCardMaker:
         assert maker2.gutter_px == 3
         assert maker2.gutter_mm == pytest.approx(1.499, abs = 0.01)
 
+
+    def test_convert_mm_to_px(self):
+
+        # Highish resolution
+        maker1 = CardMaker(width  = 250,
+                           height = 350,
+                           gutter = 4,
+                           unit   = 'mm',
+                           width_px = 1000,    # 4px per mm, or 0.25mm per px
+                           )
+        assert maker1.width     == 250
+        assert maker1.width_mm  == 250
+        assert maker1.width_px  == 1000
+        assert maker1.height    == 350
+        assert maker1.height_mm == 350
+        assert maker1.height_px == 1400
+        assert maker1.gutter    == 4
+        assert maker1.gutter_mm == 4
+        assert maker1.gutter_px == 16
+
+
+    def test_constructor_unit_combinations(self):
+        with pytest.raises(ValueError, match = 'Unit'):
+            maker = CardMaker(width  = 250,
+                              height = 350,
+                              gutter = 4,
+                              unit   = '__',
+                              width_px = 1000,    # 4px per mm, or 0.25mm per px
+                              )

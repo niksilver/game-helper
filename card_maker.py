@@ -19,6 +19,7 @@ class CardMaker:
     def __init__(self,
                  width = None, height = None,
                  width_mm = None,
+                 width_px = None,
                  gutter = 0,
                  image = None,
                  colour = (0, 0, 0, 0),    # Transparent background
@@ -33,14 +34,15 @@ class CardMaker:
         We specify the default unit of these and other measurements.
         'px' is used if None is given.
         """
-        if not(unit == 'px'):
-            raise ValueError(f"unit must be None or px, but got '{unit}'")
+        if not(unit in ['px', 'mm']):
+            raise ValueError(f"Unit must be px or mm, but got '{unit}'")
 
         self._width    = int(width)
         self._height   = int(height)
         self._gutter   = int(gutter)
         self._unit     = unit
 
+        self._width_px = width_px
         self._width_mm = width_mm
         self._set_unit_properties()
 
@@ -60,16 +62,27 @@ class CardMaker:
         """
         Set the various _mm and _px properties appropriately
         """
-        assert self._unit == 'px'
+        match self._unit:
+            case 'px':
+                px_per_mm = self._width / self._width_mm
 
-        px_per_mm = self._width / self._width_mm
+                self._width_px  = self._width
+                self._width_mm  = self._width_px / px_per_mm
+                self._height_px = self._height
+                self._height_mm = self._height_px / px_per_mm
+                self._gutter_px = self._gutter
+                self._gutter_mm = self._gutter_px / px_per_mm
+            case 'mm':
+                mm_per_px = self._width / self._width_px
 
-        self._width_px  = self._width
-        self._width_mm  = self._width_px / px_per_mm
-        self._height_px = self._height
-        self._height_mm = self._height_px / px_per_mm
-        self._gutter_px = self._gutter
-        self._gutter_mm = self._gutter_px / px_per_mm
+                self._width_mm  = self._width
+                self._width_px  = self._width_mm / mm_per_px
+                self._height_mm = self._height
+                self._height_px = self._height_mm / mm_per_px
+                self._gutter_mm = self._gutter
+                self._gutter_px = self._gutter_mm / mm_per_px
+            case _:
+                raise ValueError(f"Cannot convert from unit '{self._unit}'")
 
 
     @property
