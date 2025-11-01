@@ -7,6 +7,11 @@ from image_sheet import ImageSheet
 import card_maker_demo
 
 
+outdir  = 'demos/out'
+if not(os.path.exists(outdir)):
+    os.mkdir('demos/out')
+
+
 gutter = 0    # No gutter for image sheets
 
 sheet = ImageSheet(card_width  = card_maker_demo.card_width,    # Units are pixels
@@ -20,10 +25,7 @@ sheet.add(card_maker_demo.simple('Two!', gutter))
 sheet.add(card_maker_demo.html('Oh, <i>hi</i>'))
 
 
-outdir  = 'demos/out'
 outfile = outdir + '/demo.png'
-if not(os.path.exists(outdir)):
-    os.mkdir('demos/out')
 sheet.save(outfile)
 print(f'Output to {outfile}')
 

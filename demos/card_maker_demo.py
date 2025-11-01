@@ -21,9 +21,11 @@ font = ImageFont.truetype(font = font_file,
 
 
 def simple(wording, gutter):
-    maker = CardMaker(width  = card_width,
-                      height = card_height,
-                      gutter = gutter,
+    maker = CardMaker(width    = card_width,
+                      height   = card_height,
+                      unit     = 'px',
+                      gutter   = gutter,
+                      width_mm = card_width,    # 1px to 1mm for simplicity
                       )
 
     im = None
@@ -47,6 +49,8 @@ def simple(wording, gutter):
 def html(content):
     maker = CardMaker(width  = card_width,
                       height = card_height,
+                      unit     = 'px',
+                      width_mm = card_width,    # 1px to 1mm for simplicity
                       colour = (255, 255, 0, 255),
                       )
     maker.html(content,
