@@ -302,6 +302,9 @@ class CardMaker:
         """
         Convert from a number in the default unit to pixels.
         """
+        if x is None:
+            return None
+
         match self._unit:
             case 'px':
                 return x
@@ -318,6 +321,16 @@ class CardMaker:
         (0, 0) is the top left of the card, excluding the gutters.
         Units must be in the default unit.
         """
+
+        # Switch to pixels
+
+        x_left   = self.to_px(x_left)
+        x_centre = self.to_px(x_centre)
+        x_right  = self.to_px(x_right)
+        y_top    = self.to_px(y_top)
+        y_middle = self.to_px(y_middle)
+        y_bottom = self.to_px(y_bottom)
+
         x_pos, y_pos = None, None
 
         if not(x_left is None):
@@ -440,7 +453,7 @@ class CardMaker:
         if chrs_per_line:
             text = self._insert_new_lines(text, chrs_per_line)
 
-        draw = ImageDraw.Draw(self._card_im)
+        draw = ImageDraw.Draw(self._im_with_gutters)
         draw.text(xy      = (int(x_pos), int(y_pos)),
                   anchor  = h_anchor + v_anchor,
                   text    = text,

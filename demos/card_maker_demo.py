@@ -12,9 +12,12 @@ from card_maker import CardMaker
 assets_dir  = 'demos/assets'
 
 font_file = '/usr/share/fonts/opentype/urw-base35/URWBookman-LightItalic.otf'
-font = ImageFont.truetype(font = font_file,
-                          size = 58,
-                          )
+font_tiny  = ImageFont.truetype(font = font_file,
+                                size = 24,
+                                )
+font_large = ImageFont.truetype(font = font_file,
+                                size = 58,
+                                )
 
 base_maker = CardMaker(width    = 400,
                        height   = 500,
@@ -31,12 +34,17 @@ def simple(wording):
     border_im = border_im.resize(size = maker.size_with_gutters_px)
 
     maker.paste(im     = border_im,
-                x_left = 0,
-                y_top  = 0)
+                x_left = -maker.gutter,
+                y_top  = -maker.gutter)
+    maker.text(text   = 'This is top left (and in a bit)',
+               x_left = 24,
+               y_top  = 24,
+               font   = font_tiny,
+               )
     maker.text(text     = wording,
                x_centre = maker.width / 2,
                y_middle = maker.height / 2,
-               font     = font,
+               font     = font_large,
                )
     return maker.image()
 

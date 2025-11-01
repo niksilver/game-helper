@@ -291,4 +291,7 @@ class TestCardMaker:
         assert maker1.to_px(1)    == 0.5
         assert maker1.to_px(10.5) == 5.25
 
+        # Handle None
+        assert maker1.to_px(None) is None
+
 
