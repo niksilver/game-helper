@@ -102,7 +102,7 @@ class CardMaker:
     @property
     def width(self):
         """
-        The width of the card, including gutters, in the default unit.
+        The width of the card, excluding gutters, in the default unit.
         """
         return self._width
 
@@ -110,7 +110,7 @@ class CardMaker:
     @property
     def width_px(self):
         """
-        The width of the card, including gutters, in pixels.
+        The width of the card, excluding gutters, in pixels.
         """
         return self._width_px
 
@@ -118,7 +118,7 @@ class CardMaker:
     @property
     def width_mm(self):
         """
-        The width of the card, including gutters, in millimetres.
+        The width of the card, excluding gutters, in millimetres.
         """
         return self._width_mm
 
@@ -126,7 +126,7 @@ class CardMaker:
     @property
     def height(self):
         """
-        The height of the card, including gutters, in the default unit.
+        The height of the card, excluding gutters, in the default unit.
         """
         return self._height
 
@@ -134,7 +134,7 @@ class CardMaker:
     @property
     def height_px(self):
         """
-        The height of the card, including gutters, in pixels.
+        The height of the card, excluding gutters, in pixels.
         """
         return self._height_px
 
@@ -142,7 +142,7 @@ class CardMaker:
     @property
     def height_mm(self):
         """
-        The height of the card, including gutters, in millimetres.
+        The height of the card, excluding gutters, in millimetres.
         """
         return self._height_mm
 
