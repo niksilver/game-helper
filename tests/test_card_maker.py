@@ -129,3 +129,25 @@ class TestCardMaker:
                               width_px = 1000,
                               width_mm = 250,
                               )
+
+        # Shouldn't be able to specify a width of px and unit of px
+
+        with pytest.raises(ValueError, match = 'specify'):
+            maker = CardMaker(width  = 250,
+                              height = 350,
+                              gutter = 4,
+                              unit   = 'px',
+                              width_px = 1000,
+                              )
+
+        # Shouldn't be able to specify a width of mm and unit of mm
+
+        with pytest.raises(ValueError, match = 'specify'):
+            maker = CardMaker(width  = 250,
+                              height = 350,
+                              gutter = 4,
+                              unit   = 'mm',
+                              width_mm = 1000,
+                              )
+
+
