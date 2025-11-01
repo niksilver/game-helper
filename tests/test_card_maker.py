@@ -164,7 +164,7 @@ class TestCardMaker:
                               )
 
 
-    def test_card_image_size_with_different_units(self):
+    def test_image(self):
 
         # Image size when default units are px
 
@@ -174,6 +174,7 @@ class TestCardMaker:
                            unit   = 'px',
                            width_mm = 500,    # 2px per mm, or 0.5mm per px
                            )
+        # Gutters are excluded
         assert maker1.image().width  == 2 + 1000 + 2
         assert maker1.image().height == 2 + 1200 + 2
 
@@ -187,11 +188,107 @@ class TestCardMaker:
                            width_px = 500,    # 2mm per px, or 0.5px per mm
                            )
 
+        # Gutters are excluded
         px_per_mm = 0.5
         full_width_px  = (2 + 1000 + 2) * px_per_mm
         full_height_px = (2 + 1200 + 2) * px_per_mm
 
         assert maker2.image().width  == pytest.approx(full_width_px,  abs = 0.1)
         assert maker2.image().height == pytest.approx(full_height_px, abs = 0.1)
+
+
+    def test_image(self):
+
+        # Image size when default units are px
+
+        maker1 = CardMaker(width  = 1000,
+                           height = 1200,
+                           gutter = 2,
+                           unit   = 'px',
+                           width_mm = 500,    # 2px per mm, or 0.5mm per px
+                           )
+        # Gutters are excluded
+        assert maker1.image().width  == 1000
+        assert maker1.image().height == 1200
+
+
+        # Image size when default units are mm
+
+        maker2 = CardMaker(width  = 1000,
+                           height = 1200,
+                           gutter = 2,
+                           unit   = 'mm',
+                           width_px = 500,    # 2mm per px, or 0.5px per mm
+                           )
+
+        # Gutters are excluded
+        px_per_mm = 0.5
+        full_width_px  = 1000 * px_per_mm
+        full_height_px = 1200 * px_per_mm
+
+        assert maker2.image().width  == pytest.approx(full_width_px,  abs = 0.1)
+ 
+
+    def test_image_with_gutters(self):
+
+        # Image size when default units are px
+
+        maker1 = CardMaker(width  = 1000,
+                           height = 1200,
+                           gutter = 2,
+                           unit   = 'px',
+                           width_mm = 500,    # 2px per mm, or 0.5mm per px
+                           )
+        # Gutters are included
+        assert maker1.image_with_gutters().width  == 2 + 1000 + 2
+        assert maker1.image_with_gutters().height == 2 + 1200 + 2
+
+
+        # Image size when default units are mm
+
+        maker2 = CardMaker(width  = 1000,
+                           height = 1200,
+                           gutter = 2,
+                           unit   = 'mm',
+                           width_px = 500,    # 2mm per px, or 0.5px per mm
+                           )
+
+        # Gutters are included
+        px_per_mm = 0.5
+        full_width_px  = (2 + 1000 + 2) * px_per_mm
+        full_height_px = (2 + 1200 + 2) * px_per_mm
+
+        assert maker2.image_with_gutters().width  == pytest.approx(full_width_px,  abs = 0.1)
+        assert maker2.image_with_gutters().height == pytest.approx(full_height_px, abs = 0.1)
+
+
+    def test_to_px(self):
+
+        # When default unit is px
+        maker1 = CardMaker(width  = 1000,
+                           height = 1200,
+                           unit   = 'px',
+                           width_mm = 500,    # 2px per mm, or 0.5mm per px
+                           )
+        assert maker1.to_px(1)    == 1
+        assert maker1.to_px(10.5) == 10.5
+
+        # When default unit is mm
+        maker1 = CardMaker(width  = 500,
+                           height = 600,
+                           unit   = 'mm',
+                           width_px = 1000,    # 0.5mm per px, or 2px per mm
+                           )
+        assert maker1.to_px(1)    == 2
+        assert maker1.to_px(10.5) == 21
+
+        # When default unit is mm and we need floating point
+        maker1 = CardMaker(width  = 1000,
+                           height = 1200,
+                           unit   = 'mm',
+                           width_px = 500,    # 2mm per px, or 0.5px per mm
+                           )
+        assert maker1.to_px(1)    == 0.5
+        assert maker1.to_px(10.5) == 5.25
 
 

@@ -9,10 +9,6 @@ from PIL import ImageFont
 from card_maker import CardMaker
 
 
-card_width_px  = 400
-card_height_px = 560
-card_width_mm  = 40
-
 assets_dir  = 'demos/assets'
 
 font_file = '/usr/share/fonts/opentype/urw-base35/URWBookman-LightItalic.otf'
@@ -20,21 +16,19 @@ font = ImageFont.truetype(font = font_file,
                           size = 58,
                           )
 
+base_maker = CardMaker(width    = 400,
+                       height   = 500,
+                       gutter   = 10,
+                       unit     = 'px',
+                       width_mm = 40,
+                       )
 
-def simple(wording, gutter):
-    maker = CardMaker(width    = card_width_px,
-                      height   = card_height_px,
-                      unit     = 'px',
-                      gutter   = gutter,
-                      width_mm = card_width_mm,
-                      )
 
-    im = None
-    if gutter == 0:
-        border_im = Image.open(assets_dir + '/card-border-no-gutter.png')
-    else:
-        border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
-    border_im = border_im.resize(size = (card_width_px, card_height_px))
+def simple(wording):
+    maker = base_maker.copy()
+
+    border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
+    border_im = border_im.resize(size = maker.size_with_gutters_px)
 
     maker.paste(im     = border_im,
                 x_left = 0,

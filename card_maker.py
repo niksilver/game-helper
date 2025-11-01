@@ -5,6 +5,7 @@ from PIL import ImageChops
 
 from fpdf import FPDF
 
+import copy
 import pdf2image
 
 
@@ -59,7 +60,7 @@ class CardMaker:
         else:
             image = image.copy()
 
-        self._card_im = image
+        self._im_with_gutters = image
 
 
     def _set_unit_properties(self):
@@ -97,6 +98,18 @@ class CardMaker:
                 self._gutter_px = self._gutter_mm / mm_per_px
             case _:
                 raise ValueError(f"Cannot convert from unit '{self._unit}'")
+
+
+    def copy(self):
+        """
+        Create a copy of the object. Useful for when we have a base card with
+        a border and we want to make lots of cards based on that
+        """
+
+        dup = copy.copy(self)
+        dup._im_with_gutters = self._im_with_gutters.copy()
+
+        return dup
 
 
     # ------------ Width -------------
@@ -228,33 +241,103 @@ class CardMaker:
         return self._gutter_mm
 
 
+    # ------------ Size -------------
+
+
+    @property
+    def size(self):
+        """
+        The (width, height) of the card, excluding gutters, in the default unit.
+        """
+        return (self._width, self._height)
+
+
+    @property
+    def size_px(self):
+        """
+        The (width, height) of the card, excluding gutters, in pixels.
+        """
+        return (self._width_px, self._height_px)
+
+
+    @property
+    def size_mm(self):
+        """
+        The (width, height) of the card, excluding gutters, in millimetres.
+        """
+        return (self._width_mm, self._height_mm)
+
+
+    @property
+    def size_with_gutters(self):
+        """
+        The (width, height) of the card, including gutters, in the default unit.
+        """
+        return (self._gutter + self._width + self._gutter,
+                self._gutter + self._height + self._gutter)
+
+
+    @property
+    def size_with_gutters_px(self):
+        """
+        The (width, height) of the card, including gutters, in pixels.
+        """
+        return (self._gutter_px + self._width_px + self._gutter_px,
+                self._gutter_px + self._height_px + self._gutter_px)
+
+
+    @property
+    def size_with_gutters_mm(self):
+        """
+        The (width, height) of the card, including gutters, in millimetres.
+        """
+        return (self._gutter_mm + self._width_mm + self._gutter_mm,
+                self._gutter_mm + self._height_mm + self._gutter_mm)
+
+
+    # -------------------
+
+
+    def to_px(self, x):
+        """
+        Convert from a number in the default unit to pixels.
+        """
+        match self._unit:
+            case 'px':
+                return x
+            case 'mm':
+                return x * self._width_px / self._width_mm
+
+
     def paste(self,
               im,
               x_left = None, x_centre = None, x_right = None,
               y_top = None, y_middle = None, y_bottom = None):
         """
         Paste a given image onto the card; it will use itself as a mask.
+        (0, 0) is the top left of the card, excluding the gutters.
+        Units must be in the default unit.
         """
         x_pos, y_pos = None, None
 
         if not(x_left is None):
-            x_pos = x_left + self._gutter
+            x_pos = x_left + self._gutter_px
         if not(x_right is None):
-            x_pos = x_right - im.width + self._gutter
+            x_pos = x_right - im.width + self._gutter_px
         if not(x_centre is None):
-            x_pos = int(x_centre - int(im.width / 2)) + self._gutter
+            x_pos = int(x_centre - int(im.width / 2)) + self._gutter_px
 
         if not(y_top is None):
-            y_pos = y_top + self._gutter
+            y_pos = y_top + self._gutter_px
         if not(y_bottom is None):
-            y_pos = y_bottom - im.height + self._gutter
+            y_pos = y_bottom - im.height + self._gutter_px
         if not(y_middle is None):
-            y_pos = int(y_middle - (im.height / 2)) + self._gutter
+            y_pos = int(y_middle - (im.height / 2)) + self._gutter_px
 
-        self._card_im.paste(im = im,
-                           box = (int(x_pos), int(y_pos)),
-                           mask = im,
-                           )
+        self._im_with_gutters.paste(im = im,
+                                    box = (int(x_pos), int(y_pos)),
+                                    mask = im,
+                                    )
 
     def html(self,
              content,
@@ -311,6 +394,7 @@ class CardMaker:
              ):
         """
         Add some text to the card.
+        x, y are relative to the top left of the card excluding the gutters.
         The font must be an ImageFont object.
         If given, newlines will be inserted at chrs_per_line
         Returns the bounding box, as per
@@ -403,11 +487,20 @@ class CardMaker:
 
     def image(self):
         """
-        Return the card image.
-        This includes the gutters, so if the gutter is > 0 then its width
-        and height will be greater than the width and height originally given.
+        Return the card image, excluding the gutters.
         """
-        return self._card_im
+        return self._im_with_gutters.crop(box = (self._gutter_px,
+                                                 self._gutter_px,
+                                                 self._gutter_px + self._width_px,
+                                                 self._gutter_px + self._height_px,
+                                                 ))
+
+
+    def image_with_gutters(self):
+        """
+        Return the card image, including the gutters.
+        """
+        return self._im_with_gutters.copy()
 
 
     def colour_wash(self, colour):
