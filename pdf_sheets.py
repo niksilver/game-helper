@@ -117,7 +117,7 @@ class PDFSheets:
         pdf.set_draw_color(0, 0, 0)
         pdf.set_line_width(0.25)
 
-        gap = 1    # Gap either side of the marks
+        gap = self.gutter / 5    # Gap either side of the marks
 
         num_boxes = int(width / self.gutter)
         delta     = width / num_boxes
@@ -136,7 +136,7 @@ class PDFSheets:
         pdf.set_draw_color(0, 0, 0)
         pdf.set_line_width(0.25)
 
-        gap = 1    # Gap either side of the marks
+        gap = self.gutter / 5    # Gap either side of the marks
 
         num_boxes = int(height / self.gutter)
         delta     = height / num_boxes
