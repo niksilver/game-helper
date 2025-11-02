@@ -82,7 +82,7 @@ def text_positioning():
     border_im = border_im.resize(size = maker.size_with_gutters_px)
 
     # Text on the top line
-    maker.text(text   = 'LT',
+    maker.text(text   = 'Left-top',
                x_left = 0,
                y_top  = 0,
                font   = font_small,
@@ -92,7 +92,7 @@ def text_positioning():
                y_top    = 0,
                font     = font_small,
                )
-    maker.text(text    = 'RT',
+    maker.text(text    = 'Right-top',
                x_right = maker.width,
                y_top   = 0,
                font    = font_small,
@@ -104,7 +104,7 @@ def text_positioning():
                y_middle = maker.height / 2,
                font     = font_small,
                )
-    maker.text(text     = 'This text is centred.',
+    maker.text(text     = 'Centre-middle.',
                x_centre = maker.width / 2,
                y_middle = maker.height / 2,
                font     = font_small,
@@ -116,20 +116,20 @@ def text_positioning():
                )
 
     # Text on the bottom
-    maker.text(text     = 'LB',
-               x_left   = 0,
-               y_bottom = maker.height,
-               font     = font_small,
+    maker.text(text        = 'Left-bottom',
+               x_left      = 0,
+               y_descender = maker.height,
+               font        = font_small,
                )
-    maker.text(text     = 'CB',
-               x_centre = maker.width / 2,
-               y_bottom = maker.height,
-               font     = font_small,
+    maker.text(text        = 'CB',
+               x_centre    = maker.width / 2,
+               y_descender = maker.height,
+               font        = font_small,
                )
-    maker.text(text     = 'RB',
-               x_right  = maker.width,
-               y_bottom = maker.height,
-               font     = font_small,
+    maker.text(text        = 'Right-bottom',
+               x_right     = maker.width,
+               y_descender = maker.height,
+               font        = font_small,
                )
 
     return maker
