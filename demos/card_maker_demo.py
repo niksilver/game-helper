@@ -19,12 +19,23 @@ font_large = ImageFont.truetype(font = font_file,
                                 size = 58,
                                 )
 
+# A CardMaker we'll use as the base, with default units px
+
 base_maker = CardMaker(width    = 400,
                        height   = 500,
                        gutter   = 20,
                        unit     = 'px',
                        width_mm = 60,
                        )
+
+# Another CardMaker, same dimesions, but default unit is mm
+
+base_maker_mm = CardMaker(width    = 60,
+                          height   = 75,
+                          gutter   = 3,
+                          unit     = 'mm',
+                          width_px = 400,
+                          )
 
 
 def simple(wording):
@@ -73,5 +84,39 @@ def html(content):
                width  = maker.width / 2,
                height = maker.height / 2,
                )
+
+    return maker
+
+
+def bounding_box_demo():
+    """
+    Make sure the bounding box returned by text() is correct.
+    """
+
+    maker = base_maker_mm.copy()
+
+    border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
+    border_im = border_im.resize(size = maker.size_with_gutters_px)
+
+    maker.paste(im     = border_im,
+                x_left = -maker.gutter,
+                y_top  = -maker.gutter,
+                )
+
+    text1 = f"This card is {maker.width_mm}mm wide and {maker.height_mm}mm high."
+    bbox  = maker.text(text          = text1,
+                       x_left        = 10,
+                       y_ascender    = 10,
+                       font          = font_tiny,
+                       chrs_per_line = 20,
+                       )
+
+    text2 = f"Bounding box for above text:\nleft = {bbox[0]}mm\ntop = {bbox[1]}mm\nright = {bbox[2]}mm\nbottom = {bbox[3]}mm"
+    bbox  = maker.text(text          = text2,
+                       x_left        = 10,
+                       y_ascender    = maker.height_mm * 0.60,
+                       font          = font_tiny,
+                       chrs_per_line = 30,
+                       )
 
     return maker

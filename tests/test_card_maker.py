@@ -328,3 +328,26 @@ class TestCardMaker:
         assert maker1.to_mm(None) is None
 
 
+    def test_from_px(self):
+
+        # When default unit is px
+        maker1 = CardMaker(width  = 1000,
+                           height = 1200,
+                           unit   = 'px',
+                           width_mm = 500,    # 2px per mm, or 0.5mm per px
+                           )
+        assert maker1.from_px(1)    == 1
+        assert maker1.from_px(10.5) == 10.5
+
+        # When default unit is mm
+        maker2 = CardMaker(width  = 500,
+                           height = 600,
+                           unit   = 'mm',
+                           width_px = 1000,    # 0.5mm per px, or 2px per mm
+                           )
+        assert maker2.from_px(1)    == 0.5
+        assert maker2.from_px(10.5) == 5.25
+
+        # Handle None
+        assert maker2.from_px(None) is None
+

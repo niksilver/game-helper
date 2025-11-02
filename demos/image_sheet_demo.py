@@ -26,6 +26,8 @@ sheet.add(card_maker_demo.simple('Two!').image())
 
 sheet.add(card_maker_demo.html('Oh, <i>hi</i>').image())
 
+sheet.add(card_maker_demo.bounding_box_demo().image())
+
 
 outfile = outdir + '/demo.png'
 sheet.save(outfile)

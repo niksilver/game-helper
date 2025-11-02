@@ -40,9 +40,9 @@ class CardMaker:
         if not(unit in ['px', 'mm']):
             raise ValueError(f"Unit must be px or mm, but got '{unit}'")
 
-        self._width    = int(width)
-        self._height   = int(height)
-        self._gutter   = int(gutter)
+        self._width    = width
+        self._height   = height
+        self._gutter   = gutter
         self._unit     = unit
 
         self._width_px = width_px
@@ -81,21 +81,21 @@ class CardMaker:
             case 'px':
                 px_per_mm = self._width / self._width_mm
 
-                self._width_px  = self._width
-                self._width_mm  = self._width_px / px_per_mm
-                self._height_px = self._height
-                self._height_mm = self._height_px / px_per_mm
-                self._gutter_px = self._gutter
-                self._gutter_mm = self._gutter_px / px_per_mm
+                self._width_px  = int(self._width)
+                self._width_mm  =     self._width_px / px_per_mm
+                self._height_px = int(self._height)
+                self._height_mm =     self._height_px / px_per_mm
+                self._gutter_px = int(self._gutter)
+                self._gutter_mm =     self._gutter_px / px_per_mm
             case 'mm':
                 mm_per_px = self._width / self._width_px
 
-                self._width_mm  = self._width
-                self._width_px  = self._width_mm / mm_per_px
-                self._height_mm = self._height
-                self._height_px = self._height_mm / mm_per_px
-                self._gutter_mm = self._gutter
-                self._gutter_px = self._gutter_mm / mm_per_px
+                self._width_mm  =     self._width
+                self._width_px  = int(self._width_mm / mm_per_px)
+                self._height_mm =     self._height
+                self._height_px = int(self._height_mm / mm_per_px)
+                self._gutter_mm =     self._gutter
+                self._gutter_px = int(self._gutter_mm / mm_per_px)
             case _:
                 raise ValueError(f"Cannot convert from unit '{self._unit}'")
 
@@ -126,7 +126,7 @@ class CardMaker:
     @property
     def width_px(self):
         """
-        The width of the card, excluding gutters, in pixels.
+        The width of the card, excluding gutters, in pixels as an int.
         """
         return self._width_px
 
@@ -177,7 +177,7 @@ class CardMaker:
     @property
     def height_px(self):
         """
-        The height of the card, excluding gutters, in pixels.
+        The height of the card, excluding gutters, in pixels as an int.
         """
         return self._height_px
 
@@ -326,6 +326,23 @@ class CardMaker:
                 return x * self._width_mm / self._width_px
 
 
+    def from_px(self, x):
+        """
+        Convert from some number of pixels to the default unit.
+        """
+        if x is None:
+            return None
+
+        match self._unit:
+            case 'px':
+                return x
+            case 'mm':
+                return x * self._width_mm / self._width_px
+
+
+    # -------------------
+
+
     def paste(self,
               im,
               x_left = None, x_centre = None, x_right = None,
@@ -420,8 +437,22 @@ class CardMaker:
         If given, newlines will be inserted at chrs_per_line
         Returns the bounding box, as per
         https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.textbbox
+        but in the default unit.
         This is relative to the top of the card content, excluding the gutter.
         """
+
+        # Switch to pixels
+
+        x_left        = self.to_px(x_left)
+        x_centre      = self.to_px(x_centre)
+        x_right       = self.to_px(x_right)
+        y_ascender    = self.to_px(y_ascender)
+        y_top         = self.to_px(y_top)
+        y_middle      = self.to_px(y_middle)
+        y_baseline    = self.to_px(y_baseline)
+        y_bottom      = self.to_px(y_bottom)
+        y_descender   = self.to_px(y_descender)
+
         x_pos, y_pos       = None, None
         h_anchor, v_anchor = None, None
         align              = None
@@ -477,10 +508,11 @@ class CardMaker:
                              align   = align,
                              spacing = spacing,
                              )
-        return (bbox[0] - self._gutter,
-                bbox[1] - self._gutter,
-                bbox[2] - self._gutter,
-                bbox[3] - self._gutter)
+        return (self.from_px(bbox[0] - self._gutter),
+                self.from_px(bbox[1] - self._gutter),
+                self.from_px(bbox[2] - self._gutter),
+                self.from_px(bbox[3] - self._gutter),
+                )
 
 
     @staticmethod
