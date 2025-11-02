@@ -11,7 +11,8 @@ from card_maker import CardMaker
 
 assets_dir  = 'demos/assets'
 
-font_file = '/usr/share/fonts/opentype/urw-base35/URWBookman-LightItalic.otf'
+# font_file = '/usr/share/fonts/opentype/urw-base35/URWBookman-LightItalic.otf'
+font_file = '/usr/share/fonts/opentype/urw-base35/URWBookman-Light.otf'
 font_tiny  = ImageFont.truetype(font = font_file,
                                 size = 20,    # Pixels, same as the gutter
                                 )
@@ -69,7 +70,7 @@ def simple(wording):
     return maker
 
 
-def centred_text():
+def text_positioning():
     """
     Return a card with a border and centred wording.
     Our border image includes a gutter, so we'll paste it accordingly.
@@ -80,15 +81,57 @@ def centred_text():
     border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
     border_im = border_im.resize(size = maker.size_with_gutters_px)
 
-    maker.paste(im     = border_im,
-                x_left = -maker.gutter,
-                y_top  = -maker.gutter,
-                )
+    # Text on the top line
+    maker.text(text   = 'LT',
+               x_left = 0,
+               y_top  = 0,
+               font   = font_small,
+               )
+    maker.text(text     = 'CT',
+               x_centre = maker.width / 2,
+               y_top    = 0,
+               font     = font_small,
+               )
+    maker.text(text    = 'RT',
+               x_right = maker.width,
+               y_top   = 0,
+               font    = font_small,
+               )
+
+    # Text in the middle
+    maker.text(text     = 'LM',
+               x_left   = 0,
+               y_middle = maker.height / 2,
+               font     = font_small,
+               )
     maker.text(text     = 'This text is centred.',
                x_centre = maker.width / 2,
                y_middle = maker.height / 2,
                font     = font_small,
                )
+    maker.text(text     = 'RM',
+               x_right  = maker.width,
+               y_middle = maker.height / 2,
+               font     = font_small,
+               )
+
+    # Text on the bottom
+    maker.text(text     = 'LB',
+               x_left   = 0,
+               y_bottom = maker.height,
+               font     = font_small,
+               )
+    maker.text(text     = 'CB',
+               x_centre = maker.width / 2,
+               y_bottom = maker.height,
+               font     = font_small,
+               )
+    maker.text(text     = 'RB',
+               x_right  = maker.width,
+               y_bottom = maker.height,
+               font     = font_small,
+               )
+
     return maker
 
 

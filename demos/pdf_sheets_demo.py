@@ -30,7 +30,7 @@ pdf.add(card_maker_demo.simple('Two!').image_with_gutters(),
 pdf.add(card_maker_demo.html().image_with_gutters(),
         back_image_or_file = 'demos/assets/card-back.png',
         )
-pdf.add(card_maker_demo.centred_text().image())
+pdf.add(card_maker_demo.text_positioning().image())
 pdf.add(card_maker_demo.bounding_box_demo().image_with_gutters())
 
 pdf.add_backs_page()    # Only needed at the end
