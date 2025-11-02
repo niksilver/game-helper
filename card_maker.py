@@ -458,35 +458,35 @@ class CardMaker:
         align              = None
 
         if not(x_left is None):
-            x_pos    = x_left + self._gutter
+            x_pos    = x_left + self._gutter_px
             h_anchor = "l"
             align    = "left"
         if not(x_centre is None):
-            x_pos    = x_centre + self._gutter
+            x_pos    = x_centre + self._gutter_px
             h_anchor = "m"
             align    = "center"
         if not(x_right is None):
-            x_pos    = x_right + self._gutter
+            x_pos    = x_right + self._gutter_px
             h_anchor = "r"
             align    = "right"
         
         if not(y_ascender is None):
-            y_pos    = y_ascender + self._gutter
+            y_pos    = y_ascender + self._gutter_px
             v_anchor = "a"
         if not(y_top is None):
-            y_pos    = y_top + self._gutter
+            y_pos    = y_top + self._gutter_px
             v_anchor = "t"
         if not(y_middle is None):
-            y_pos    = y_middle + self._gutter
+            y_pos    = y_middle + self._gutter_px
             v_anchor = "m"
         if not(y_baseline is None):
-            y_pos    = y_baseline + self._gutter
+            y_pos    = y_baseline + self._gutter_px
             v_anchor = "s"
         if not(y_bottom is None):
-            y_pos    = y_bottom + self._gutter
+            y_pos    = y_bottom + self._gutter_px
             v_anchor = "b"
         if not(y_descender is None):
-            y_pos    = y_descender + self._gutter
+            y_pos    = y_descender + self._gutter_px
             v_anchor = "d"
 
         if chrs_per_line:
@@ -508,10 +508,10 @@ class CardMaker:
                              align   = align,
                              spacing = spacing,
                              )
-        return (self.from_px(bbox[0] - self._gutter),
-                self.from_px(bbox[1] - self._gutter),
-                self.from_px(bbox[2] - self._gutter),
-                self.from_px(bbox[3] - self._gutter),
+        return (self.from_px(bbox[0] - self._gutter_px),
+                self.from_px(bbox[1] - self._gutter_px),
+                self.from_px(bbox[2] - self._gutter_px),
+                self.from_px(bbox[3] - self._gutter_px),
                 )
 
 

@@ -15,6 +15,9 @@ font_file = '/usr/share/fonts/opentype/urw-base35/URWBookman-LightItalic.otf'
 font_tiny  = ImageFont.truetype(font = font_file,
                                 size = 20,    # Pixels, same as the gutter
                                 )
+font_small = ImageFont.truetype(font = font_file,
+                                size = 28,
+                                )
 font_large = ImageFont.truetype(font = font_file,
                                 size = 58,
                                 )
@@ -62,6 +65,29 @@ def simple(wording):
                x_centre = maker.width / 2,
                y_middle = maker.height / 2,
                font     = font_large,
+               )
+    return maker
+
+
+def centred_text():
+    """
+    Return a card with a border and centred wording.
+    Our border image includes a gutter, so we'll paste it accordingly.
+    """
+
+    maker = base_maker_mm.copy()
+
+    border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
+    border_im = border_im.resize(size = maker.size_with_gutters_px)
+
+    maker.paste(im     = border_im,
+                x_left = -maker.gutter,
+                y_top  = -maker.gutter,
+                )
+    maker.text(text     = 'This text is centred.',
+               x_centre = maker.width / 2,
+               y_middle = maker.height / 2,
+               font     = font_small,
                )
     return maker
 

@@ -23,6 +23,7 @@ sheet = ImageSheet(card_width  = base_maker.width_px,    # Units are pixels
 
 sheet.add(card_maker_demo.simple('One!').image())
 sheet.add(card_maker_demo.simple('Two!').image())
+sheet.add(card_maker_demo.centred_text().image())
 
 sheet.add(card_maker_demo.html().image())
 
