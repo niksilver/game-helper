@@ -66,7 +66,7 @@ def simple(wording):
     return maker
 
 
-def html(content):
+def html():
     """
     Return a yellow card with some HTML content.
     """
@@ -78,11 +78,19 @@ def html(content):
                       width_mm = base_maker.width_mm,
                       colour = (255, 255, 0, 255),    # Yellow
                       )
+    content = """Oh, <i>hi</i>.
+        HTML text flows over multiple lines and has a transparent background."""
     maker.html(content,
                x_left = 10,
                y_top  = 10,
                width  = maker.width / 2,
                height = maker.height / 2,
+               )
+    maker.html('It will also get cut off inside its own box',
+               x_left = 10,
+               y_top  = 250,
+               width  = maker.width / 2,
+               height = 65,
                )
 
     return maker

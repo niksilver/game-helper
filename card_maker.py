@@ -406,8 +406,8 @@ class CardMaker:
         dots_per_in = dots_per_mm * mm_per_in
 
         ims = pdf2image.convert_from_bytes(pdf_file = byte_array,
-                                           # transparent = True,
-                                           # fmt = 'png',
+                                           transparent = True,
+                                           fmt = 'png',
                                            dpi = dots_per_in,
                                            )
         im = ims[0]    # First page. A PPMImage by default

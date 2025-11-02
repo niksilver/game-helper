@@ -26,7 +26,7 @@ pdf.add(card_maker_demo.simple('One!').image_with_gutters(),
 pdf.add(card_maker_demo.simple('Two!').image_with_gutters(),
         back_image_or_file = 'demos/assets/card-back.png',
         )
-pdf.add(card_maker_demo.html('Oh, <i>hi</i>').image_with_gutters(),
+pdf.add(card_maker_demo.html().image_with_gutters(),
         back_image_or_file = 'demos/assets/card-back.png',
         )
 
