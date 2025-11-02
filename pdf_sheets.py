@@ -24,8 +24,9 @@ class PDFSheets:
                  ):
         """
         Create a new series of A4 sheets with cards, for printing.
+        Card width and height exclude gutters.
         Shape may be "rectangle" (default) or "circle".
-        By default card backs will be included on alternate sheets..
+        By default card backs will be included on alternate sheets.
         """
         self.pdf = FPDF(orientation = 'landscape', unit = 'mm', format = 'A4')
         self.pdf.set_margin(0)

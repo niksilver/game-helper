@@ -15,9 +15,10 @@ if not(os.path.exists(outdir)):
 # In this case we choose not to the gutter size as originally
 # set in the CardMaker. We could do, but it's a bit small.
 
-pdf = PDFSheets(card_width  = base_maker.width_with_gutters_mm,
-                card_height = base_maker.height_with_gutters_mm,
+pdf = PDFSheets(card_width  = base_maker.width_mm,
+                card_height = base_maker.height_mm,
                 gutter      = 3,    # Also mm
+                # gutter      = base_maker.gutter_mm,    # Also mm
                 )
 
 pdf.add(card_maker_demo.simple('One!').image_with_gutters(),
