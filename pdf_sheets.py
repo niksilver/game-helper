@@ -304,8 +304,12 @@ class PDFSheets:
         self.y = top_margin_fronts_page
 
 
-    def output(self, filename):
+    def output(self, filename, date = None):
         """
         Write the PDF sheets to the given file.
+        data must be a `datetime` object and defaults to the current date
+        and time. Useful if we want to ensure consistency between different
+        runs of the output.
         """
+        self.pdf.set_creation_date(date = date)
         self.pdf.output(filename)
