@@ -52,7 +52,7 @@ class ImageSheet:
             im = Image.open(card_or_im_or_file)
             im = im.convert('RGBA')
         else:
-            raise TypeError(f"Can only an Image or CardMaker but got a {type(card_or_im)}")
+            raise TypeError(f"Can only an Image or CardMaker or str but got a {type(card_or_im_or_file)}")
 
         scaled_im   = im.resize(size = (self._card_width, self._card_height))
         self._base_im.paste(im   = scaled_im,
