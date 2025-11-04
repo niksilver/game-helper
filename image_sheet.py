@@ -30,7 +30,7 @@ class ImageSheet:
                                  )
 
 
-    def add(self, card_or_im):
+    def add(self, card_or_im_or_file):
         """
         Add the next CardMaker or Image onto the sheet.
         The CardMaker image will exclude any gutters.
@@ -43,10 +43,13 @@ class ImageSheet:
         y_pos       = self._current_row * slot_height
 
         im = None
-        if isinstance(card_or_im, CardMaker):
-            im = card_or_im.image()
-        elif isinstance(card_or_im, Image.Image):
-            im = card_or_im
+        if isinstance(card_or_im_or_file, CardMaker):
+            im = card_or_im_or_file.image()
+        elif isinstance(card_or_im_or_file, Image.Image):
+            im = card_or_im_or_file
+            im = im.convert('RGBA')
+        elif isinstance(card_or_im_or_file, str):
+            im = Image.open(card_or_im_or_file)
             im = im.convert('RGBA')
         else:
             raise TypeError(f"Can only an Image or CardMaker but got a {type(card_or_im)}")

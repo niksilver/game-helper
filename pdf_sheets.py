@@ -1,7 +1,9 @@
 import math
 
 from fpdf import FPDF
-from PIL import Image
+from PIL  import Image
+
+from card_maker import CardMaker
 
 
 left_margin_fronts_page = 7
@@ -221,13 +223,14 @@ class PDFSheets:
 
 
     def add(self,
-            image_or_file,
+            card_or_im_or_file,
             x_offset = 0,
             y_offset = 0,
             back_image_or_file = None,
             ):
         """
         Add a card image to the sheet.
+        This may be given as a CardMaker, an Image or a filename.
         Its top left may be offset from the origin, which includes the gutters.
         The image will be placed in the centre of the card space, so an offset
         will reduce its size.
@@ -236,7 +239,18 @@ class PDFSheets:
         im_width  = self.card_width  + 2*self.gutter - 2*x_offset
         im_height = self.card_height + 2*self.gutter - 2*y_offset
         self._inc_xy()
-        self.pdf.image(image_or_file,
+
+        im = None
+        if isinstance(card_or_im_or_file, CardMaker):
+            im = card_or_im_or_file.image_with_gutters()
+        elif isinstance(card_or_im_or_file, Image.Image):
+            im = card_or_im_or_file
+        elif isinstance(card_or_im_or_file, str):
+            im = card_or_im_or_file
+        else:
+            raise TypeError(f"Can only an Image or CardMaker or str but got a {type(card_or_im)}")
+
+        self.pdf.image(im,
                        x = self.x + x_offset,
                        y = self.y + y_offset,
                        w = im_width,
@@ -311,5 +325,6 @@ class PDFSheets:
         and time. Useful if we want to ensure consistency between different
         runs of the output.
         """
-        self.pdf.set_creation_date(date = date)
+        if not(date is None):
+            self.pdf.set_creation_date(date = date)
         self.pdf.output(filename)

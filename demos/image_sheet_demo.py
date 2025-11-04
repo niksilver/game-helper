@@ -32,6 +32,7 @@ sheet.add(card_maker_demo.html())
 sheet.add(card_maker_demo.bounding_box_demo())
 
 sheet.add(Image.open('demos/assets/womble.jpg'))    # We can add any image, which will scale
+sheet.add('demos/assets/womble.jpg')                # We can use a filename directly, too.
 
 
 outfile = outdir + '/demo.png'

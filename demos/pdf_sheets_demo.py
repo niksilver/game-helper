@@ -3,6 +3,9 @@ sys.path.append('.')     # So that we can run this from the top directory
 
 import os
 from   pdf_sheets      import PDFSheets
+
+from PIL import Image
+
 import card_maker_demo
 from   card_maker_demo import base_maker
 
@@ -21,17 +24,23 @@ pdf = PDFSheets(card_width  = base_maker.width_mm,
                 # gutter      = base_maker.gutter_mm,    # Also mm
                 )
 
-pdf.add(card_maker_demo.simple('One!').image_with_gutters(),
+pdf.add(card_maker_demo.simple('One!'),
         back_image_or_file = 'demos/assets/card-back.png',
         )
-pdf.add(card_maker_demo.simple('Two!').image_with_gutters(),
+pdf.add(card_maker_demo.simple('Two!'),
         back_image_or_file = 'demos/assets/card-back.png',
         )
-pdf.add(card_maker_demo.html().image_with_gutters(),
+pdf.add(card_maker_demo.html(),
         back_image_or_file = 'demos/assets/card-back.png',
         )
-pdf.add(card_maker_demo.text_positioning().image_with_gutters())
-pdf.add(card_maker_demo.bounding_box_demo().image_with_gutters())
+pdf.add(card_maker_demo.text_positioning())
+pdf.add(card_maker_demo.bounding_box_demo())
+pdf.add(Image.open('demos/assets/womble.jpg'))    # This image bleeds into the gutters.
+pdf.add('demos/assets/womble.jpg')                # We can use a filename instead.
+pdf.add('demos/assets/womble.jpg',                # Scales to fit inside the gutters.
+        x_offset = base_maker.gutter_mm,
+        y_offset = base_maker.gutter_mm,
+        )
 
 pdf.add_backs_page()    # Only needed at the end
 
