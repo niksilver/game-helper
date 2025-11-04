@@ -1,5 +1,7 @@
 from PIL import Image
 
+from card_maker import CardMaker
+
 
 class ImageSheet:
     """
@@ -28,15 +30,27 @@ class ImageSheet:
                                  )
 
 
-    def add(self, im):
+    def add(self, card_or_im):
         """
-        Add the next card image onto the sheet.
+        Add the next CardMaker or Image onto the sheet.
+        The CardMaker image will exclude any gutters.
+        In either case the image will scale to fit the space.
         """
 
         slot_width  = int(self._width / self._columns)
         slot_height = int(self._height / self._rows)
         x_pos       = self._current_column * slot_width
         y_pos       = self._current_row * slot_height
+
+        im = None
+        if isinstance(card_or_im, CardMaker):
+            im = card_or_im.image()
+        elif isinstance(card_or_im, Image.Image):
+            im = card_or_im
+            im = im.convert('RGBA')
+        else:
+            raise TypeError(f"Can only an Image or CardMaker but got a {type(card_or_im)}")
+
         scaled_im   = im.resize(size = (self._card_width, self._card_height))
         self._base_im.paste(im   = scaled_im,
                            box  = (x_pos, y_pos),

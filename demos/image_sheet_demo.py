@@ -1,7 +1,9 @@
 import sys
+import os
 sys.path.append('.')     # So that we can run this from the top directory
 
-import os
+from PIL import Image
+
 from   image_sheet     import ImageSheet
 import card_maker_demo
 from   card_maker_demo import base_maker
@@ -21,13 +23,15 @@ sheet = ImageSheet(card_width  = base_maker.width_px,    # Units are pixels
 # For our first two cards we'll get them and extract the image,
 # which exludes gutters.
 
-sheet.add(card_maker_demo.simple('One!').image())
-sheet.add(card_maker_demo.simple('Two!').image())
-sheet.add(card_maker_demo.text_positioning().image())
+sheet.add(card_maker_demo.simple('One!'))
+sheet.add(card_maker_demo.simple('Two!'))
+sheet.add(card_maker_demo.text_positioning())
 
-sheet.add(card_maker_demo.html().image())
+sheet.add(card_maker_demo.html())
 
-sheet.add(card_maker_demo.bounding_box_demo().image())
+sheet.add(card_maker_demo.bounding_box_demo())
+
+sheet.add(Image.open('demos/assets/womble.jpg'))    # We can add any image, which will scale
 
 
 outfile = outdir + '/demo.png'
