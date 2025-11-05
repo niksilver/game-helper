@@ -3,7 +3,7 @@ import math
 from fpdf import FPDF
 from PIL  import Image
 
-from card_maker import CardMaker
+from .card_maker import CardMaker
 
 
 left_margin_fronts_page = 7

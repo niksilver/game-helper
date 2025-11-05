@@ -2,7 +2,7 @@ import sys
 sys.path.append('.')     # So that we can run this from the top directory
 
 import os
-from   pdf_sheets      import PDFSheets
+from   gamehelper.pdf_sheets      import PDFSheets
 
 from PIL import Image
 
