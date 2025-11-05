@@ -3,8 +3,6 @@ import pytest
 import openpyxl
 from   openpyxl import Workbook
 
-# from context    import gamehelper
-# import gamehelper
 from gamehelper.excelhelper import ExcelHelper
 
 

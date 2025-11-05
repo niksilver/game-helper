@@ -1,7 +1,5 @@
 import pytest
 
-# from context   import gamehelper
-# import gamehelper
 from gamehelper.card_maker import CardMaker
 
 
