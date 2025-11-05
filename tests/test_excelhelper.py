@@ -1,9 +1,11 @@
 import pytest
 
 import openpyxl
+from   openpyxl import Workbook
 
-from openpyxl import Workbook
-from excelhelper import ExcelHelper
+# from context    import gamehelper
+# import gamehelper
+from gamehelper.excelhelper import ExcelHelper
 
 
 class TestExcelHelper:
