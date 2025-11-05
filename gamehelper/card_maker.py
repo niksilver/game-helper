@@ -1,11 +1,10 @@
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
-from PIL import ImageChops
-
-from fpdf import FPDF
-
 import copy
+
+from   PIL       import Image
+from   PIL       import ImageDraw
+from   PIL       import ImageFont
+from   PIL       import ImageChops
+from   fpdf      import FPDF
 import pdf2image
 
 

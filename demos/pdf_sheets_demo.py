@@ -1,10 +1,9 @@
 import sys
+import os
 sys.path.append('.')     # So that we can run this from the top directory
 
-import os
-from   gamehelper.pdf_sheets      import PDFSheets
-
-from PIL import Image
+from PIL                   import Image
+from gamehelper.pdf_sheets import PDFSheets
 
 import card_maker_demo
 from   card_maker_demo import base_maker

@@ -2,11 +2,8 @@ import sys
 import os
 sys.path.append('.')     # So that we can run this from the top directory
 
-from PIL import Image
-
-import sys
-print(f"{__name__}: sys.path = {sys.path}")
-from   gamehelper.image_sheet     import ImageSheet
+from PIL                    import Image
+from gamehelper.image_sheet import ImageSheet
 
 import card_maker_demo
 from   card_maker_demo import base_maker
