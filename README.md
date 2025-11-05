@@ -19,11 +19,14 @@ image. Useful for uploading to Screentop, etc.
 might store card data.
 
 
-# Learning
+## Learning
 
 Run `make test` to run a small number of unit tests.
 
-Demo scripts are in the `demos` directory.
+Demo scripts are in the `demos` directory. From the root directory here, run
+```
+python demos/name_of_demo_script.py
+```
 
 
 ## Setup
@@ -34,3 +37,27 @@ which in turn requires poppler to be installed. On Ubuntu:
 sudo apt-get install poppler-utils
 ```
 otherwise look at [the pdf2image page](https://github.com/Belval/pdf2image).
+
+
+## Development
+
+While this is in development and in use in another project, we'll have a
+structure like this:
+
+```
+myproject
+ |_Makefile
+ \_gamehelper
+    |_gamehelper
+    | |_card_maker.py
+    | |_image_sheet.py
+    | |_pdf_sheets.py
+    |
+    |_tests
+    \_demos
+```
+
+This structure is taken from [PyPA on GitHub](https://github.com/pypa/sampleproject/)
+and the associated [packaging documentation](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/).
+
+The chosen build backend is hatchling - it [seems simplest](https://www.linkedin.com/pulse/comparing-python-build-backends-setuptools-hatchling-flit-sharma-cq2cf/).
