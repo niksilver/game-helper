@@ -1,6 +1,6 @@
 from PIL import Image
 
-from card_maker import CardMaker
+from .card_maker import CardMaker
 
 
 class ImageSheet:

@@ -4,9 +4,12 @@ if __name__ == '__main__':
     sys.exit(0)
 
 
+import sys
+print(f"{__name__}: sys.path = {sys.path}")
+
 from PIL import Image
 from PIL import ImageFont
-from card_maker import CardMaker
+from gamehelper.card_maker import CardMaker
 
 
 assets_dir  = 'demos/assets'
