@@ -558,10 +558,19 @@ class CardMaker:
 
     def colour_wash(self, colour):
         """
-        Give the image on the card a wash of colour.
+        Give the card a wash of colour.
         Transparency will be preserved.
         """
-        im      = self._im_with_gutters
+
+        self._im_with_gutters = self.colour_wash_image(self._im_with_gutters, colour)
+
+
+    @staticmethod
+    def colour_wash_image(im, colour):
+        """
+        Give an image a wash of colour.
+        Transparency will be preserved.
+        """
         wash_im = Image.new(mode = 'RGBA',
                             size = im.size,
                             color = colour,
@@ -576,4 +585,4 @@ class CardMaker:
                       box = (0, 0),
                       mask = im)
 
-        self._im_with_gutters = base_im
+        return base_im
