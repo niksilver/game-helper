@@ -206,7 +206,7 @@ def colour_wash():
 
     maker = base_maker.copy()
 
-    im = Image.open(assets_dir + '/cog.png')
+    im = Image.open(assets_dir + '/womble.jpg')
     im = im.resize(size = maker.size_with_gutters_px)
 
     maker.paste(im     = im,

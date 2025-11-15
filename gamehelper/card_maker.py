@@ -377,6 +377,7 @@ class CardMaker:
         if not(y_middle is None):
             y_pos = int(y_middle - (im.height / 2)) + self._gutter_px
 
+        im = im.convert('RGBA')
         self._im_with_gutters.paste(im = im,
                                     box = (int(x_pos), int(y_pos)),
                                     mask = im,
