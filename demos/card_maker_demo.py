@@ -197,3 +197,21 @@ def bounding_box_demo():
                        )
 
     return maker
+
+
+def colour_wash():
+    """
+    Return a card that has a red colour wash.
+    """
+
+    maker = base_maker.copy()
+
+    im = Image.open(assets_dir + '/cog.png')
+    im = im.resize(size = maker.size_with_gutters_px)
+
+    maker.paste(im     = im,
+                x_left = -maker.gutter,
+                y_top  = -maker.gutter,
+                )
+    maker.colour_wash((255,0,0))    # Red
+    return maker

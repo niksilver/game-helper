@@ -561,7 +561,7 @@ class CardMaker:
         Transparency will be preserved.
         """
 
-        self._card_im = self.colour_wash_image(self._card_im, colour)
+        self._im_with_gutters = self.colour_wash_image(self._im_with_gutters, colour)
 
 
     @staticmethod
