@@ -70,6 +70,21 @@ def simple(wording):
     return maker
 
 
+def svg():
+    """
+    Return a card with an SVG image that goes right to the card border.
+    """
+
+    maker = base_maker.copy()
+
+    maker.paste(im        = assets_dir + '/atom.svg',
+                size      = maker.size_px,
+                x_centre  = maker.width / 2,
+                y_middle  = maker.height / 2,
+                )
+    return maker
+
+
 def text_positioning():
     """
     Return a card with a border and centred wording.

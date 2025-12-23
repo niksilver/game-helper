@@ -1,4 +1,5 @@
 import copy
+import io
 
 from   PIL       import Image
 from   PIL       import ImageDraw
@@ -6,6 +7,7 @@ from   PIL       import ImageFont
 from   PIL       import ImageChops
 from   fpdf      import FPDF
 import pdf2image
+import cairosvg
 
 
 class CardMaker:
@@ -344,13 +346,62 @@ class CardMaker:
 
     def paste(self,
               im,
+              size = None, width = None, height = None,
               x_left = None, x_centre = None, x_right = None,
               y_top = None, y_middle = None, y_bottom = None):
         """
         Paste a given image onto the card; it will use itself as a mask.
         (0, 0) is the top left of the card, excluding the gutters.
         Units must be in the default unit.
+        `im` may be an Image object or a filename. (If it's a filename
+        it may be an SVG.)
+        `size`, `width` and `height` are all optional.
+        `size` is a (width, height) pair.
         """
+
+        # Make sure im is an Image in the correct format
+
+        im_filename = None
+        is_svg = False
+
+        if type(im) == str and im[-4:] == '.svg':
+            is_svg      = True
+            im_filename = im
+            w           = self.to_px(size[0])
+            h           = self.to_px(size[1])
+            b_string    = cairosvg.svg2png(url = im)
+            b_io        = io.BytesIO(b_string)
+            im          = Image.open(b_io)
+            im          = im.convert('RGBA')
+
+        elif type(im) == str:
+            im_filename = im
+            im          = Image.open(im)
+            im          = im.convert('RGBA')
+
+        else:
+            im = im.convert('RGBA')
+
+        # We may need to resize it.
+        # If it's an SVG we have to resize it as we (re)load it.
+        # Inconveniently, the SVG converter will only scale it in either the
+        # x or y dimension, so the resizing has to be done separately.
+
+        (resize, size_px) = self._size_px(im, size, width, height)
+
+        if resize and is_svg:
+            max_size = max(size)
+            b_string = cairosvg.svg2png(url           = im_filename,
+                                        output_width  = max_size,
+                                        output_height = max_size,
+                                        )
+            b_io = io.BytesIO(b_string)
+            im   = Image.open(b_io)
+            im   = im.convert('RGBA')
+            im   = im.resize(size       = size)
+
+        elif resize:
+            im = im.resize(size = size)
 
         # Switch to pixels
 
@@ -377,11 +428,51 @@ class CardMaker:
         if not(y_middle is None):
             y_pos = int(y_middle - (im.height / 2)) + self._gutter_px
 
-        im = im.convert('RGBA')
+        # Paste the image in the right place
+
         self._im_with_gutters.paste(im = im,
                                     box = (int(x_pos), int(y_pos)),
                                     mask = im,
                                     )
+
+    def _size_px(self, im, size, width, height):
+        """
+        Decide if an image should be rescaled, and what its new dimensions
+        should be, in pixels.
+        Returns (flag, (width, height)) where flag is if it requires resizing.
+        """
+        # Convert to pixels
+
+        if size is not None:
+            size = (self.to_px(size[0]),
+                    self.to_px(size[1]) )
+        if width is not None:
+            width = self.to_px(width)
+        if height is not None:
+            height = self.to_px(height)
+
+        # Should we resize?
+
+        resize = (size is not None) or (width is not None) or (height is not None)
+
+        # Switch the values into width and height only
+
+        if size is not None:
+            (width, height) = size
+
+        # Calculate desired width and height
+
+        if (width is None) and (height is None):
+            return (resize, im.size)
+
+        if (width is not None):
+            height = im.height * (width / im.width)
+
+        if (height is not None):
+            width = im.width * (height / im.height)
+
+        return (resize, (width, height))
+
 
     def html(self,
              content,

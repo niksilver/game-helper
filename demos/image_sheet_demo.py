@@ -25,6 +25,7 @@ sheet = ImageSheet(card_width  = base_maker.width_px,    # Units are pixels
 
 sheet.add(card_maker_demo.simple('One!'))
 sheet.add(card_maker_demo.simple('Two!'))
+sheet.add(card_maker_demo.svg())
 sheet.add(card_maker_demo.text_positioning())
 
 sheet.add(card_maker_demo.html())
