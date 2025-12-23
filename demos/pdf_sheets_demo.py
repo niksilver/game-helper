@@ -29,6 +29,7 @@ pdf.add(card_maker_demo.simple('One!'),
 pdf.add(card_maker_demo.simple('Two!'),
         back_image_or_file = 'demos/assets/card-back.png',
         )
+pdf.add(card_maker_demo.svg())
 pdf.add(card_maker_demo.html(),
         back_image_or_file = 'demos/assets/card-back.png',
         )
@@ -40,6 +41,8 @@ pdf.add('demos/assets/womble.jpg',                # Scales to fit inside the gut
         x_offset = base_maker.gutter_mm,
         y_offset = base_maker.gutter_mm,
         )
+
+pdf.add(card_maker_demo.colour_wash())    # Demonstrating a colour wash.
 
 pdf.add_backs_page()    # Only needed at the end
 
