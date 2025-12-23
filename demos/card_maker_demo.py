@@ -50,10 +50,8 @@ def simple(wording):
 
     maker = base_maker.copy()
 
-    border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
-    border_im = border_im.resize(size = maker.size_with_gutters_px)
-
-    maker.paste(im     = border_im,
+    maker.paste(im     = assets_dir + '/card-border-with-gutter.png',
+                size   = maker.size_with_gutters_px,
                 x_left = -maker.gutter,
                 y_top  = -maker.gutter,
                 )
@@ -92,9 +90,6 @@ def text_positioning():
     """
 
     maker = base_maker_mm.copy()
-
-    border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
-    border_im = border_im.resize(size = maker.size_with_gutters_px)
 
     # Text on the top line
     maker.text(text   = 'Left-top',
@@ -187,10 +182,8 @@ def bounding_box_demo():
 
     maker = base_maker_mm.copy()
 
-    border_im = Image.open(assets_dir + '/card-border-with-gutter.png')
-    border_im = border_im.resize(size = maker.size_with_gutters_px)
-
-    maker.paste(im     = border_im,
+    maker.paste(im     = assets_dir + '/card-border-with-gutter.png',
+                size   = maker.size_with_gutters_px,
                 x_left = -maker.gutter,
                 y_top  = -maker.gutter,
                 )
@@ -221,10 +214,8 @@ def colour_wash():
 
     maker = base_maker.copy()
 
-    im = Image.open(assets_dir + '/womble.jpg')
-    im = im.resize(size = maker.size_with_gutters_px)
-
-    maker.paste(im     = im,
+    maker.paste(im     = assets_dir + '/womble.jpg',
+                size   = maker.size_with_gutters_px,
                 x_left = -maker.gutter,
                 y_top  = -maker.gutter,
                 )
