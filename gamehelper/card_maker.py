@@ -387,7 +387,7 @@ class CardMaker:
         # Inconveniently, the SVG converter will only scale it in either the
         # x or y dimension, so the resizing has to be done separately.
 
-        (resize, size_px) = self._size_px(im, size, width, height)
+        (resize, size_px) = self.need_resize_px(im, size, width, height)
 
         if resize and is_svg:
             max_size = max(size)
@@ -435,7 +435,7 @@ class CardMaker:
                                     mask = im,
                                     )
 
-    def resize_px(self, im, size = None, width = None, height = None):
+    def need_resize_px(self, im, size = None, width = None, height = None):
         """
         Decide if an image should be resized, and what its new dimensions
         should be, in pixels.

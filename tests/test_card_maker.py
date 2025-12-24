@@ -354,7 +354,7 @@ class TestCardMaker:
         assert maker2.from_px(None) is None
 
 
-    def test_resize_px(self):
+    def test_need_resize_px(self):
 
         # Some arbitrary CardMaker using pixels
 
@@ -370,22 +370,22 @@ class TestCardMaker:
         assert im.width  == 100
         assert im.height == 150
 
-        (flag, size) = px_maker.resize_px(im)
+        (flag, size) = px_maker.need_resize_px(im)
 
         assert flag == False
         assert size == (100, 150)
 
-        (flag, size) = px_maker.resize_px(im, size = (100, 150))
+        (flag, size) = px_maker.need_resize_px(im, size = (100, 150))
 
         assert flag == False
         assert size == (100, 150)
 
-        (flag, size) = px_maker.resize_px(im, width = 100)
+        (flag, size) = px_maker.need_resize_px(im, width = 100)
 
         assert flag == False
         assert size == (100, 150)
 
-        (flag, size) = px_maker.resize_px(im, height = 150)
+        (flag, size) = px_maker.need_resize_px(im, height = 150)
 
         assert flag == False
         assert size == (100, 150)
