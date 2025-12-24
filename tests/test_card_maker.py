@@ -354,7 +354,7 @@ class TestCardMaker:
         assert maker2.from_px(None) is None
 
 
-    def test_need_resize_px_with_png_and_px(self):
+    def test_need_resize_px_with_px_maker(self):
 
         # Some arbitrary CardMaker using pixels
         # and a PNG image.
@@ -414,7 +414,7 @@ class TestCardMaker:
         assert size == (200, 300)
 
 
-    def test_need_resize_px_with_png_and_mm(self):
+    def test_need_resize_px_with_mm_maker(self):
 
         # Some arbitrary CardMaker using millimetres
         # and a PNG image.
