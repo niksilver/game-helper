@@ -441,6 +441,9 @@ class CardMaker:
         should be, in pixels.
         Only one of `size`, `width` and `height` is needed, and the dimensions
         are the default dimensions of the object.
+        If only `width` or `height` is specified the resizing will be a
+        proportional scaling.
+
         Returns (flag, (width, height)) where flag is if it requires resizing.
         """
         # Convert to pixels
