@@ -1,5 +1,7 @@
 import pytest
 
+from PIL import Image
+
 from gamehelper.card_maker import CardMaker
 
 
@@ -350,4 +352,41 @@ class TestCardMaker:
 
         # Handle None
         assert maker2.from_px(None) is None
+
+
+    def test_resize_px(self):
+
+        # Some arbitrary CardMaker using pixels
+
+        px_maker = CardMaker(width  = 100,
+                             height = 120,
+                             unit   = 'px',
+                             width_mm = 50,
+                             )
+
+        # No resizing with a PNG
+
+        im = Image.open('tests/100x150.png')
+        assert im.width  == 100
+        assert im.height == 150
+
+        (flag, size) = px_maker.resize_px(im)
+
+        assert flag == False
+        assert size == (100, 150)
+
+        (flag, size) = px_maker.resize_px(im, size = (100, 150))
+
+        assert flag == False
+        assert size == (100, 150)
+
+        (flag, size) = px_maker.resize_px(im, width = 100)
+
+        assert flag == False
+        assert size == (100, 150)
+
+        (flag, size) = px_maker.resize_px(im, height = 150)
+
+        assert flag == False
+        assert size == (100, 150)
 

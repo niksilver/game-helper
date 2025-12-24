@@ -435,10 +435,12 @@ class CardMaker:
                                     mask = im,
                                     )
 
-    def _size_px(self, im, size, width, height):
+    def resize_px(self, im, size = None, width = None, height = None):
         """
-        Decide if an image should be rescaled, and what its new dimensions
+        Decide if an image should be resized, and what its new dimensions
         should be, in pixels.
+        Only one of `size`, `width` and `height` is needed, and the dimensions
+        are the default dimensions of the object.
         Returns (flag, (width, height)) where flag is if it requires resizing.
         """
         # Convert to pixels
@@ -451,14 +453,18 @@ class CardMaker:
         if height is not None:
             height = self.to_px(height)
 
-        # Should we resize?
-
-        resize = (size is not None) or (width is not None) or (height is not None)
-
-        # Switch the values into width and height only
+        # Switch the values into width and height only (either may be None)
 
         if size is not None:
             (width, height) = size
+
+        # Should we resize?
+
+        resize = False
+        if (width is not None) and im.width != width:
+            resize = True
+        if (height is not None) and im.height != height:
+            resize = True
 
         # Calculate desired width and height
 
