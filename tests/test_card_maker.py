@@ -413,6 +413,18 @@ class TestCardMaker:
         assert flag == True
         assert size == (200, 300)
 
+        # Returned size should use ints
+
+        (flag, size) = px_maker.need_resize_px(im, width = 1)    # 1/100
+
+        assert flag == True
+        assert size == (1, 1)
+
+        (flag, size) = px_maker.need_resize_px(im, height = 50)    # One third
+
+        assert flag == True
+        assert size == (33, 50)
+
 
     def test_need_resize_px_with_mm_maker(self):
 

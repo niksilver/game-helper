@@ -367,8 +367,6 @@ class CardMaker:
         if type(im) == str and im[-4:] == '.svg':
             is_svg      = True
             im_filename = im
-            w           = self.to_px(size[0])
-            h           = self.to_px(size[1])
             b_string    = cairosvg.svg2png(url = im)
             b_io        = io.BytesIO(b_string)
             im          = Image.open(b_io)
@@ -390,7 +388,7 @@ class CardMaker:
         (resize, size_px) = self.need_resize_px(im, size, width, height)
 
         if resize and is_svg:
-            max_size = max(size)
+            max_size = max(size_px)
             b_string = cairosvg.svg2png(url           = im_filename,
                                         output_width  = max_size,
                                         output_height = max_size,
@@ -398,7 +396,7 @@ class CardMaker:
             b_io = io.BytesIO(b_string)
             im   = Image.open(b_io)
             im   = im.convert('RGBA')
-            im   = im.resize(size       = size)
+            im   = im.resize(size = size_px)
 
         elif resize:
             im = im.resize(size = size)
@@ -480,7 +478,7 @@ class CardMaker:
         if (width is None) and (height is not None):
             width = im.width * (height / im.height)
 
-        return (resize, (width, height))
+        return (resize, (int(width), int(height)))
 
 
     def html(self,
