@@ -344,40 +344,39 @@ class CardMaker:
     # -------------------
 
 
-    def paste(self,
-              im,
-              size = None, width = None, height = None,
-              x_left = None, x_centre = None, x_right = None,
-              y_top = None, y_middle = None, y_bottom = None):
+    def load_image(self,
+                   filename,
+                   size = None, width = None, height = None,
+                   ):
         """
-        Paste a given image onto the card; it will use itself as a mask.
-        (0, 0) is the top left of the card, excluding the gutters.
-        Units must be in the default unit.
-        `im` may be an Image object or a filename. (If it's a filename
-        it may be an SVG.)
+        Load an image from a file, possibly resize it, and return it.
+        If `filename` points to an SVG it will be converted to a PNG.
+
+        Units should be in the default unit.
+        `im` may be an Image object or a filename.
+        (If it's a filename it may be an SVG.)
         `size`, `width` and `height` are all optional.
         `size` is a (width, height) pair.
+        If only `width` or `height` is given then the image will scale
+        proportionally.
+
+        The returned image will be RGBA.
         """
 
         # Make sure im is an Image in the correct format
 
-        im_filename = None
+        im     = None
         is_svg = False
 
-        if type(im) == str and im[-4:] == '.svg':
-            is_svg      = True
-            im_filename = im
-            b_string    = cairosvg.svg2png(url = im)
-            b_io        = io.BytesIO(b_string)
-            im          = Image.open(b_io)
-            im          = im.convert('RGBA')
-
-        elif type(im) == str:
-            im_filename = im
-            im          = Image.open(im)
-            im          = im.convert('RGBA')
+        if filename[-4:] == '.svg':
+            is_svg   = True
+            b_string = cairosvg.svg2png(url = filename)
+            b_io     = io.BytesIO(b_string)
+            im       = Image.open(b_io)
+            im       = im.convert('RGBA')
 
         else:
+            im = Image.open(filename)
             im = im.convert('RGBA')
 
         # We may need to resize it.
@@ -389,7 +388,7 @@ class CardMaker:
 
         if resize and is_svg:
             max_size = max(size_px)
-            b_string = cairosvg.svg2png(url           = im_filename,
+            b_string = cairosvg.svg2png(url           = filename,
                                         output_width  = max_size,
                                         output_height = max_size,
                                         )
@@ -400,6 +399,32 @@ class CardMaker:
 
         elif resize:
             im = im.resize(size = size)
+
+        return im
+
+
+    def paste(self,
+              im,
+              size = None, width = None, height = None,
+              x_left = None, x_centre = None, x_right = None,
+              y_top = None, y_middle = None, y_bottom = None):
+        """
+        Paste a given image onto the card; it will use itself as a mask.
+        (0, 0) is the top left of the card, excluding the gutters.
+
+        See `load_image` for explanation of
+        `size`, `width` and `height` parameters.
+        """
+
+        # Make sure we have an Image and it's the specified size.
+
+        if type(im) == str:
+            im = self.load_image(im, size, width, height)
+
+        else:
+            (resize, size_px) = self.need_resize_px(im, size, width, height)
+            if resize:
+                im = im.resize(size = size_px)
 
         # Switch to pixels
 
