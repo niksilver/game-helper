@@ -471,10 +471,10 @@ class CardMaker:
         if (width is None) and (height is None):
             return (resize, im.size)
 
-        if (width is not None):
+        if (width is not None) and (height is None):
             height = im.height * (width / im.width)
 
-        if (height is not None):
+        if (width is None) and (height is not None):
             width = im.width * (height / im.height)
 
         return (resize, (width, height))
