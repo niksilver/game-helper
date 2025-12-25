@@ -463,6 +463,28 @@ class TestCardMaker:
         assert flag    == False
         assert size_px == (100, 150)
 
+        # Shouldn't resize if new dimensions are almost the same
+
+        (flag, size_px) = px_maker.need_resize_px(im)
+
+        assert flag    == False
+        assert size_px == (100, 150)
+
+        (flag, size_px) = px_maker.need_resize_px(im, size = (50.1, 75.1))
+
+        assert flag    == False
+        assert size_px == (100, 150)
+
+        (flag, size_px) = px_maker.need_resize_px(im, width = 50.1)
+
+        assert flag    == False
+        assert size_px == (100, 150)
+
+        (flag, size_px) = px_maker.need_resize_px(im, height = 75.1)
+
+        assert flag    == False
+        assert size_px == (100, 150)
+
         # Some resizing
 
         (flag, size_px) = px_maker.need_resize_px(im, size = (75, 100))

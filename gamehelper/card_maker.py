@@ -478,12 +478,12 @@ class CardMaker:
         # Convert to pixels
 
         if size is not None:
-            size = (self.to_px(size[0]),
-                    self.to_px(size[1]) )
+            size = (int(self.to_px(size[0])),
+                    int(self.to_px(size[1])) )
         if width is not None:
-            width = self.to_px(width)
+            width = int(self.to_px(width))
         if height is not None:
-            height = self.to_px(height)
+            height = int(self.to_px(height))
 
         # Switch the values into width and height only (either may be None)
 
