@@ -494,10 +494,8 @@ class CardMaker:
 
         resize = False
         if (width is not None) and im.width != width:
-            print(f"Need resize for width: {im.width} != {width}")
             resize = True
         if (height is not None) and im.height != height:
-            print(f"Need resize for height: {im.height} != {height}")
             resize = True
 
         # Calculate desired width and height
