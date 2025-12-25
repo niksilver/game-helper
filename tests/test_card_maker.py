@@ -441,27 +441,49 @@ class TestCardMaker:
         assert im.width  == 100
         assert im.height == 150
 
+        # No resizing - dimensions in mm
+
+        (flag, size_px) = px_maker.need_resize_px(im)
+
+        assert flag    == False
+        assert size_px == (100, 150)
+
+        (flag, size_px) = px_maker.need_resize_px(im, size = (50, 75))
+
+        assert flag    == False
+        assert size_px == (100, 150)
+
+        (flag, size_px) = px_maker.need_resize_px(im, width = 50)
+
+        assert flag    == False
+        assert size_px == (100, 150)
+
+        (flag, size_px) = px_maker.need_resize_px(im, height = 75)
+
+        assert flag    == False
+        assert size_px == (100, 150)
+
         # Some resizing
 
-        (flag, size) = px_maker.need_resize_px(im, size = (75, 100))
+        (flag, size_px) = px_maker.need_resize_px(im, size = (75, 100))
 
-        assert flag == True
-        assert size == (150, 200)
+        assert flag    == True
+        assert size_px == (150, 200)
 
-        (flag, size) = px_maker.need_resize_px(im, width = 75, height = 100)
+        (flag, size_px) = px_maker.need_resize_px(im, width = 75, height = 100)
 
-        assert flag == True
-        assert size == (150, 200)
+        assert flag    == True
+        assert size_px == (150, 200)
 
         (flag, size) = px_maker.need_resize_px(im, width = 75)
 
-        assert flag == True
-        assert size == (150, 225)
+        assert flag    == True
+        assert size_px == (150, 200)
 
-        (flag, size) = px_maker.need_resize_px(im, height = 150)
+        (flag, size_px) = px_maker.need_resize_px(im, height = 150)
 
-        assert flag == True
-        assert size == (200, 300)
+        assert flag    == True
+        assert size_px == (200, 300)
 
 
     def test_load_image_px_maker(self):

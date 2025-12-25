@@ -426,10 +426,10 @@ class CardMaker:
 
         else:
             im = im_or_filename
+            print(f"    im was    {im.width} x {im.height}")
             (resize, size_px) = self.need_resize_px(im, size, width, height)
             if resize:
-                # Need to restore this!
-                # im = im.resize(size = size_px)
+                im = im.resize(size = size_px)
                 print(f"    im is now {im.width} x {im.height}")
 
         # Switch to pixels
@@ -494,8 +494,10 @@ class CardMaker:
 
         resize = False
         if (width is not None) and im.width != width:
+            print(f"Need resize for width: {im.width} != {width}")
             resize = True
         if (height is not None) and im.height != height:
+            print(f"Need resize for height: {im.height} != {height}")
             resize = True
 
         # Calculate desired width and height
