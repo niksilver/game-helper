@@ -384,27 +384,37 @@ class CardMaker:
         # Inconveniently, the SVG converter will only scale it in either the
         # x or y dimension, so the resizing has to be done separately.
 
+        print(f"{filename} is {im.width} x {im.height}")
+        print(f"resize width  = {width}")
+        print(f"resize height = {height}")
         (resize, size_px) = self.need_resize_px(im, size, width, height)
+        print(f"   New width  = {size_px[0]}")
+        print(f"   New height = {size_px[1]}")
 
         if resize and is_svg:
             max_size = max(size_px)
             b_string = cairosvg.svg2png(url           = filename,
-                                        output_width  = max_size,
-                                        output_height = max_size,
+                                        output_width  = size_px[0],
+                                        output_height = size_px[1],
                                         )
             b_io = io.BytesIO(b_string)
             im   = Image.open(b_io)
             im   = im.convert('RGBA')
-            im   = im.resize(size = size_px)
+            print(f"On loading, im is {im.width} x {im.height}")
+            # print(f"Before resize, im is {im.width} x {im.height}")
+            # im   = im.resize(size = size_px)
+            # print(f"After  resize, im is {im.width} x {im.height}")
 
         elif resize:
+            # NB: Suspected error here! size is not necessarily in px.
+            print(f"Reszing to {size}")
             im = im.resize(size = size)
 
         return im
 
 
     def paste(self,
-              im,
+              im_or_filename,
               size = None, width = None, height = None,
               x_left = None, x_centre = None, x_right = None,
               y_top = None, y_middle = None, y_bottom = None):
@@ -418,13 +428,20 @@ class CardMaker:
 
         # Make sure we have an Image and it's the specified size.
 
-        if type(im) == str:
-            im = self.load_image(im, size, width, height)
+        im = None
+        if type(im_or_filename) == str:
+            filename = im_or_filename
+            im       = self.load_image(filename, size, width, height)
 
         else:
+            im = im_or_filename
+            print(f"im is {im.width} x {im.height}")
+            print(f"need_resize_px(..., {size}, {width}, {height})")
             (resize, size_px) = self.need_resize_px(im, size, width, height)
+            print(f"    = {resize}, {size_px}")
             if resize:
-                im = im.resize(size = size_px)
+                # im = im.resize(size = size_px)
+                print(f"    im is now {im.width} x {im.height}")
 
         # Switch to pixels
 
@@ -483,26 +500,33 @@ class CardMaker:
 
         if size is not None:
             (width, height) = size
+        print(f"need_resize_px(): width = {width}, height = {height}")
 
         # Should we resize?
 
         resize = False
         if (width is not None) and im.width != width:
             resize = True
+            print(f"need_resize_px(): width: set resize = True")
         if (height is not None) and im.height != height:
             resize = True
+            print(f"need_resize_px(): height: set resize = True")
 
         # Calculate desired width and height
 
         if (width is None) and (height is None):
+            print(f"need_resize_px(): Returning(a) {resize}, {im.size}")
             return (resize, im.size)
 
         if (width is not None) and (height is None):
             height = im.height * (width / im.width)
+            print(f"need_resize_px(): Set height to {height}")
 
         if (width is None) and (height is not None):
             width = im.width * (height / im.height)
+            print(f"need_resize_px(): Set width to {width}")
 
+        print(f"need_resize_px(): Returning(b) {resize}, {(int(width), int(height))}")
         return (resize, (int(width), int(height)))
 
 

@@ -462,3 +462,55 @@ class TestCardMaker:
 
         assert flag == True
         assert size == (200, 300)
+
+
+    def test_load_image_px_maker(self):
+
+        # Some arbitrary CardMaker using pixels
+        # and an SVG image.
+
+        px_maker = CardMaker(width  = 100,
+                             height = 120,
+                             unit   = 'px',
+                             width_mm = 50,
+                             )
+
+        # No resizing
+
+        im2 = px_maker.load_image('tests/123x82.svg')
+
+        assert im2.width  == 123
+        assert im2.height == 82
+
+        # Some resizing
+
+        im2 = px_maker.load_image('tests/123x82.svg', width = 100)
+
+        assert im2.width  == 100
+        assert im2.height == int(82 / (123/100))
+
+
+    def test_load_image_mm_maker(self):
+
+        # Some arbitrary CardMaker using pixels
+        # and an SVG image.
+
+        px_maker = CardMaker(width    = 70,
+                             height   = 70,
+                             unit     = 'mm',
+                             width_px = 100,    # 70mm = 100px
+                             )
+
+        # No resizing
+
+        im2 = px_maker.load_image('tests/123x82.svg')
+
+        assert im2.width  == 123
+        assert im2.height == 82
+
+        # Some resizing
+
+        im2 = px_maker.load_image('tests/123x82.svg', width = 70)    # mm
+
+        assert im2.width  == 100                    # Image is in px
+        assert im2.height == int(82 / (123/100))    # Image is in px
