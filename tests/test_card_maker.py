@@ -576,3 +576,82 @@ class TestCardMaker:
         assert im.width  == 150
         assert im.height == 225
 
+
+    def test_paste_requires_correct_arguments(self):
+
+        # When default unit is px
+        maker = CardMaker(width  = 1000,
+                          height = 1200,
+                          unit   = 'px',
+                          width_mm = 500,    # 2px per mm, or 0.5mm per px
+                          )
+
+        # Needs exactly one x argument
+
+        with pytest.raises(ValueError) as valerr:
+            im = maker.paste('tests/100x150.png')
+        assert 'one of x_left, x_centre, x_right' in valerr.value.args[0]
+
+        with pytest.raises(ValueError) as valerr:
+            im = maker.paste('tests/100x150.png',
+                             x_left   = 0,
+                             x_centre = 0,
+                             y_top    = 0,
+                             )
+        assert 'one of x_left, x_centre, x_right' in valerr.value.args[0]
+
+        with pytest.raises(ValueError) as valerr:
+            im = maker.paste('tests/100x150.png',
+                             x_centre = 0,
+                             x_right  = 0,
+                             y_top    = 0,
+                             )
+        assert 'one of x_left, x_centre, x_right' in valerr.value.args[0]
+
+        with pytest.raises(ValueError) as valerr:
+            im = maker.paste('tests/100x150.png',
+                             x_left   = 0,
+                             x_centre = 0,
+                             x_right  = 0,
+                             y_top    = 0,
+                             )
+        assert 'one of x_left, x_centre, x_right' in valerr.value.args[0]
+
+        im = maker.paste('tests/100x150.png', x_left   = 0, y_top = 0)    # Okay
+        im = maker.paste('tests/100x150.png', x_centre = 0, y_top = 0)    # Okay
+        im = maker.paste('tests/100x150.png', x_right  = 0, y_top = 0)    # Okay
+
+        # Needs exactly one y argument
+
+        with pytest.raises(ValueError) as valerr:
+            im = maker.paste('tests/100x150.png', x_left = 0)
+        assert 'one of y_top, y_middle, y_bottom' in valerr.value.args[0]
+
+        with pytest.raises(ValueError) as valerr:
+            im = maker.paste('tests/100x150.png',
+                             x_left   = 0,
+                             y_top    = 0,
+                             y_middle = 0,
+                             )
+        assert 'one of y_top, y_middle, y_bottom' in valerr.value.args[0]
+
+        with pytest.raises(ValueError) as valerr:
+            im = maker.paste('tests/100x150.png',
+                             x_left   = 0,
+                             y_middle = 0,
+                             y_bottom = 0,
+                             )
+        assert 'one of y_top, y_middle, y_bottom' in valerr.value.args[0]
+
+        with pytest.raises(ValueError) as valerr:
+            im = maker.paste('tests/100x150.png',
+                             x_left   = 0,
+                             y_top    = 0,
+                             y_middle = 0,
+                             y_bottom = 0,
+                             )
+        assert 'one of y_top, y_middle, y_bottom' in valerr.value.args[0]
+
+        im = maker.paste('tests/100x150.png', x_left = 0, y_top    = 0)    # Okay
+        im = maker.paste('tests/100x150.png', x_left = 0, y_middle = 0)    # Okay
+        im = maker.paste('tests/100x150.png', x_left = 0, y_bottom = 0)    # Okay

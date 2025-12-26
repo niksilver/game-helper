@@ -416,6 +416,27 @@ class CardMaker:
         `size`, `width` and `height` parameters.
         """
 
+        # Require the correct x and y arguments
+
+        x_vals = [x_left, x_centre, x_right]
+        y_vals = [y_top, y_middle, y_bottom]
+
+        def count_vals(s):
+            count = 0
+            for val in s:
+                if val is not None: count = count + 1
+            return count
+
+        x_count = count_vals([x_left, x_centre, x_right])
+        if x_count != 1:
+            raise ValueError(f"Must specify exactly one of "
+                             f"x_left, x_centre, x_right but got {x_count}")
+
+        y_count = count_vals([y_top, y_middle, y_bottom])
+        if y_count != 1:
+            raise ValueError(f"Must specify exactly one of "
+                             f"y_top, y_middle, y_bottom but got {y_count}")
+
         # Make sure we have an Image and it's the specified size.
 
         im = None
