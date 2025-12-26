@@ -6,7 +6,7 @@ endif
 
 test:
 	@echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-	python -m pytest --tb=short
+	python -m pytest --tb=short --capture=no
 
 docs:
 	python -m pdoc gamehelper/ -o ./docs

@@ -558,3 +558,24 @@ class TestCardMaker:
 
         assert im2.width  == 100                    # Image is in px
         assert im2.height == int(82 / (123/100))    # Image is in px
+
+
+    def test_load_image_resize_bug(self):
+
+        # Some arbitrary CardMaker using pixels
+        # and an SVG image.
+
+        print("test_load_image_resize_bug(): Starting")
+        mm_maker = CardMaker(width    = 70,
+                             height   = 70,
+                             unit     = 'mm',
+                             width_px = 150,    # 70mm = 100px
+                             )
+
+        im = mm_maker.load_image('tests/100x150.png', width = 70)    # mm
+        # mm_maker.paste(im, width = 70, x_left = 0, y_top = 0)
+
+        print("test_load_image_resize_bug(): Asserting")
+        assert im.width  == 150
+        assert im.height == 225
+
