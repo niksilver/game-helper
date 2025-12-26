@@ -364,7 +364,6 @@ class CardMaker:
         """
 
         # Make sure im is an Image in the correct format
-        print("load_image(): Entering")
 
         im     = None
         is_svg = False
@@ -399,7 +398,6 @@ class CardMaker:
 
         elif resize:
             # NB: Suspected error here! size is not necessarily in px.
-            print(f"Reszing to {size_px}")
             im = im.resize(size = size_px)
 
         return im
@@ -427,11 +425,9 @@ class CardMaker:
 
         else:
             im = im_or_filename
-            print(f"    im was    {im.width} x {im.height}")
             (resize, size_px) = self.need_resize_px(im, size, width, height)
             if resize:
                 im = im.resize(size = size_px)
-                print(f"    im is now {im.width} x {im.height}")
 
         # Switch to pixels
 
