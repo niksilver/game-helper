@@ -431,7 +431,7 @@ class TestCardMaker:
         # Some arbitrary CardMaker using millimetres
         # and a PNG image.
 
-        px_maker = CardMaker(width  = 50,
+        mm_maker = CardMaker(width  = 50,
                              height = 60,
                              unit   = 'mm',
                              width_px = 100,    # 2px = 1mm
@@ -443,66 +443,66 @@ class TestCardMaker:
 
         # No resizing - dimensions in mm
 
-        (flag, size_px) = px_maker.need_resize_px(im)
+        (flag, size_px) = mm_maker.need_resize_px(im)
 
         assert flag    == False
         assert size_px == (100, 150)
 
-        (flag, size_px) = px_maker.need_resize_px(im, size = (50, 75))
+        (flag, size_px) = mm_maker.need_resize_px(im, size = (50, 75))
 
         assert flag    == False
         assert size_px == (100, 150)
 
-        (flag, size_px) = px_maker.need_resize_px(im, width = 50)
+        (flag, size_px) = mm_maker.need_resize_px(im, width = 50)
 
         assert flag    == False
         assert size_px == (100, 150)
 
-        (flag, size_px) = px_maker.need_resize_px(im, height = 75)
+        (flag, size_px) = mm_maker.need_resize_px(im, height = 75)
 
         assert flag    == False
         assert size_px == (100, 150)
 
         # Shouldn't resize if new dimensions are almost the same
 
-        (flag, size_px) = px_maker.need_resize_px(im)
+        (flag, size_px) = mm_maker.need_resize_px(im)
 
         assert flag    == False
         assert size_px == (100, 150)
 
-        (flag, size_px) = px_maker.need_resize_px(im, size = (50.1, 75.1))
+        (flag, size_px) = mm_maker.need_resize_px(im, size = (50.1, 75.1))
 
         assert flag    == False
         assert size_px == (100, 150)
 
-        (flag, size_px) = px_maker.need_resize_px(im, width = 50.1)
+        (flag, size_px) = mm_maker.need_resize_px(im, width = 50.1)
 
         assert flag    == False
         assert size_px == (100, 150)
 
-        (flag, size_px) = px_maker.need_resize_px(im, height = 75.1)
+        (flag, size_px) = mm_maker.need_resize_px(im, height = 75.1)
 
         assert flag    == False
         assert size_px == (100, 150)
 
         # Some resizing
 
-        (flag, size_px) = px_maker.need_resize_px(im, size = (75, 100))
+        (flag, size_px) = mm_maker.need_resize_px(im, size = (75, 100))
 
         assert flag    == True
         assert size_px == (150, 200)
 
-        (flag, size_px) = px_maker.need_resize_px(im, width = 75, height = 100)
+        (flag, size_px) = mm_maker.need_resize_px(im, width = 75, height = 100)
 
         assert flag    == True
         assert size_px == (150, 200)
 
-        (flag, size) = px_maker.need_resize_px(im, width = 75)
+        (flag, size) = mm_maker.need_resize_px(im, width = 75)
 
         assert flag    == True
         assert size_px == (150, 200)
 
-        (flag, size_px) = px_maker.need_resize_px(im, height = 150)
+        (flag, size_px) = mm_maker.need_resize_px(im, height = 150)
 
         assert flag    == True
         assert size_px == (200, 300)
