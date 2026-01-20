@@ -26,23 +26,23 @@ pdf = PDFSheets(card_width  = base_maker.width_mm,
 pdf.add(card_maker_demo.simple('One!'),
         back_image_or_file = 'demos/assets/card-back.png',
         )
-pdf.add(card_maker_demo.simple('Two!'),
-        back_image_or_file = 'demos/assets/card-back.png',
-        )
-pdf.add(card_maker_demo.svg())
-pdf.add(card_maker_demo.html(),
-        back_image_or_file = 'demos/assets/card-back.png',
-        )
-pdf.add(card_maker_demo.text_positioning())
-pdf.add(card_maker_demo.bounding_box_demo())
-pdf.add(Image.open('demos/assets/womble.jpg'))    # This image bleeds into the gutters.
-pdf.add('demos/assets/womble.jpg')                # We can use a filename instead.
-pdf.add('demos/assets/womble.jpg',                # Scales to fit inside the gutters.
-        x_offset = base_maker.gutter_mm,
-        y_offset = base_maker.gutter_mm,
-        )
-
-pdf.add(card_maker_demo.colour_wash())    # Demonstrating a colour wash.
+#pdf.add(card_maker_demo.simple('Two!'),
+#        back_image_or_file = 'demos/assets/card-back.png',
+#        )
+#pdf.add(card_maker_demo.svg())
+#pdf.add(card_maker_demo.html(),
+#        back_image_or_file = 'demos/assets/card-back.png',
+#        )
+#pdf.add(card_maker_demo.text_positioning())
+#pdf.add(card_maker_demo.bounding_box_demo())
+#pdf.add(Image.open('demos/assets/womble.jpg'))    # This image bleeds into the gutters.
+#pdf.add('demos/assets/womble.jpg')                # We can use a filename instead.
+#pdf.add('demos/assets/womble.jpg',                # Scales to fit inside the gutters.
+#        x_offset = base_maker.gutter_mm,
+#        y_offset = base_maker.gutter_mm,
+#        )
+#
+#pdf.add(card_maker_demo.colour_wash())    # Demonstrating a colour wash.
 
 pdf.add_backs_page()    # Only needed at the end
 

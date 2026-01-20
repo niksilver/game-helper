@@ -258,6 +258,7 @@ class PDFSheets:
                        )
         self._gutter_marks(self.x, self.y)
         self.backs.append((back_image_or_file, self.x, self.y))
+        print(f"x_offset = {x_offset}, y_offset = {y_offset}")
 
         if self._last_xy():
             self.add_backs_page()

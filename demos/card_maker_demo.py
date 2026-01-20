@@ -50,7 +50,7 @@ def simple(wording):
 
     maker = base_maker.copy()
 
-    maker.paste(im     = assets_dir + '/card-border-with-gutter.png',
+    maker.paste(assets_dir + '/card-border-with-gutter.png',
                 size   = maker.size_with_gutters_px,
                 x_left = -maker.gutter,
                 y_top  = -maker.gutter,
@@ -75,7 +75,7 @@ def svg():
 
     maker = base_maker.copy()
 
-    maker.paste(im        = assets_dir + '/atom.svg',
+    maker.paste(assets_dir + '/atom.svg',
                 size      = maker.size_px,
                 x_centre  = maker.width / 2,
                 y_middle  = maker.height / 2,
@@ -182,8 +182,8 @@ def bounding_box_demo():
 
     maker = base_maker_mm.copy()
 
-    maker.paste(im     = assets_dir + '/card-border-with-gutter.png',
-                size   = maker.size_with_gutters_px,
+    maker.paste(assets_dir + '/card-border-with-gutter.png',
+                size   = maker.size_with_gutters_mm,
                 x_left = -maker.gutter,
                 y_top  = -maker.gutter,
                 )
@@ -214,7 +214,7 @@ def colour_wash():
 
     maker = base_maker.copy()
 
-    maker.paste(im     = assets_dir + '/womble.jpg',
+    maker.paste(assets_dir + '/womble.jpg',
                 size   = maker.size_with_gutters_px,
                 x_left = -maker.gutter,
                 y_top  = -maker.gutter,
