@@ -579,9 +579,11 @@ class CardMaker:
              ):
         """
         Add some text to the card.
-        x, y are relative to the top left of the card excluding the gutters.
-        The font must be an ImageFont object.
-        If given, newlines will be inserted at chrs_per_line
+        - x, y are relative to the top left of the card excluding the gutters.
+        - The font must be an ImageFont object.
+        - `spacing` is the spacing between lines, in the default unit.
+        - If given, newlines will be inserted at `chrs_per_line`.
+
         Returns the bounding box, as per
         https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.textbbox
         but in the default unit.
@@ -599,6 +601,7 @@ class CardMaker:
         y_baseline    = self.to_px(y_baseline)
         y_bottom      = self.to_px(y_bottom)
         y_descender   = self.to_px(y_descender)
+        spacing       = self.to_px(spacing)
 
         x_pos, y_pos       = None, None
         h_anchor, v_anchor = None, None
