@@ -11,6 +11,8 @@ top_margin_fronts_page = 8
 a4_short_length = 210
 a4_long_length = 297
 
+y_reflection_fudge = 1.5    # Don't know why we need this - investigate!
+
 
 class PDFSheets:
     """
@@ -258,7 +260,8 @@ class PDFSheets:
                        )
         self._gutter_marks(self.x, self.y)
         self.backs.append((back_image_or_file, self.x, self.y))
-        print(f"x_offset = {x_offset}, y_offset = {y_offset}")
+        print(f"Added this front at {self.x + x_offset}, {self.y + y_offset}")
+        print(f" and future back at {self.x}, {self.y}")
 
         if self._last_xy():
             self.add_backs_page()
@@ -287,6 +290,7 @@ class PDFSheets:
         Add a card back to the PDF, which includes the gutters.
         The x,y is the position of the card front, so we need to flip this page.
         """
+        print(f"      Doing back at {x}, {y}")
 
         # For convenience
         card_width  = self.card_width
@@ -295,7 +299,7 @@ class PDFSheets:
 
         self._inc_xy()
         x_origin = a4_long_length / 2
-        y_origin = a4_short_length / 2
+        y_origin = a4_short_length / 2 + y_reflection_fudge
 
         # We need to mirror the whole page, then mirror each card back again
         with self.pdf.mirror(origin = (x_origin, y_origin), angle = 'EAST'):
@@ -307,7 +311,18 @@ class PDFSheets:
                                w = gutter + card_width + gutter,
                                h = gutter + card_height + gutter
                                )
+                print(f"      Added back at {self.x}, {self.y}")
             self._gutter_marks(self.x, self.y)
+        """# Not mirrored, for debugging
+        reflected_im = image_or_file
+        self.pdf.image(reflected_im,
+                       x = self.x,
+                       y = self.y, 
+                       w = gutter + card_width + gutter,
+                       h = gutter + card_height + gutter
+                       )
+        print(f"      Added back at {self.x}, {self.y}")
+        self._gutter_marks(self.x, self.y)"""
 
 
     def _add_page(self):

@@ -26,6 +26,13 @@ pdf = PDFSheets(card_width  = base_maker.width_mm,
 pdf.add(card_maker_demo.simple('One!'),
         back_image_or_file = 'demos/assets/card-back.png',
         )
+for i in range(1,8):
+    pdf.add('demos/assets/Empty.png',
+            back_image_or_file = 'demos/assets/Empty.png',
+            )
+#pdf.add(card_maker_demo.simple('One!'),
+#        back_image_or_file = 'demos/assets/card-back.png',
+#        )
 #pdf.add(card_maker_demo.simple('Two!'),
 #        back_image_or_file = 'demos/assets/card-back.png',
 #        )
