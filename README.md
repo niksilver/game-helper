@@ -27,6 +27,11 @@ Demo scripts are in the `demos` directory. From the root directory here, run
 ```
 python demos/name_of_demo_script.py
 ```
+or either of these:
+```
+make image-demo
+make pdf-demo
+```
 
 
 ## Setup

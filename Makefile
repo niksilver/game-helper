@@ -10,3 +10,9 @@ test:
 
 docs:
 	python -m pdoc gamehelper/ -o ./docs
+
+image-demo:
+	python demos/image_sheet_demo.py
+
+pdf-demo:
+	python demos/image_sheet_demo.pypython demos/pdf_sheets_demo.py
