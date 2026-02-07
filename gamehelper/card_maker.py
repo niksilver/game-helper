@@ -543,7 +543,7 @@ class CardMaker:
         box_height_px = self.to_px(height)
 
         print("Entering HTML2Image...")
-        hti      = Html2Image(size = (box_width_px, box_height_px),
+        hti      = Html2Image(size = (int(box_width_px), int(box_height_px)),
                               browser = 'google-chrome',
                               )
         print("...taking screenshot...")
