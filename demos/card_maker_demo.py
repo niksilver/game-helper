@@ -171,6 +171,12 @@ def html():
                width  = maker.width / 2,
                height = 65,
                )
+    maker.html('We can include <img src="demos/assets/atom.svg" width="20" height="20" style="display: inline"/>',
+               x_left = 10,
+               y_top  = 320,
+               width  = maker.width / 2,
+               height = 100,
+               )
 
     return maker
 

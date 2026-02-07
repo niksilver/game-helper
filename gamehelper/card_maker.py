@@ -1,12 +1,12 @@
 import copy
 import io
 
-from   PIL       import Image
-from   PIL       import ImageDraw
-from   PIL       import ImageFont
-from   PIL       import ImageChops
-from   fpdf      import FPDF
-import pdf2image
+from   PIL        import Image
+from   PIL        import ImageDraw
+from   PIL        import ImageFont
+from   PIL        import ImageChops
+from   fpdf       import FPDF
+from   html2image import Html2Image
 import cairosvg
 
 
@@ -539,7 +539,23 @@ class CardMaker:
         Render some HTML content in a box of the given size.
         """
 
-        box_width_mm  = self.to_mm(width)
+        box_width_px  = self.to_px(width)
+        box_height_px = self.to_px(height)
+
+        print("Entering HTML2Image...")
+        hti      = Html2Image(size = (box_width_px, box_height_px),
+                              browser = 'google-chrome',
+                              )
+        print("...taking screenshot...")
+        out_path = hti.screenshot(html_str = content)
+        print("...taken screenshot.")
+        print(f"HTML path is {out_path}")
+        im = Image.open(out_path[0])
+        im = im.convert('RGBA')
+
+        # Old....
+
+        """box_width_mm  = self.to_mm(width)
         box_height_mm = self.to_mm(height)
 
         pdf = FPDF(format = (box_width_mm, box_height_mm))
@@ -560,7 +576,7 @@ class CardMaker:
         im = ims[0]    # First page. A PPMImage by default
 
         im_ratio = im.height / im.width
-        im = im.convert(mode = 'RGBA')
+        im = im.convert(mode = 'RGBA')"""
         self.paste(im,
                    x_left = x_left,
                    y_top = y_top,
