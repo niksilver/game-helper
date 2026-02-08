@@ -4,6 +4,8 @@ if __name__ == '__main__':
     sys.exit(0)
 
 
+import os
+
 from PIL import Image
 from PIL import ImageFont
 from gamehelper.card_maker import CardMaker
@@ -171,7 +173,10 @@ def html():
                width  = maker.width / 2,
                height = 65,
                )
-    maker.html('We can include <img src="/home/nik/dev/game-helper/demos/assets/atom.svg" width="20" height="20" style="display: inline"/>',
+
+    # Files need absolute path names
+    atom_im = os.path.abspath('demos/assets/atom.svg')
+    maker.html(f'We can include <img src="{atom_im}" width="20" height="20" style="display: inline"/>',
                x_left = 10,
                y_top  = 320,
                width  = maker.width / 2,
