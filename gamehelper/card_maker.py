@@ -536,7 +536,8 @@ class CardMaker:
             self._html2image = Html2Image(browser = 'google-chrome',
                                           )
             self._html2image.output_path = self._html2image.temp_path
-            self._html2image.browser.print_command = True
+            self._html2image.browser.print_command   = False
+            self._html2image.browser.disable_logging = True
 
         return self._html2image
 
