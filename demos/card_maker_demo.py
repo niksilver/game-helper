@@ -163,10 +163,8 @@ def html():
                x_left = 10,
                y_top  = 10,
                width  = maker.width / 2,
-               # height = maker.height / 2,
-               height = 26,
+               height = maker.height / 2,
                )
-    """
     maker.html('It will also get cut off inside its own box',
                x_left = 10,
                y_top  = 250,
@@ -179,7 +177,6 @@ def html():
                width  = maker.width / 2,
                height = 200,
                )
-    """
 
     return maker
 
