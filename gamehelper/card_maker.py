@@ -542,41 +542,15 @@ class CardMaker:
         box_width_px  = self.to_px(width)
         box_height_px = self.to_px(height)
 
-        print("Entering HTML2Image...")
         hti      = Html2Image(size = (int(box_width_px), int(box_height_px)),
                               browser = 'google-chrome',
                               )
-        print("...taking screenshot...")
         out_path = hti.screenshot(html_str = content)
-        print("...taken screenshot.")
-        print(f"HTML path is {out_path}")
         im = Image.open(out_path[0])
         im = im.convert('RGBA')
 
         # Old....
 
-        """box_width_mm  = self.to_mm(width)
-        box_height_mm = self.to_mm(height)
-
-        pdf = FPDF(format = (box_width_mm, box_height_mm))
-        pdf.add_page()
-        pdf.set_margin(0)
-        pdf.write_html(content)
-        byte_array = pdf.output()
-
-        dots_per_mm = self._width_px / self._width_mm
-        mm_per_in   = 25.4
-        dots_per_in = dots_per_mm * mm_per_in
-
-        ims = pdf2image.convert_from_bytes(pdf_file = byte_array,
-                                           transparent = True,
-                                           fmt = 'png',
-                                           dpi = dots_per_in,
-                                           )
-        im = ims[0]    # First page. A PPMImage by default
-
-        im_ratio = im.height / im.width
-        im = im.convert(mode = 'RGBA')"""
         self.paste(im,
                    x_left = x_left,
                    y_top = y_top,
