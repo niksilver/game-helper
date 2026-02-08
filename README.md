@@ -36,12 +36,22 @@ make pdf-demo
 
 ## Setup
 
-The HTML rendering uses [pdf2image](https://github.com/Belval/pdf2image),
-which in turn requires poppler to be installed. On Ubuntu:
+The HTML rendering uses [html2image](https://pypi.org/project/html2image/),
+which in turn requires Chromium or Google Chrome to be installed, which will
+run headless.
+This is what I used to get Google Chome on WSL/Ubuntu:
 ```
-sudo apt-get install poppler-utils
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt-get install -y google-chrome-stable_current_amd64.deb
+google-chrome --version
 ```
-otherwise look at [the pdf2image page](https://github.com/Belval/pdf2image).
+
+I found Google Chrome also needed other packages to run without warnings.
+In my case
+```
+sudo apt install dbus
+sudo apt install upower
+```
 
 
 ## Development
