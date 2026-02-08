@@ -52,6 +52,7 @@ In my case
 sudo apt install dbus
 sudo apt install upower
 ```
+But in this package text output from the browser is disabled.
 
 
 ## Development
