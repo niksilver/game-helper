@@ -535,6 +535,8 @@ class CardMaker:
         if not(self._html2image):
             self._html2image = Html2Image(browser = 'google-chrome',
                                           )
+            self._html2image.output_path = self._html2image.temp_path
+            self._html2image.browser.print_command = True
 
         return self._html2image
 
@@ -548,12 +550,18 @@ class CardMaker:
         Render some HTML content in a box of the given size.
         """
 
-        box_width_px  = self.to_px(width)
-        box_height_px = self.to_px(height)
+        width_px  = int(self.to_px(width))
+        height_px = int(self.to_px(height))
 
         hti      = self.get_HTML2Image()
-        hti.size = (int(box_width_px), int(box_height_px))
-        out_path = hti.screenshot(html_str = content)
+        out_path = hti.screenshot(html_str = content,
+                                  size     = (width_px, height_px),
+                                  css_str  = ['body {',
+                                              'margin: 0px;',
+                                              f'width: {width_px}px;',
+                                              '}',
+                                              ]
+                                  )
         im       = Image.open(out_path[0])
         im       = im.convert('RGBA')
 
