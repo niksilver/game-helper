@@ -62,6 +62,7 @@ class CardMaker:
             image = image.copy()
 
         self._im_with_gutters = image
+        self._html2image      = None
 
 
     def _set_unit_properties(self):
@@ -530,6 +531,14 @@ class CardMaker:
         return (resize, (int(width), int(height)))
 
 
+    def get_HTML2Image(self):
+        if not(self._html2image):
+            self._html2image = Html2Image(browser = 'google-chrome',
+                                          )
+
+        return self._html2image
+
+
     def html(self,
              content,
              x_left, y_top,
@@ -542,12 +551,11 @@ class CardMaker:
         box_width_px  = self.to_px(width)
         box_height_px = self.to_px(height)
 
-        hti      = Html2Image(size = (int(box_width_px), int(box_height_px)),
-                              browser = 'google-chrome',
-                              )
+        hti      = self.get_HTML2Image()
+        hti.size = (int(box_width_px), int(box_height_px))
         out_path = hti.screenshot(html_str = content)
-        im = Image.open(out_path[0])
-        im = im.convert('RGBA')
+        im       = Image.open(out_path[0])
+        im       = im.convert('RGBA')
 
         # Old....
 
