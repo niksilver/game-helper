@@ -11,8 +11,6 @@ top_margin_fronts_page = 8
 a4_short_length = 210
 a4_long_length = 297
 
-y_reflection_fudge = 1.5    # Don't know why we need this - investigate!
-
 
 class PDFSheets:
     """
@@ -296,7 +294,7 @@ class PDFSheets:
 
         self._inc_xy()
         x_origin = a4_long_length / 2
-        y_origin = a4_short_length / 2 + y_reflection_fudge
+        y_origin = a4_short_length / 2
 
         # We need to mirror the whole page, then mirror each card back again
         with self.pdf.mirror(origin = (x_origin, y_origin), angle = 'EAST'):
