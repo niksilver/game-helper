@@ -1,3 +1,5 @@
+import math
+
 from PIL import Image
 
 from .card_maker import CardMaker
@@ -9,13 +11,27 @@ class ImageSheet:
     """
 
     def __init__(self,
-                 card_width = None, card_height = None,
-                 columns = 1, rows = 1,
-                 colour = (255, 255, 255, 255),    # Default white background
+                 card_width  = None,
+                 card_height = None,
+                 columns     = 1,
+                 rows        = None,
+                 cards       = None,
+                 colour      = (255, 255, 255, 255),
                  ):
         """
         A sheet of cards, white by default.
+
+        Specify either 'rows' or 'cards' to set the grid height.
+        If 'cards' is specified, rows is calculated as ceil(cards / columns).
         """
+        if rows is not None and cards is not None:
+            raise ValueError("Cannot specify both 'rows' and 'cards'")
+
+        if cards is not None:
+            rows = math.ceil(cards / columns)
+        elif rows is None:
+            rows = 1
+
         self._card_width     = card_width
         self._card_height    = card_height
         self._width          = card_width * columns
@@ -25,9 +41,9 @@ class ImageSheet:
         self._current_column = 0
         self._current_row    = 0
         self._base_im = Image.new(mode  = 'RGBA',
-                                 size  = (self._width, self._height),
-                                 color = colour,
-                                 )
+                                  size  = (self._width, self._height),
+                                  color = colour,
+                                  )
 
 
     def add(self, card_or_im_or_file):
