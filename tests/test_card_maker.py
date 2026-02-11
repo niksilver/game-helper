@@ -811,3 +811,31 @@ class TestTextLineSpacing:
         assert maker.text_line_spacing    == 1.5
         assert maker.text_line_spacing_mm == 1.5
         assert maker.text_line_spacing_px == 3
+
+
+class TestFontFamilies:
+    """Tests for font_families()."""
+
+    def test_copy_preserves_font_families(self):
+        """Copying a CardMaker should preserve the font families."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_families({'MyFont': '/path/to/font.ttf'})
+        dup = maker.copy()
+        assert dup._font_families == {'MyFont': '/path/to/font.ttf'}
+
+    def test_copy_font_families_are_independent(self):
+        """Changing font families on a copy should not affect the original."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_families({'MyFont': '/path/to/font.ttf'})
+        dup = maker.copy()
+        dup.font_families({'Other': '/path/to/other.ttf'})
+        assert maker._font_families == {'MyFont': '/path/to/font.ttf'}
+        assert dup._font_families   == {'Other': '/path/to/other.ttf'}
