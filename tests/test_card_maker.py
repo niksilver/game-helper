@@ -354,6 +354,39 @@ class TestCardMaker:
         assert maker2.from_px(None) is None
 
 
+    def test_from_mm(self):
+
+        # When default unit is mm
+        maker1 = CardMaker(width    = 1000,
+                           height   = 1200,
+                           unit     = 'mm',
+                           width_px = 500,
+                           )
+        assert maker1.from_mm(1)    == 1
+        assert maker1.from_mm(10.5) == 10.5
+
+        # When default unit is px
+        maker2 = CardMaker(width    = 500,
+                           height   = 600,
+                           unit     = 'px',
+                           width_mm = 1000,  # 0.5px per mm
+                           )
+        assert maker2.from_mm(1)    == 0.5
+        assert maker2.from_mm(10.5) == 5.25
+
+        # When default unit is px with different ratio
+        maker3 = CardMaker(width    = 1000,
+                           height   = 1200,
+                           unit     = 'px',
+                           width_mm = 500,  # 2px per mm
+                           )
+        assert maker3.from_mm(1)    == 2
+        assert maker3.from_mm(10.5) == 21
+
+        # Handle None
+        assert maker3.from_mm(None) is None
+
+
     def test_need_resize_px_with_px_maker(self):
 
         # Some arbitrary CardMaker using pixels

@@ -416,6 +416,20 @@ class CardMaker:
                 return x * self._width_mm / self._width_px
 
 
+    def from_mm(self, x):
+        """
+        Convert from some number of millimetres to the default unit.
+        """
+        if x is None:
+            return None
+
+        match self._unit:
+            case 'mm':
+                return x
+            case 'px':
+                return x * self._width_px / self._width_mm
+
+
     # -------------------
 
 
