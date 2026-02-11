@@ -650,18 +650,28 @@ class CardMaker:
 
 
     def html(self,
-             content: str,
-             x_left:  float,
-             y_top:   float,
-             width:   float,
-             height:  float,
+             content:   str,
+             x_left:    float,
+             y_top:     float,
+             width:     float,
+             height:    float        = 1080,
+             h_align:   str | None   = None,
+             v_align:   str | None   = None,
+             font_size: float | None = None,
              ) -> None:
         """
         Render some HTML content in a box of the given size.
+        As usual, all lengths are in the default unit.
+
+        Rendering HTML is slower than the `text()` method if that's all you want,
+        but it may be more convenient to manage.
         """
 
-        width_px  = int(self.to_px(width))
-        height_px = int(self.to_px(height))
+        width_px    = int(self.to_px(width))
+        height_px   = int(self.to_px(height))
+        font_css    = f'font-size:      {self.to_px(font_size)};' if font_size else ""
+        h_align_css = f'text-align:     {h_align};'               if h_align else ""
+        v_align_css = f'vertical-align: {v_align};'               if v_align else ""
 
         hti      = self._get_HTML2Image()
         out_path = hti.screenshot(html_str = content,
@@ -669,13 +679,14 @@ class CardMaker:
                                   css_str  = ['body {',
                                               'margin: 0px;',
                                               f'width: {width_px}px;',
+                                              font_css,
+                                              h_align_css,
+                                              v_align_css,
                                               '}',
                                               ]
                                   )
         im       = Image.open(out_path[0])
         im       = im.convert('RGBA')
-
-        # Old....
 
         self.paste(im,
                    x_left = x_left,
