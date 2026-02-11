@@ -162,14 +162,14 @@ def html():
     content = """Oh, <i>hi</i>.
         HTML text flows over multiple lines and has a transparent background."""
     maker.html(content,
-               x_left = 10,
-               y_top  = 10,
+               left   = 10,
+               top    = 10,
                width  = maker.width / 2,
                height = maker.height / 2,
                )
     maker.html('It will also get cut off inside its own box',
-               x_left = 10,
-               y_top  = 250,
+               left   = 10,
+               top    = 250,
                width  = maker.width / 2,
                height = 65,
                )
@@ -177,8 +177,8 @@ def html():
     # Files need absolute path names
     atom_im = os.path.abspath('demos/assets/atom.svg')
     maker.html(f'We can include <img src="{atom_im}" width="20" height="20" style="display: inline"/>',
-               x_left = 10,
-               y_top  = 320,
+               left   = 10,
+               top    = 320,
                width  = maker.width / 2,
                height = 200,
                )
