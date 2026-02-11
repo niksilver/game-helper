@@ -18,6 +18,8 @@ class CardMaker:
     width  = None
     height = None
 
+    _DEFAULT_TEXT_LINE_SPACING_MM = 1.5
+
     def __init__(self,
                  width = None, height = None,
                  width_mm = None,
@@ -63,6 +65,10 @@ class CardMaker:
 
         self._im_with_gutters = image
         self._html2image      = None
+
+        # Set default text line spacing (1.5mm in the default unit)
+        default_spacing_px          = self._DEFAULT_TEXT_LINE_SPACING_MM * self._width_px / self._width_mm
+        self._text_line_spacing     = self.from_px(default_spacing_px)
 
 
     def _set_unit_properties(self):
@@ -241,6 +247,73 @@ class CardMaker:
         The gutter size of the card, in millimetres.
         """
         return self._gutter_mm
+
+
+    # ------------ Text line spacing -------------
+
+
+    @property
+    def text_line_spacing(self):
+        """
+        The line spacing for text, in the default unit.
+        """
+        return self._text_line_spacing
+
+    @text_line_spacing.setter
+    def text_line_spacing(self, value):
+        """
+        Set the line spacing for text, in the default unit.
+        Setting to None reverts to the default (1.5mm equivalent).
+        """
+        if value is None:
+            default_spacing_px      = self._DEFAULT_TEXT_LINE_SPACING_MM * self._width_px / self._width_mm
+            self._text_line_spacing = self.from_px(default_spacing_px)
+        else:
+            self._text_line_spacing = value
+
+    @property
+    def text_line_spacing_mm(self):
+        """
+        The line spacing for text, in millimetres.
+        """
+        return self.to_mm(self._text_line_spacing)
+
+    @text_line_spacing_mm.setter
+    def text_line_spacing_mm(self, value):
+        """
+        Set the line spacing for text, in millimetres.
+        Setting to None reverts to the default (1.5mm).
+        """
+        if value is None:
+            self.text_line_spacing = None
+        else:
+            match self._unit:
+                case 'mm':
+                    self._text_line_spacing = value
+                case 'px':
+                    self._text_line_spacing = value * self._width_px / self._width_mm
+
+    @property
+    def text_line_spacing_px(self):
+        """
+        The line spacing for text, in pixels.
+        """
+        return self.to_px(self._text_line_spacing)
+
+    @text_line_spacing_px.setter
+    def text_line_spacing_px(self, value):
+        """
+        Set the line spacing for text, in pixels.
+        Setting to None reverts to the default (1.5mm equivalent).
+        """
+        if value is None:
+            self.text_line_spacing = None
+        else:
+            match self._unit:
+                case 'px':
+                    self._text_line_spacing = value
+                case 'mm':
+                    self._text_line_spacing = value * self._width_mm / self._width_px
 
 
     # ------------ Size -------------

@@ -655,3 +655,126 @@ class TestCardMaker:
         im = maker.paste('tests/100x150.png', x_left = 0, y_top    = 0)    # Okay
         im = maker.paste('tests/100x150.png', x_left = 0, y_middle = 0)    # Okay
         im = maker.paste('tests/100x150.png', x_left = 0, y_bottom = 0)    # Okay
+
+
+class TestTextLineSpacing:
+    """Tests for text_line_spacing properties."""
+
+    def test_default_value_mm_unit(self):
+        """Default text_line_spacing should be 1.5mm when unit is mm."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        assert maker.text_line_spacing    == 1.5
+        assert maker.text_line_spacing_mm == 1.5
+        assert maker.text_line_spacing_px == 3  # 2px per mm
+
+    def test_default_value_px_unit(self):
+        """Default text_line_spacing should be equivalent to 1.5mm when unit is px."""
+        maker = CardMaker(width    = 200,
+                          height   = 200,
+                          unit     = 'px',
+                          width_mm = 100,  # 2px per mm
+                          )
+        assert maker.text_line_spacing    == 3  # 1.5mm * 2px/mm
+        assert maker.text_line_spacing_mm == 1.5
+        assert maker.text_line_spacing_px == 3
+
+    def test_set_text_line_spacing_mm_unit(self):
+        """Setting text_line_spacing when unit is mm."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,  # 2px per mm
+                          )
+        maker.text_line_spacing = 3
+        assert maker.text_line_spacing    == 3
+        assert maker.text_line_spacing_mm == 3
+        assert maker.text_line_spacing_px == 6
+
+    def test_set_text_line_spacing_px_unit(self):
+        """Setting text_line_spacing when unit is px."""
+        maker = CardMaker(width    = 200,
+                          height   = 200,
+                          unit     = 'px',
+                          width_mm = 100,  # 2px per mm
+                          )
+        maker.text_line_spacing = 6
+        assert maker.text_line_spacing    == 6
+        assert maker.text_line_spacing_mm == 3
+        assert maker.text_line_spacing_px == 6
+
+    def test_set_text_line_spacing_mm(self):
+        """Setting text_line_spacing_mm should update all properties."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,  # 2px per mm
+                          )
+        maker.text_line_spacing_mm = 4
+        assert maker.text_line_spacing    == 4
+        assert maker.text_line_spacing_mm == 4
+        assert maker.text_line_spacing_px == 8
+
+    def test_set_text_line_spacing_px(self):
+        """Setting text_line_spacing_px should update all properties."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,  # 2px per mm
+                          )
+        maker.text_line_spacing_px = 10
+        assert maker.text_line_spacing    == 5
+        assert maker.text_line_spacing_mm == 5
+        assert maker.text_line_spacing_px == 10
+
+    def test_set_to_none_reverts_to_default(self):
+        """Setting text_line_spacing to None reverts to 1.5mm equivalent."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,  # 2px per mm
+                          )
+        maker.text_line_spacing = 5
+        assert maker.text_line_spacing == 5
+
+        maker.text_line_spacing = None
+        assert maker.text_line_spacing    == 1.5
+        assert maker.text_line_spacing_mm == 1.5
+        assert maker.text_line_spacing_px == 3
+
+    def test_set_mm_to_none_reverts_to_default(self):
+        """Setting text_line_spacing_mm to None reverts to 1.5mm."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,  # 2px per mm
+                          )
+        maker.text_line_spacing_mm = 5
+        assert maker.text_line_spacing    == 5
+        assert maker.text_line_spacing_mm == 5
+        assert maker.text_line_spacing_px == 10
+
+        maker.text_line_spacing_mm = None
+        assert maker.text_line_spacing    == 1.5
+        assert maker.text_line_spacing_mm == 1.5
+        assert maker.text_line_spacing_px == 3
+
+    def test_set_px_to_none_reverts_to_default(self):
+        """Setting text_line_spacing_px to None reverts to 1.5mm equivalent."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,  # 2px per mm
+                          )
+        maker.text_line_spacing_px = 10
+        assert maker.text_line_spacing    == 5
+        assert maker.text_line_spacing_mm == 5
+        assert maker.text_line_spacing_px == 10
+
+        maker.text_line_spacing_px = None
+        assert maker.text_line_spacing    == 1.5
+        assert maker.text_line_spacing_mm == 1.5
+        assert maker.text_line_spacing_px == 3
