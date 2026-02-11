@@ -44,12 +44,13 @@ class CardMaker:
             raise ValueError(f"Unit must be px or mm, but got '{unit}'")
 
         self._width    = width
+        self._width_px = width_px
+        self._width_mm = width_mm
+
         self._height   = height
         self._gutter   = gutter
         self._unit     = unit
 
-        self._width_px = width_px
-        self._width_mm = width_mm
         self._set_unit_properties()
 
         if image is None:
@@ -604,7 +605,11 @@ class CardMaker:
         return (resize, (int(width), int(height)))
 
 
-    def get_HTML2Image(self):
+    def _get_HTML2Image(self):
+        """
+        Get (or set up) our reusable instance of HTML2Image, including its
+        connection to the browser.
+        """
         if not(self._html2image):
             self._html2image = Html2Image(browser = 'google-chrome',
                                           )
@@ -627,7 +632,7 @@ class CardMaker:
         width_px  = int(self.to_px(width))
         height_px = int(self.to_px(height))
 
-        hti      = self.get_HTML2Image()
+        hti      = self._get_HTML2Image()
         out_path = hti.screenshot(html_str = content,
                                   size     = (width_px, height_px),
                                   css_str  = ['body {',
