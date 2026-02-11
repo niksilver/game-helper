@@ -11,13 +11,13 @@ class ImageSheet:
     """
 
     def __init__(self,
-                 card_width  = None,
-                 card_height = None,
-                 columns     = 1,
-                 rows        = None,
-                 cards       = None,
-                 colour      = (255, 255, 255, 255),
-                 ):
+                 card_width:  int,
+                 card_height: int,
+                 columns:     int                       = 1,
+                 rows:        int | None                = None,
+                 cards:       int | None                = None,
+                 colour:      tuple[int, int, int, int] = (255, 255, 255, 255),
+                 ) -> None:
         """
         A sheet of cards, white by default.
 
@@ -46,20 +46,21 @@ class ImageSheet:
                                   )
 
     @property
-    def rows(self):
+    def rows(self) -> int:
         """The number of rows in the sheet (read-only)."""
         return self._rows
 
     @property
-    def columns(self):
+    def columns(self) -> int:
         """The number of columns in the sheet (read-only)."""
         return self._columns
 
-    def add(self, card_or_im_or_file):
+    def add(self, card: CardMaker | Image.Image | str) -> None:
         """
-        Add the next CardMaker or Image onto the sheet.
-        The CardMaker image will exclude any gutters.
-        In either case the image will scale to fit the space.
+        Add the next card onto the sheet.
+        `card` is a CardMaker, Image, or image filename.
+        The image will exclude any gutters.
+        In all cases the image will scale to fit the space.
         """
 
         slot_width  = int(self._width / self._columns)
@@ -68,16 +69,16 @@ class ImageSheet:
         y_pos       = self._current_row * slot_height
 
         im = None
-        if isinstance(card_or_im_or_file, CardMaker):
-            im = card_or_im_or_file.image()
-        elif isinstance(card_or_im_or_file, Image.Image):
-            im = card_or_im_or_file
+        if isinstance(card, CardMaker):
+            im = card.image()
+        elif isinstance(card, Image.Image):
+            im = card
             im = im.convert('RGBA')
-        elif isinstance(card_or_im_or_file, str):
-            im = Image.open(card_or_im_or_file)
+        elif isinstance(card, str):
+            im = Image.open(card)
             im = im.convert('RGBA')
         else:
-            raise TypeError(f"Can only an Image or CardMaker or str but got a {type(card_or_im_or_file)}")
+            raise TypeError(f"Can only an Image or CardMaker or str but got a {type(card)}")
 
         scaled_im   = im.resize(size = (self._card_width, self._card_height))
         self._base_im.paste(im   = scaled_im,
@@ -90,7 +91,7 @@ class ImageSheet:
             self._current_row = self._current_row + 1
 
 
-    def save(self, filename):
+    def save(self, filename: str) -> None:
         """
         Write the sheet to the named file.
         """
