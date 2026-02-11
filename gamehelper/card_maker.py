@@ -67,10 +67,11 @@ class CardMaker:
 
         self._im_with_gutters = image
         self._html2image      = None
+        self._font_families   = {}
 
         # Set default text line spacing (1.5mm in the default unit)
-        default_spacing_px          = self._DEFAULT_TEXT_LINE_SPACING_MM * self._width_px / self._width_mm
-        self._text_line_spacing     = self.from_px(default_spacing_px)
+        default_spacing_px      = self._DEFAULT_TEXT_LINE_SPACING_MM * self._width_px / self._width_mm
+        self._text_line_spacing = self.from_px(default_spacing_px)
 
 
     def _set_unit_properties(self) -> None:
@@ -634,6 +635,13 @@ class CardMaker:
         return (resize, (int(width), int(height)))
 
 
+    def font_families(self, families: dict[str, str]) -> None:
+        """
+        Register font families for use in `html()`.
+        Each key is a font family name and its value is the path to the font file.
+        """
+        self._font_families = families
+
     def _get_HTML2Image(self) -> Html2Image:
         """
         Get (or set up) our reusable instance of HTML2Image, including its
@@ -650,20 +658,23 @@ class CardMaker:
 
 
     def html(self,
-             content:   str,
-             left:      float,
-             top:       float,
-             width:     float,
-             height:    float        = None,
-             h_align:   str | None   = None,
-             v_align:   str | None   = None,
-             font_size: float | None = None,
+             content:     str,
+             left:        float,
+             top:         float,
+             width:       float,
+             height:      float        = None,
+             h_align:     str | None   = None,
+             v_align:     str | None   = None,
+             font_size:   float | None = None,
+             font_family: str | None   = None,
              ) -> None:
         """
         Render some HTML content in a box of the given size.
         As usual, all lengths are in the default unit.
         The height defaults to the maximum available from the
         `top` to the bottom of the card including the gutter.
+        `font_family` sets the document font family (must be registered
+        via `font_families()` if it's a custom font).
 
         Rendering HTML is slower than the `text()` method if that's all you want,
         but it may be more convenient to manage.
@@ -672,20 +683,28 @@ class CardMaker:
         if not(height):
             height = self.height_with_gutters - top - self.gutter
 
-        font_css    = f'font-size:      {self.to_px(font_size)};' if font_size else ""
-        h_align_css = f'text-align:     {h_align};'               if h_align else ""
-        v_align_css = f'vertical-align: {v_align};'               if v_align else ""
+        font_size_css   = f'font-size:      {self.to_px(font_size)};' if font_size   else ""
+        font_family_css = f"font-family:    '{font_family}';"         if font_family else ""
+        h_align_css     = f'text-align:     {h_align};'               if h_align     else ""
+        v_align_css     = f'vertical-align: {v_align};'               if v_align     else ""
 
-        width_px    = int(self.to_px(width))
-        height_px   = int(self.to_px(height))
+        font_face_css = []
+        for name, path in self._font_families.items():
+            font_face_css.append(f"@font-face {{ font-family: '{name}'; "
+                                 f"src: url('{path}'); }}")
+
+        width_px  = int(self.to_px(width))
+        height_px = int(self.to_px(height))
 
         hti      = self._get_HTML2Image()
         out_path = hti.screenshot(html_str = content,
                                   size     = (width_px, height_px),
-                                  css_str  = ['body {',
+                                  css_str  = font_face_css +
+                                             ['body {',
                                               'margin: 0px;',
                                               f'width: {width_px}px;',
-                                              font_css,
+                                              font_size_css,
+                                              font_family_css,
                                               h_align_css,
                                               v_align_css,
                                               '}',
