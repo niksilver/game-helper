@@ -45,6 +45,15 @@ class ImageSheet:
                                   color = colour,
                                   )
 
+    @property
+    def rows(self):
+        """The number of rows in the sheet (read-only)."""
+        return self._rows
+
+    @property
+    def columns(self):
+        """The number of columns in the sheet (read-only)."""
+        return self._columns
 
     def add(self, card_or_im_or_file):
         """
