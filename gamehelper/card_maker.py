@@ -21,14 +21,15 @@ class CardMaker:
     _DEFAULT_TEXT_LINE_SPACING_MM = 1.5
 
     def __init__(self,
-                 width = None, height = None,
-                 width_mm = None,
-                 width_px = None,
-                 gutter = 0,
-                 image = None,
-                 colour = (0, 0, 0, 0),    # Transparent background
-                 unit = None,
-                 ):
+                 width:    float,
+                 height:   float,
+                 width_mm: float | None               = None,
+                 width_px: int | None                 = None,
+                 gutter:   float                      = 0,
+                 image:    Image.Image | None         = None,
+                 colour:   tuple[int, int, int, int]  = (0, 0, 0, 0),
+                 unit:     str | None                 = None,
+                 ) -> None:
         """
         A maker for card with the given dimensions, excluding the gutter.
         (0, 0) is the top left of the card, excluding the gutter, and
@@ -72,7 +73,7 @@ class CardMaker:
         self._text_line_spacing     = self.from_px(default_spacing_px)
 
 
-    def _set_unit_properties(self):
+    def _set_unit_properties(self) -> None:
         """
         Set the various _mm and _px properties appropriately
         """
@@ -109,7 +110,7 @@ class CardMaker:
                 raise ValueError(f"Cannot convert from unit '{self._unit}'")
 
 
-    def copy(self):
+    def copy(self) -> 'CardMaker':
         """
         Create a copy of the object. Useful for when we have a base card with
         a border and we want to make lots of cards based on that
@@ -125,7 +126,7 @@ class CardMaker:
 
 
     @property
-    def width(self):
+    def width(self) -> float:
         """
         The width of the card, excluding gutters, in the default unit.
         """
@@ -133,7 +134,7 @@ class CardMaker:
 
 
     @property
-    def width_px(self):
+    def width_px(self) -> int:
         """
         The width of the card, excluding gutters, in pixels as an int.
         """
@@ -141,7 +142,7 @@ class CardMaker:
 
 
     @property
-    def width_mm(self):
+    def width_mm(self) -> float:
         """
         The width of the card, excluding gutters, in millimetres.
         """
@@ -149,7 +150,7 @@ class CardMaker:
 
 
     @property
-    def width_with_gutters(self):
+    def width_with_gutters(self) -> float:
         """
         The width of the card, including gutters, in the default unit.
         """
@@ -157,7 +158,7 @@ class CardMaker:
 
 
     @property
-    def width_with_gutters_px(self):
+    def width_with_gutters_px(self) -> int:
         """
         The width of the card, including gutters, in pixels.
         """
@@ -165,7 +166,7 @@ class CardMaker:
 
 
     @property
-    def width_with_gutters_mm(self):
+    def width_with_gutters_mm(self) -> float:
         """
         The width of the card, including gutters, in millimetres.
         """
@@ -176,7 +177,7 @@ class CardMaker:
 
 
     @property
-    def height(self):
+    def height(self) -> float:
         """
         The height of the card, excluding gutters, in the default unit.
         """
@@ -184,7 +185,7 @@ class CardMaker:
 
 
     @property
-    def height_px(self):
+    def height_px(self) -> int:
         """
         The height of the card, excluding gutters, in pixels as an int.
         """
@@ -192,7 +193,7 @@ class CardMaker:
 
 
     @property
-    def height_mm(self):
+    def height_mm(self) -> float:
         """
         The height of the card, excluding gutters, in millimetres.
         """
@@ -200,7 +201,7 @@ class CardMaker:
 
 
     @property
-    def height_with_gutters(self):
+    def height_with_gutters(self) -> float:
         """
         The height of the card, including gutters, in the default unit.
         """
@@ -208,7 +209,7 @@ class CardMaker:
 
 
     @property
-    def height_with_gutters_px(self):
+    def height_with_gutters_px(self) -> int:
         """
         The height of the card, including gutters, in pixels.
         """
@@ -216,7 +217,7 @@ class CardMaker:
 
 
     @property
-    def height_with_gutters_mm(self):
+    def height_with_gutters_mm(self) -> float:
         """
         The height of the card, including gutters, in millimetres.
         """
@@ -227,7 +228,7 @@ class CardMaker:
 
 
     @property
-    def gutter(self):
+    def gutter(self) -> float:
         """
         The gutter size of the card, in the default unit.
         """
@@ -235,7 +236,7 @@ class CardMaker:
 
 
     @property
-    def gutter_px(self):
+    def gutter_px(self) -> int:
         """
         The gutter size of the card, in pixels.
         """
@@ -243,7 +244,7 @@ class CardMaker:
 
 
     @property
-    def gutter_mm(self):
+    def gutter_mm(self) -> float:
         """
         The gutter size of the card, in millimetres.
         """
@@ -254,14 +255,14 @@ class CardMaker:
 
 
     @property
-    def text_line_spacing(self):
+    def text_line_spacing(self) -> float:
         """
         The line spacing for text, in the default unit.
         """
         return self._text_line_spacing
 
     @text_line_spacing.setter
-    def text_line_spacing(self, value):
+    def text_line_spacing(self, value: float | None) -> None:
         """
         Set the line spacing for text, in the default unit.
         Setting to None reverts to the default (1.5mm equivalent).
@@ -273,14 +274,14 @@ class CardMaker:
             self._text_line_spacing = value
 
     @property
-    def text_line_spacing_mm(self):
+    def text_line_spacing_mm(self) -> float:
         """
         The line spacing for text, in millimetres.
         """
         return self.to_mm(self._text_line_spacing)
 
     @text_line_spacing_mm.setter
-    def text_line_spacing_mm(self, value):
+    def text_line_spacing_mm(self, value: float | None) -> None:
         """
         Set the line spacing for text, in millimetres.
         Setting to None reverts to the default (1.5mm).
@@ -295,14 +296,14 @@ class CardMaker:
                     self._text_line_spacing = value * self._width_px / self._width_mm
 
     @property
-    def text_line_spacing_px(self):
+    def text_line_spacing_px(self) -> float:
         """
         The line spacing for text, in pixels.
         """
         return self.to_px(self._text_line_spacing)
 
     @text_line_spacing_px.setter
-    def text_line_spacing_px(self, value):
+    def text_line_spacing_px(self, value: float | None) -> None:
         """
         Set the line spacing for text, in pixels.
         Setting to None reverts to the default (1.5mm equivalent).
@@ -321,7 +322,7 @@ class CardMaker:
 
 
     @property
-    def size(self):
+    def size(self) -> tuple[float, float]:
         """
         The (width, height) of the card, excluding gutters, in the default unit.
         """
@@ -329,7 +330,7 @@ class CardMaker:
 
 
     @property
-    def size_px(self):
+    def size_px(self) -> tuple[int, int]:
         """
         The (width, height) of the card, excluding gutters, in pixels.
         """
@@ -337,7 +338,7 @@ class CardMaker:
 
 
     @property
-    def size_mm(self):
+    def size_mm(self) -> tuple[float, float]:
         """
         The (width, height) of the card, excluding gutters, in millimetres.
         """
@@ -345,7 +346,7 @@ class CardMaker:
 
 
     @property
-    def size_with_gutters(self):
+    def size_with_gutters(self) -> tuple[float, float]:
         """
         The (width, height) of the card, including gutters, in the default unit.
         """
@@ -354,7 +355,7 @@ class CardMaker:
 
 
     @property
-    def size_with_gutters_px(self):
+    def size_with_gutters_px(self) -> tuple[int, int]:
         """
         The (width, height) of the card, including gutters, in pixels.
         """
@@ -363,7 +364,7 @@ class CardMaker:
 
 
     @property
-    def size_with_gutters_mm(self):
+    def size_with_gutters_mm(self) -> tuple[float, float]:
         """
         The (width, height) of the card, including gutters, in millimetres.
         """
@@ -374,7 +375,7 @@ class CardMaker:
     # -------------------
 
 
-    def to_px(self, x):
+    def to_px(self, x: float | None) -> float | None:
         """
         Convert from a number in the default unit to pixels.
         """
@@ -388,7 +389,7 @@ class CardMaker:
                 return x * self._width_px / self._width_mm
 
 
-    def to_mm(self, x):
+    def to_mm(self, x: float | None) -> float | None:
         """
         Convert from a number in the default unit to mm.
         """
@@ -402,7 +403,7 @@ class CardMaker:
                 return x * self._width_mm / self._width_px
 
 
-    def from_px(self, x):
+    def from_px(self, x: float | None) -> float | None:
         """
         Convert from some number of pixels to the default unit.
         """
@@ -416,7 +417,7 @@ class CardMaker:
                 return x * self._width_mm / self._width_px
 
 
-    def from_mm(self, x):
+    def from_mm(self, x: float | None) -> float | None:
         """
         Convert from some number of millimetres to the default unit.
         """
@@ -434,9 +435,11 @@ class CardMaker:
 
 
     def load_image(self,
-                   filename,
-                   size = None, width = None, height = None,
-                   ):
+                   filename: str,
+                   size:     tuple[float, float] | None = None,
+                   width:    float | None               = None,
+                   height:   float | None               = None,
+                   ) -> Image.Image:
         """
         Load an image from a file, possibly resize it, and return it.
         If `filename` points to an SVG it will be converted to a PNG.
@@ -493,10 +496,17 @@ class CardMaker:
 
 
     def paste(self,
-              im_or_filename,
-              size = None, width = None, height = None,
-              x_left = None, x_centre = None, x_right = None,
-              y_top = None, y_middle = None, y_bottom = None):
+              im_or_filename: Image.Image | str,
+              size:           tuple[float, float] | None = None,
+              width:          float | None               = None,
+              height:         float | None               = None,
+              x_left:         float | None               = None,
+              x_centre:       float | None               = None,
+              x_right:        float | None               = None,
+              y_top:          float | None               = None,
+              y_middle:       float | None               = None,
+              y_bottom:       float | None               = None,
+              ) -> None:
         """
         Paste a given image onto the card; it will use itself as a mask.
         (0, 0) is the top left of the card, excluding the gutters.
@@ -571,7 +581,12 @@ class CardMaker:
                                     mask = im,
                                     )
 
-    def need_resize_px(self, im, size = None, width = None, height = None):
+    def need_resize_px(self,
+                       im:     Image.Image,
+                       size:   tuple[float, float] | None = None,
+                       width:  float | None               = None,
+                       height: float | None               = None,
+                       ) -> tuple[bool, tuple[int, int]]:
         """
         Decide if an image should be resized, and what its new dimensions
         should be, in pixels.
@@ -619,7 +634,7 @@ class CardMaker:
         return (resize, (int(width), int(height)))
 
 
-    def _get_HTML2Image(self):
+    def _get_HTML2Image(self) -> Html2Image:
         """
         Get (or set up) our reusable instance of HTML2Image, including its
         connection to the browser.
@@ -635,10 +650,12 @@ class CardMaker:
 
 
     def html(self,
-             content,
-             x_left, y_top,
-             width, height,
-             ):
+             content: str,
+             x_left:  float,
+             y_top:   float,
+             width:   float,
+             height:  float,
+             ) -> None:
         """
         Render some HTML content in a box of the given size.
         """
@@ -667,15 +684,21 @@ class CardMaker:
 
 
     def text(self,
-             text = "Default",
-             x_left = None, x_centre = None, x_right = None,
-             y_ascender = None, y_top = None, y_middle = None,
-             y_baseline = None, y_bottom = None, y_descender = None,
-             fill = (0, 0, 0),
-             font = None,
-             spacing = None,
-             chrs_per_line = None,
-             ):
+             text:          str                       = "Default",
+             x_left:        float | None              = None,
+             x_centre:      float | None              = None,
+             x_right:       float | None              = None,
+             y_ascender:    float | None              = None,
+             y_top:         float | None              = None,
+             y_middle:      float | None              = None,
+             y_baseline:    float | None              = None,
+             y_bottom:      float | None              = None,
+             y_descender:   float | None              = None,
+             fill:          tuple[int, int, int]      = (0, 0, 0),
+             font:          ImageFont.FreeTypeFont | None = None,
+             spacing:       float | None              = None,
+             chrs_per_line: int | None                = None,
+             ) -> tuple[float, float, float, float]:
         """
         Add some text to the card.
         - x, y are relative to the top left of the card excluding the gutters.
@@ -769,7 +792,7 @@ class CardMaker:
 
 
     @staticmethod
-    def _insert_new_lines(text, len):
+    def _insert_new_lines(text: str, len: int) -> str:
         """
         Given a text string and a line length, replace spaces with new line
         characters to fit the length.
@@ -791,7 +814,7 @@ class CardMaker:
         return text
 
 
-    def image(self):
+    def image(self) -> Image.Image:
         """
         Return the card image, excluding the gutters.
         """
@@ -802,14 +825,14 @@ class CardMaker:
                                                  ))
 
 
-    def image_with_gutters(self):
+    def image_with_gutters(self) -> Image.Image:
         """
         Return the card image, including the gutters.
         """
         return self._im_with_gutters.copy()
 
 
-    def colour_wash(self, colour):
+    def colour_wash(self, colour: tuple[int, int, int, int]) -> None:
         """
         Give the card a wash of colour.
         Transparency will be preserved.
@@ -819,7 +842,9 @@ class CardMaker:
 
 
     @staticmethod
-    def colour_wash_image(im, colour):
+    def colour_wash_image(im:     Image.Image,
+                          colour: tuple[int, int, int, int],
+                          ) -> Image.Image:
         """
         Give an image a wash of colour.
         Transparency will be preserved.
