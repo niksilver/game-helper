@@ -651,10 +651,10 @@ class CardMaker:
 
     def html(self,
              content:   str,
-             x_left:    float,
-             y_top:     float,
+             left:      float,
+             top:       float,
              width:     float,
-             height:    float        = 1080,
+             height:    float        = None,
              h_align:   str | None   = None,
              v_align:   str | None   = None,
              font_size: float | None = None,
@@ -662,16 +662,22 @@ class CardMaker:
         """
         Render some HTML content in a box of the given size.
         As usual, all lengths are in the default unit.
+        The height defaults to the maximum available from the
+        `top` to the bottom of the card including the gutter.
 
         Rendering HTML is slower than the `text()` method if that's all you want,
         but it may be more convenient to manage.
         """
 
-        width_px    = int(self.to_px(width))
-        height_px   = int(self.to_px(height))
+        if not(height):
+            height = self.height_with_gutters - top - self.gutter
+
         font_css    = f'font-size:      {self.to_px(font_size)};' if font_size else ""
         h_align_css = f'text-align:     {h_align};'               if h_align else ""
         v_align_css = f'vertical-align: {v_align};'               if v_align else ""
+
+        width_px    = int(self.to_px(width))
+        height_px   = int(self.to_px(height))
 
         hti      = self._get_HTML2Image()
         out_path = hti.screenshot(html_str = content,
@@ -689,8 +695,8 @@ class CardMaker:
         im       = im.convert('RGBA')
 
         self.paste(im,
-                   x_left = x_left,
-                   y_top = y_top,
+                   x_left = left,
+                   y_top  = top,
                    )
 
 
