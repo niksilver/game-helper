@@ -1,4 +1,5 @@
 import math
+from datetime import datetime
 
 from fpdf import FPDF
 from PIL  import Image
@@ -18,12 +19,12 @@ class PDFSheets:
     """
 
     def __init__(self,
-                 card_width,
-                 card_height,
-                 gutter = 4,
-                 shape = 'rectangle',
-                 include_backs = True,
-                 ):
+                 card_width:    float,
+                 card_height:   float,
+                 gutter:        float = 4,
+                 shape:         str   = 'rectangle',
+                 include_backs: bool  = True,
+                 ) -> None:
         """
         Create a new series of A4 sheets with cards, for printing.
         Card width and height exclude gutters.
@@ -46,7 +47,7 @@ class PDFSheets:
         self.backs = []
 
 
-    def _inc_xy(self):
+    def _inc_xy(self) -> bool:
         """
         Update the current x and y for a new card. May also trigger a
         new page.
@@ -82,7 +83,7 @@ class PDFSheets:
         return True
 
 
-    def _last_xy(self):
+    def _last_xy(self) -> bool:
         """
         True if the next card will need a new page.
         """
@@ -94,7 +95,7 @@ class PDFSheets:
         return last_on_row and last_on_column
 
 
-    def _gutter_lines(self, x, y):
+    def _gutter_lines(self, x: float, y: float) -> None:
         """
         Draw little lines around the edge of a card positioned at x, y.
         These coordinates include the gutters.
@@ -111,7 +112,7 @@ class PDFSheets:
         self._gutter_v_line(x + gutter + card_width, y,                        gutter + card_height + gutter)
 
 
-    def _gutter_h_line(self, x, y, width):
+    def _gutter_h_line(self, x: float, y: float, width: float) -> None:
         """
         Draw a row of horizontal gutter marks with top left at x, y
         (which includes the gutters).
@@ -130,7 +131,7 @@ class PDFSheets:
             offset = offset + delta
 
 
-    def _gutter_v_line(self, x, y, height):
+    def _gutter_v_line(self, x: float, y: float, height: float) -> None:
         """
         Draw a row of vertical gutter marks with top left at x, y
         (which includes the gutters).
@@ -149,7 +150,7 @@ class PDFSheets:
             offset = offset + delta
 
 
-    def _zero_gutter_edges(self, x, y):
+    def _zero_gutter_edges(self, x: float, y: float) -> None:
         """
         Draw a line around the edge of the card card positioned at x, y.
         This should only be used when the gutter size is zero (no gutter).
@@ -165,7 +166,7 @@ class PDFSheets:
         self.pdf.line(x1 = x,     y1 = y + h, x2 = x,     y2 = y)
 
 
-    def _gutter_ring(self, x, y):
+    def _gutter_ring(self, x: float, y: float) -> None:
         """
         Draw all the gutter ring at the corner of a card positioned at x, y.
         These coordinates include the gutters.
@@ -191,7 +192,7 @@ class PDFSheets:
                      )
 
 
-    def _gutter_marks(self, x, y):
+    def _gutter_marks(self, x: float, y: float) -> None:
         """
         Add the gutter marks, which will be either corners for a rectangle or
         a ring for a circle.
@@ -206,13 +207,14 @@ class PDFSheets:
             raise ValueError(f'Shape defined as unknown "{self.shape}"')
 
 
-    def _reflect(self, image_or_file):
+    def _reflect(self, image: Image.Image | str) -> Image.Image:
         """
         Reflect an image east-west.
+        `image` is an Image or image filename.
         """
-        im = image_or_file
+        im = image
         if isinstance(im, str):
-            im = Image.open(image_or_file)
+            im = Image.open(image)
 
         # Data drawn from
         # https://pillow.readthedocs.io/en/stable/reference/ImageTransform.html#PIL.ImageTransform.AffineTransform
@@ -223,32 +225,32 @@ class PDFSheets:
 
 
     def add(self,
-            card_or_im_or_file,
-            x_offset = 0,
-            y_offset = 0,
-            back_image_or_file = None,
-            ):
+            card:     CardMaker | Image.Image | str,
+            x_offset: float                         = 0,
+            y_offset: float                         = 0,
+            back:     Image.Image | str | None      = None,
+            ) -> None:
         """
         Add a card image to the sheet.
-        This may be given as a CardMaker, an Image or a filename.
+        `card` is a CardMaker, Image, or image filename.
         Its top left may be offset from the origin, which includes the gutters.
         The image will be placed in the centre of the card space, so an offset
         will reduce its size.
-        The back image/file may be None.
+        `back` is the back image (Image or filename), or None.
         """
         im_width  = self.card_width  + 2*self.gutter - 2*x_offset
         im_height = self.card_height + 2*self.gutter - 2*y_offset
         self._inc_xy()
 
         im = None
-        if isinstance(card_or_im_or_file, CardMaker):
-            im = card_or_im_or_file.image_with_gutters()
-        elif isinstance(card_or_im_or_file, Image.Image):
-            im = card_or_im_or_file
-        elif isinstance(card_or_im_or_file, str):
-            im = card_or_im_or_file
+        if isinstance(card, CardMaker):
+            im = card.image_with_gutters()
+        elif isinstance(card, Image.Image):
+            im = card
+        elif isinstance(card, str):
+            im = card
         else:
-            raise TypeError(f"Can only an Image or CardMaker or str but got a {type(card_or_im)}")
+            raise TypeError(f"Can only an Image or CardMaker or str but got a {type(card)}")
 
         self.pdf.image(im,
                        x = self.x + x_offset,
@@ -257,13 +259,13 @@ class PDFSheets:
                        h = im_height,
                        )
         self._gutter_marks(self.x, self.y)
-        self.backs.append((back_image_or_file, self.x, self.y))
+        self.backs.append((back, self.x, self.y))
 
         if self._last_xy():
             self.add_backs_page()
 
 
-    def add_backs_page(self):
+    def add_backs_page(self) -> None:
         """
         Add a new page of card backs.
         This will normally be called as part of the add() process, but the
@@ -281,9 +283,14 @@ class PDFSheets:
         self.backs = []
 
 
-    def _add_back(self, image_or_file, x, y):
+    def _add_back(self,
+                  image: Image.Image | str | None,
+                  x:     float,
+                  y:     float,
+                  ) -> None:
         """
         Add a card back to the PDF, which includes the gutters.
+        `image` is an Image, image filename, or None.
         The x,y is the position of the card front, so we need to flip this page.
         """
 
@@ -298,8 +305,8 @@ class PDFSheets:
 
         # We need to mirror the whole page, then mirror each card back again
         with self.pdf.mirror(origin = (x_origin, y_origin), angle = 'EAST'):
-            if not(image_or_file is None):
-                reflected_im = self._reflect(image_or_file)
+            if not(image is None):
+                reflected_im = self._reflect(image)
                 self.pdf.image(reflected_im,
                                x = self.x,
                                y = self.y, 
@@ -309,7 +316,7 @@ class PDFSheets:
             self._gutter_marks(self.x, self.y)
 
 
-    def _add_page(self):
+    def _add_page(self) -> None:
         """
         Add a next page to the PDF and reset our x, y position.
         """
@@ -318,10 +325,10 @@ class PDFSheets:
         self.y = top_margin_fronts_page
 
 
-    def output(self, filename, date = None):
+    def output(self, filename: str, date: datetime | None = None) -> None:
         """
         Write the PDF sheets to the given file.
-        data must be a `datetime` object and defaults to the current date
+        `date` must be a `datetime` object and defaults to the current date
         and time. Useful if we want to ensure consistency between different
         runs of the output.
         """

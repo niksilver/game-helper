@@ -15,4 +15,4 @@ image-demo:
 	python demos/image_sheet_demo.py
 
 pdf-demo:
-	python demos/image_sheet_demo.pypython demos/pdf_sheets_demo.py
+	python demos/pdf_sheets_demo.py

@@ -24,14 +24,14 @@ pdf = PDFSheets(card_width  = base_maker.width_mm,
                 )
 
 pdf.add(card_maker_demo.simple('One!'),
-        back_image_or_file = 'demos/assets/card-back.png',
+        back = 'demos/assets/card-back.png',
         )
 pdf.add(card_maker_demo.simple('Two!'),
-        back_image_or_file = 'demos/assets/card-back.png',
+        back = 'demos/assets/card-back.png',
         )
 pdf.add(card_maker_demo.svg())
 pdf.add(card_maker_demo.html(),
-        back_image_or_file = 'demos/assets/card-back.png',
+        back = 'demos/assets/card-back.png',
         )
 pdf.add(card_maker_demo.text_positioning())
 pdf.add(card_maker_demo.bounding_box_demo())

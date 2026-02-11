@@ -1,2 +1,1 @@
-- For ImageSheet, add a count param, to save working out the rows each time.
 - It should almost one line to get a table of data from the spreadsheet.
