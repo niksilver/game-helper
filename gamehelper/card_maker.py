@@ -654,7 +654,7 @@ class CardMaker:
              y_baseline = None, y_bottom = None, y_descender = None,
              fill = (0, 0, 0),
              font = None,
-             spacing = 4,
+             spacing = None,
              chrs_per_line = None,
              ):
         """
@@ -662,6 +662,7 @@ class CardMaker:
         - x, y are relative to the top left of the card excluding the gutters.
         - The font must be an ImageFont object.
         - `spacing` is the spacing between lines, in the default unit.
+          If None, defaults to `text_line_spacing`.
         - If given, newlines will be inserted at `chrs_per_line`.
 
         Returns the bounding box, as per
@@ -670,18 +671,21 @@ class CardMaker:
         This is relative to the top of the card content, excluding the gutter.
         """
 
+        if spacing is None:
+            spacing = self.text_line_spacing
+
         # Switch to pixels
 
-        x_left        = self.to_px(x_left)
-        x_centre      = self.to_px(x_centre)
-        x_right       = self.to_px(x_right)
-        y_ascender    = self.to_px(y_ascender)
-        y_top         = self.to_px(y_top)
-        y_middle      = self.to_px(y_middle)
-        y_baseline    = self.to_px(y_baseline)
-        y_bottom      = self.to_px(y_bottom)
-        y_descender   = self.to_px(y_descender)
-        spacing       = self.to_px(spacing)
+        x_left      = self.to_px(x_left)
+        x_centre    = self.to_px(x_centre)
+        x_right     = self.to_px(x_right)
+        y_ascender  = self.to_px(y_ascender)
+        y_top       = self.to_px(y_top)
+        y_middle    = self.to_px(y_middle)
+        y_baseline  = self.to_px(y_baseline)
+        y_bottom    = self.to_px(y_bottom)
+        y_descender = self.to_px(y_descender)
+        spacing     = self.to_px(spacing)
 
         x_pos, y_pos       = None, None
         h_anchor, v_anchor = None, None
