@@ -1,1 +1,2 @@
+- Make text() calculate line lengths.
 - It should almost one line to get a table of data from the spreadsheet.
