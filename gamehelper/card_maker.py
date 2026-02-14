@@ -1,13 +1,14 @@
 import copy
 import io
 
-from   PIL        import Image
-from   PIL        import ImageDraw
-from   PIL        import ImageFont
-from   PIL        import ImageChops
-from   fpdf       import FPDF
-from   html2image import Html2Image
+from   PIL              import Image
+from   PIL              import ImageDraw
+from   PIL              import ImageFont
+from   PIL              import ImageChops
+from   fpdf             import FPDF
+from   html2image       import Html2Image
 import cairosvg
+from   gamehelper.utils import optimise
 
 
 class CardMaker:
@@ -807,6 +808,8 @@ class CardMaker:
             y_pos    = y_descender + self._gutter_px
             v_anchor = "d"
 
+        chrs_per_line = self._calc_chrs_per_line(text, width, chrs_per_line,
+                                                 font, spacing)
         if chrs_per_line:
             text = self._insert_new_lines(text, chrs_per_line)
 
@@ -854,6 +857,43 @@ class CardMaker:
                 count = i - space
 
         return text
+
+
+    def _calc_chrs_per_line(self,
+                            text:          str,
+                            width:         float | None,
+                            chrs_per_line: int | None,
+                            font:          ImageFont.FreeTypeFont | None,
+                            spacing:       float,
+                            ) -> int | None:
+        """
+        Calculate the optimal `chrs_per_line` for the given text and width.
+
+        If `chrs_per_line` is given, return it as-is.
+        If `width` is given, use `optimise()` to find the best value.
+        If neither is given, return None.
+        """
+        if chrs_per_line is not None:
+            return chrs_per_line
+
+        if width is None:
+            return None
+
+        target_width_px = self.to_px(width)
+        draw            = ImageDraw.Draw(self._im_with_gutters)
+
+        def assessment(chrs):
+            wrapped    = self._insert_new_lines(text, chrs)
+            bbox       = draw.textbbox(xy      = (0, 0),
+                                       text    = wrapped,
+                                       font    = font,
+                                       spacing = spacing,
+                                       )
+            bbox_width = bbox[2] - bbox[0]
+            acceptable = bbox_width <= target_width_px
+            return (bbox_width - target_width_px, acceptable)
+
+        return optimise(len(text), assessment)
 
 
     def image(self) -> Image.Image:

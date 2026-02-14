@@ -1,6 +1,6 @@
 import pytest
 
-from PIL import Image
+from PIL import Image, ImageFont
 
 from gamehelper.card_maker import CardMaker
 
@@ -858,3 +858,20 @@ class TestText:
                        width         = 50,
                        chrs_per_line = 10,
                        )
+
+    def test_width_wraps_text_to_fit(self):
+        """When width is given, text should be wrapped to fit within that width."""
+        maker = CardMaker(width    = 500,
+                          height   = 500,
+                          unit     = 'px',
+                          width_mm = 500,
+                          )
+        font = ImageFont.load_default()
+        long_text = "This is a long piece of text that should be wrapped to fit"
+        bbox = maker.text(long_text,
+                          x_left     = 0,
+                          y_ascender = 0,
+                          font       = font,
+                          width      = 200,
+                          )
+        assert bbox[2] - bbox[0] <= 200
