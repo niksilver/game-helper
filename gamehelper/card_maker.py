@@ -840,6 +840,8 @@ class CardMaker:
         `direction` is negative (too small), positive (too large), or zero
         (just right), and `acceptable` is True if this value is good enough
         if nothing better is found.
+
+        Raises `ValueError` if no acceptable value can be found.
         """
         best_acceptable = None
 
@@ -887,7 +889,7 @@ class CardMaker:
         if best_acceptable is not None:
             return best_acceptable
 
-        return lo
+        raise ValueError("Could not find an acceptable value")
 
     @staticmethod
     def _insert_new_lines(text: str, len: int) -> str:

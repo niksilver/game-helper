@@ -909,3 +909,13 @@ class TestOptimise:
         # Initial guess within the acceptable range
         result = CardMaker.optimise(12, assess)
         assert 10 <= result <= 15
+
+    def test_negative_target_raises_error(self):
+        """When the target is negative, it can't be found and should raise ValueError."""
+        assess = self._target_assessment(-5)
+
+        with pytest.raises(ValueError):
+            CardMaker.optimise(1, assess)
+
+        with pytest.raises(ValueError):
+            CardMaker.optimise(100, assess)
