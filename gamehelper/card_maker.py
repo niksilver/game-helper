@@ -734,6 +734,7 @@ class CardMaker:
              font:          ImageFont.FreeTypeFont | None = None,
              spacing:       float | None              = None,
              chrs_per_line: int | None                = None,
+             width:         float | None              = None,
              ) -> tuple[float, float, float, float]:
         """
         Add some text to the card.
@@ -742,12 +743,17 @@ class CardMaker:
         - `spacing` is the spacing between lines, in the default unit.
           If None, defaults to `text_line_spacing`.
         - If given, newlines will be inserted at `chrs_per_line`.
+        - `width` is the desired width of the text box, in the default unit.
+          Cannot be specified together with `chrs_per_line`.
 
         Returns the bounding box, as per
         https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.textbbox
         but in the default unit.
         This is relative to the top of the card content, excluding the gutter.
         """
+
+        if width is not None and chrs_per_line is not None:
+            raise ValueError("Cannot specify both 'width' and 'chrs_per_line'")
 
         if spacing is None:
             spacing = self.text_line_spacing

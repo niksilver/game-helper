@@ -839,3 +839,22 @@ class TestFontFamilies:
         dup.font_families({'Other': '/path/to/other.ttf'})
         assert maker._font_families == {'MyFont': '/path/to/font.ttf'}
         assert dup._font_families   == {'Other': '/path/to/other.ttf'}
+
+
+class TestText:
+    """Tests for the text() method."""
+
+    def test_width_and_chrs_per_line_raises_error(self):
+        """Should raise an error if both width and chrs_per_line are specified."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'px',
+                          width_mm = 100,
+                          )
+        with pytest.raises(ValueError):
+            maker.text("Hello world",
+                       x_left        = 0,
+                       y_top         = 0,
+                       width         = 50,
+                       chrs_per_line = 10,
+                       )
