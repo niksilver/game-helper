@@ -843,6 +843,7 @@ class CardMaker:
 
         Raises `ValueError` if no acceptable value can be found.
         """
+        MAX_EXPANSIONS  = 64
         best_acceptable = None
 
         def assess_and_track(value):
@@ -864,7 +865,9 @@ class CardMaker:
         if direction < 0:
             # Too small — expand upward
             hi = max(initial_guess * 2, 1)
-            while assess_and_track(hi) < 0:
+            for _ in range(MAX_EXPANSIONS):
+                if assess_and_track(hi) >= 0:
+                    break
                 hi = hi * 2
         else:
             # Too large — expand downward

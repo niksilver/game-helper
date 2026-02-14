@@ -919,3 +919,14 @@ class TestOptimise:
 
         with pytest.raises(ValueError):
             CardMaker.optimise(100, assess)
+
+    def test_always_too_small_raises_error(self):
+        """When assessment always says too small, should raise ValueError."""
+        def assess(value):
+            return (-1, False)
+
+        with pytest.raises(ValueError):
+            CardMaker.optimise(1, assess)
+
+        with pytest.raises(ValueError):
+            CardMaker.optimise(100, assess)
