@@ -834,6 +834,7 @@ class CardMaker:
                  ) -> int:
         """
         Find an optimal integer value by trial and error.
+        Only searches values >= 1.
 
         `assessment` takes a value and returns `(direction, acceptable)` where
         `direction` is negative (too small), positive (too large), or zero
