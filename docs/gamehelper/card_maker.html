@@ -76,24 +76,6 @@
                                 <a class="variable" href="#CardMaker.height_with_gutters_mm">height_with_gutters_mm</a>
                         </li>
                         <li>
-                                <a class="variable" href="#CardMaker.gutter">gutter</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#CardMaker.gutter_px">gutter_px</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#CardMaker.gutter_mm">gutter_mm</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#CardMaker.text_line_spacing">text_line_spacing</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#CardMaker.text_line_spacing_mm">text_line_spacing_mm</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#CardMaker.text_line_spacing_px">text_line_spacing_px</a>
-                        </li>
-                        <li>
                                 <a class="variable" href="#CardMaker.size">size</a>
                         </li>
                         <li>
@@ -110,6 +92,24 @@
                         </li>
                         <li>
                                 <a class="variable" href="#CardMaker.size_with_gutters_mm">size_with_gutters_mm</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CardMaker.gutter">gutter</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CardMaker.gutter_px">gutter_px</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CardMaker.gutter_mm">gutter_mm</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CardMaker.text_line_spacing">text_line_spacing</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CardMaker.text_line_spacing_mm">text_line_spacing_mm</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CardMaker.text_line_spacing_px">text_line_spacing_px</a>
                         </li>
                         <li>
                                 <a class="function" href="#CardMaker.to_px">to_px</a>
@@ -405,155 +405,155 @@
 </span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span>
 </span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a>
 </span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a>
-</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>    <span class="c1"># ------------ Gutter -------------</span>
+</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>    <span class="c1"># ------------ Size -------------</span>
 </span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a>
 </span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a>
 </span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a>    <span class="nd">@property</span>
-</span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 </span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a><span class="sd">        The gutter size of the card, in the default unit.</span>
+</span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in the default unit.</span>
 </span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span>
+</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span><span class="p">)</span>
 </span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a>
 </span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>
 </span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>    <span class="nd">@property</span>
-</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 </span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a><span class="sd">        The gutter size of the card, in pixels.</span>
+</span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in pixels.</span>
 </span><span id="L-244"><a href="#L-244"><span class="linenos">244</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span>
+</span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span><span class="p">)</span>
 </span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>
 </span><span id="L-247"><a href="#L-247"><span class="linenos">247</span></a>
 </span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a>    <span class="nd">@property</span>
-</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 </span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a><span class="sd">        The gutter size of the card, in millimetres.</span>
+</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in millimetres.</span>
 </span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span>
+</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span><span class="p">)</span>
 </span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a>
 </span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>
-</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a>    <span class="c1"># ------------ Text line spacing -------------</span>
-</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a>
-</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a>
-</span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a>    <span class="nd">@property</span>
-</span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a><span class="sd">        The line spacing for text, in the default unit.</span>
-</span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span>
-</span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>
-</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a>    <span class="nd">@text_line_spacing</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-268"><a href="#L-268"><span class="linenos">268</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a><span class="sd">        Set the line spacing for text, in the default unit.</span>
-</span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a><span class="sd">        Setting to None reverts to the default (1.5mm equivalent).</span>
-</span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a>            <span class="n">default_spacing_px</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULT_TEXT_LINE_SPACING_MM</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span>
-</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_px</span><span class="p">(</span><span class="n">default_spacing_px</span><span class="p">)</span>
-</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
-</span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a>
-</span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a>    <span class="nd">@property</span>
-</span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a><span class="sd">        The line spacing for text, in millimetres.</span>
-</span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_mm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
+</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a>    <span class="nd">@property</span>
+</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a><span class="sd">        The (width, height) of the card, including gutters, in the default unit.</span>
+</span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">,</span>
+</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">)</span>
+</span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a>
+</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a>
+</span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>    <span class="nd">@property</span>
+</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+</span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-268"><a href="#L-268"><span class="linenos">268</span></a><span class="sd">        The (width, height) of the card, including gutters, in pixels.</span>
+</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">,</span>
+</span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">)</span>
+</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a>
+</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a>
+</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a>    <span class="nd">@property</span>
+</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a><span class="sd">        The (width, height) of the card, including gutters, in millimetres.</span>
+</span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">,</span>
+</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">)</span>
+</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a>
+</span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a>
+</span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>    <span class="c1"># -------------------</span>
 </span><span id="L-284"><a href="#L-284"><span class="linenos">284</span></a>
-</span><span id="L-285"><a href="#L-285"><span class="linenos">285</span></a>    <span class="nd">@text_line_spacing_mm</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a><span class="sd">        Set the line spacing for text, in millimetres.</span>
-</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a><span class="sd">        Setting to None reverts to the default (1.5mm).</span>
-</span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-291"><a href="#L-291"><span class="linenos">291</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">text_line_spacing</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-293"><a href="#L-293"><span class="linenos">293</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="L-294"><a href="#L-294"><span class="linenos">294</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span>
-</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a>                <span class="k">case</span> <span class="s1">&#39;mm&#39;</span><span class="p">:</span>
-</span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
-</span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a>                <span class="k">case</span> <span class="s1">&#39;px&#39;</span><span class="p">:</span>
-</span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span>
-</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a>
-</span><span id="L-300"><a href="#L-300"><span class="linenos">300</span></a>    <span class="nd">@property</span>
-</span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a><span class="sd">        The line spacing for text, in pixels.</span>
-</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_px</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
-</span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a>
-</span><span id="L-307"><a href="#L-307"><span class="linenos">307</span></a>    <span class="nd">@text_line_spacing_px</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="L-308"><a href="#L-308"><span class="linenos">308</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-309"><a href="#L-309"><span class="linenos">309</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-310"><a href="#L-310"><span class="linenos">310</span></a><span class="sd">        Set the line spacing for text, in pixels.</span>
-</span><span id="L-311"><a href="#L-311"><span class="linenos">311</span></a><span class="sd">        Setting to None reverts to the default (1.5mm equivalent).</span>
-</span><span id="L-312"><a href="#L-312"><span class="linenos">312</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-313"><a href="#L-313"><span class="linenos">313</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-314"><a href="#L-314"><span class="linenos">314</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">text_line_spacing</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-315"><a href="#L-315"><span class="linenos">315</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="L-316"><a href="#L-316"><span class="linenos">316</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span>
-</span><span id="L-317"><a href="#L-317"><span class="linenos">317</span></a>                <span class="k">case</span> <span class="s1">&#39;px&#39;</span><span class="p">:</span>
-</span><span id="L-318"><a href="#L-318"><span class="linenos">318</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
-</span><span id="L-319"><a href="#L-319"><span class="linenos">319</span></a>                <span class="k">case</span> <span class="s1">&#39;mm&#39;</span><span class="p">:</span>
-</span><span id="L-320"><a href="#L-320"><span class="linenos">320</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span>
-</span><span id="L-321"><a href="#L-321"><span class="linenos">321</span></a>
+</span><span id="L-285"><a href="#L-285"><span class="linenos">285</span></a>
+</span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a>    <span class="c1"># ------------ Gutter -------------</span>
+</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a>
+</span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a>
+</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a>    <span class="nd">@property</span>
+</span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="L-291"><a href="#L-291"><span class="linenos">291</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a><span class="sd">        The gutter size of the card, in the default unit.</span>
+</span><span id="L-293"><a href="#L-293"><span class="linenos">293</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-294"><a href="#L-294"><span class="linenos">294</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span>
+</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a>
+</span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a>
+</span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a>    <span class="nd">@property</span>
+</span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-300"><a href="#L-300"><span class="linenos">300</span></a><span class="sd">        The gutter size of the card, in pixels.</span>
+</span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span>
+</span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a>
+</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a>
+</span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>    <span class="nd">@property</span>
+</span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="L-307"><a href="#L-307"><span class="linenos">307</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-308"><a href="#L-308"><span class="linenos">308</span></a><span class="sd">        The gutter size of the card, in millimetres.</span>
+</span><span id="L-309"><a href="#L-309"><span class="linenos">309</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-310"><a href="#L-310"><span class="linenos">310</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span>
+</span><span id="L-311"><a href="#L-311"><span class="linenos">311</span></a>
+</span><span id="L-312"><a href="#L-312"><span class="linenos">312</span></a>
+</span><span id="L-313"><a href="#L-313"><span class="linenos">313</span></a>    <span class="c1"># ------------ Text line spacing -------------</span>
+</span><span id="L-314"><a href="#L-314"><span class="linenos">314</span></a>
+</span><span id="L-315"><a href="#L-315"><span class="linenos">315</span></a>
+</span><span id="L-316"><a href="#L-316"><span class="linenos">316</span></a>    <span class="nd">@property</span>
+</span><span id="L-317"><a href="#L-317"><span class="linenos">317</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="L-318"><a href="#L-318"><span class="linenos">318</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-319"><a href="#L-319"><span class="linenos">319</span></a><span class="sd">        The line spacing for text, in the default unit.</span>
+</span><span id="L-320"><a href="#L-320"><span class="linenos">320</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-321"><a href="#L-321"><span class="linenos">321</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span>
 </span><span id="L-322"><a href="#L-322"><span class="linenos">322</span></a>
-</span><span id="L-323"><a href="#L-323"><span class="linenos">323</span></a>    <span class="c1"># ------------ Size -------------</span>
-</span><span id="L-324"><a href="#L-324"><span class="linenos">324</span></a>
-</span><span id="L-325"><a href="#L-325"><span class="linenos">325</span></a>
-</span><span id="L-326"><a href="#L-326"><span class="linenos">326</span></a>    <span class="nd">@property</span>
-</span><span id="L-327"><a href="#L-327"><span class="linenos">327</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="L-328"><a href="#L-328"><span class="linenos">328</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-329"><a href="#L-329"><span class="linenos">329</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in the default unit.</span>
-</span><span id="L-330"><a href="#L-330"><span class="linenos">330</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-331"><a href="#L-331"><span class="linenos">331</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span><span class="p">)</span>
-</span><span id="L-332"><a href="#L-332"><span class="linenos">332</span></a>
-</span><span id="L-333"><a href="#L-333"><span class="linenos">333</span></a>
-</span><span id="L-334"><a href="#L-334"><span class="linenos">334</span></a>    <span class="nd">@property</span>
-</span><span id="L-335"><a href="#L-335"><span class="linenos">335</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-</span><span id="L-336"><a href="#L-336"><span class="linenos">336</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-337"><a href="#L-337"><span class="linenos">337</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in pixels.</span>
-</span><span id="L-338"><a href="#L-338"><span class="linenos">338</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-339"><a href="#L-339"><span class="linenos">339</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span><span class="p">)</span>
-</span><span id="L-340"><a href="#L-340"><span class="linenos">340</span></a>
+</span><span id="L-323"><a href="#L-323"><span class="linenos">323</span></a>    <span class="nd">@text_line_spacing</span><span class="o">.</span><span class="n">setter</span>
+</span><span id="L-324"><a href="#L-324"><span class="linenos">324</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-325"><a href="#L-325"><span class="linenos">325</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-326"><a href="#L-326"><span class="linenos">326</span></a><span class="sd">        Set the line spacing for text, in the default unit.</span>
+</span><span id="L-327"><a href="#L-327"><span class="linenos">327</span></a><span class="sd">        Setting to None reverts to the default (1.5mm equivalent).</span>
+</span><span id="L-328"><a href="#L-328"><span class="linenos">328</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-329"><a href="#L-329"><span class="linenos">329</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-330"><a href="#L-330"><span class="linenos">330</span></a>            <span class="n">default_spacing_px</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULT_TEXT_LINE_SPACING_MM</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span>
+</span><span id="L-331"><a href="#L-331"><span class="linenos">331</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_px</span><span class="p">(</span><span class="n">default_spacing_px</span><span class="p">)</span>
+</span><span id="L-332"><a href="#L-332"><span class="linenos">332</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="L-333"><a href="#L-333"><span class="linenos">333</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
+</span><span id="L-334"><a href="#L-334"><span class="linenos">334</span></a>
+</span><span id="L-335"><a href="#L-335"><span class="linenos">335</span></a>    <span class="nd">@property</span>
+</span><span id="L-336"><a href="#L-336"><span class="linenos">336</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="L-337"><a href="#L-337"><span class="linenos">337</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-338"><a href="#L-338"><span class="linenos">338</span></a><span class="sd">        The line spacing for text, in millimetres.</span>
+</span><span id="L-339"><a href="#L-339"><span class="linenos">339</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-340"><a href="#L-340"><span class="linenos">340</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_mm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
 </span><span id="L-341"><a href="#L-341"><span class="linenos">341</span></a>
-</span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>    <span class="nd">@property</span>
-</span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>    <span class="nd">@text_line_spacing_mm</span><span class="o">.</span><span class="n">setter</span>
+</span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in millimetres.</span>
-</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span><span class="p">)</span>
-</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>
-</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a>
-</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>    <span class="nd">@property</span>
-</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a><span class="sd">        The (width, height) of the card, including gutters, in the default unit.</span>
-</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">,</span>
-</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">)</span>
-</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>
-</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>
-</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>    <span class="nd">@property</span>
-</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a><span class="sd">        The (width, height) of the card, including gutters, in pixels.</span>
-</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">,</span>
-</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">)</span>
-</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a>
-</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a>
-</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a>    <span class="nd">@property</span>
-</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a><span class="sd">        The (width, height) of the card, including gutters, in millimetres.</span>
-</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">,</span>
-</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">)</span>
-</span><span id="L-375"><a href="#L-375"><span class="linenos">375</span></a>
-</span><span id="L-376"><a href="#L-376"><span class="linenos">376</span></a>
-</span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a>    <span class="c1"># -------------------</span>
+</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a><span class="sd">        Set the line spacing for text, in millimetres.</span>
+</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a><span class="sd">        Setting to None reverts to the default (1.5mm).</span>
+</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">text_line_spacing</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span>
+</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>                <span class="k">case</span> <span class="s1">&#39;mm&#39;</span><span class="p">:</span>
+</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
+</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a>                <span class="k">case</span> <span class="s1">&#39;px&#39;</span><span class="p">:</span>
+</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span>
+</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>
+</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>    <span class="nd">@property</span>
+</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a><span class="sd">        The line spacing for text, in pixels.</span>
+</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_px</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
+</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a>
+</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a>    <span class="nd">@text_line_spacing_px</span><span class="o">.</span><span class="n">setter</span>
+</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a><span class="sd">        Set the line spacing for text, in pixels.</span>
+</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a><span class="sd">        Setting to None reverts to the default (1.5mm equivalent).</span>
+</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">text_line_spacing</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span>
+</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a>                <span class="k">case</span> <span class="s1">&#39;px&#39;</span><span class="p">:</span>
+</span><span id="L-375"><a href="#L-375"><span class="linenos">375</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
+</span><span id="L-376"><a href="#L-376"><span class="linenos">376</span></a>                <span class="k">case</span> <span class="s1">&#39;mm&#39;</span><span class="p">:</span>
+</span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span>
 </span><span id="L-378"><a href="#L-378"><span class="linenos">378</span></a>
 </span><span id="L-379"><a href="#L-379"><span class="linenos">379</span></a>
 </span><span id="L-380"><a href="#L-380"><span class="linenos">380</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_px</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -1355,155 +1355,155 @@
 </span><span id="CardMaker-227"><a href="#CardMaker-227"><span class="linenos">227</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span>
 </span><span id="CardMaker-228"><a href="#CardMaker-228"><span class="linenos">228</span></a>
 </span><span id="CardMaker-229"><a href="#CardMaker-229"><span class="linenos">229</span></a>
-</span><span id="CardMaker-230"><a href="#CardMaker-230"><span class="linenos">230</span></a>    <span class="c1"># ------------ Gutter -------------</span>
+</span><span id="CardMaker-230"><a href="#CardMaker-230"><span class="linenos">230</span></a>    <span class="c1"># ------------ Size -------------</span>
 </span><span id="CardMaker-231"><a href="#CardMaker-231"><span class="linenos">231</span></a>
 </span><span id="CardMaker-232"><a href="#CardMaker-232"><span class="linenos">232</span></a>
 </span><span id="CardMaker-233"><a href="#CardMaker-233"><span class="linenos">233</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-234"><a href="#CardMaker-234"><span class="linenos">234</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker-234"><a href="#CardMaker-234"><span class="linenos">234</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 </span><span id="CardMaker-235"><a href="#CardMaker-235"><span class="linenos">235</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-236"><a href="#CardMaker-236"><span class="linenos">236</span></a><span class="sd">        The gutter size of the card, in the default unit.</span>
+</span><span id="CardMaker-236"><a href="#CardMaker-236"><span class="linenos">236</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in the default unit.</span>
 </span><span id="CardMaker-237"><a href="#CardMaker-237"><span class="linenos">237</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-238"><a href="#CardMaker-238"><span class="linenos">238</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span>
+</span><span id="CardMaker-238"><a href="#CardMaker-238"><span class="linenos">238</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span><span class="p">)</span>
 </span><span id="CardMaker-239"><a href="#CardMaker-239"><span class="linenos">239</span></a>
 </span><span id="CardMaker-240"><a href="#CardMaker-240"><span class="linenos">240</span></a>
 </span><span id="CardMaker-241"><a href="#CardMaker-241"><span class="linenos">241</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-242"><a href="#CardMaker-242"><span class="linenos">242</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="CardMaker-242"><a href="#CardMaker-242"><span class="linenos">242</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 </span><span id="CardMaker-243"><a href="#CardMaker-243"><span class="linenos">243</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-244"><a href="#CardMaker-244"><span class="linenos">244</span></a><span class="sd">        The gutter size of the card, in pixels.</span>
+</span><span id="CardMaker-244"><a href="#CardMaker-244"><span class="linenos">244</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in pixels.</span>
 </span><span id="CardMaker-245"><a href="#CardMaker-245"><span class="linenos">245</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-246"><a href="#CardMaker-246"><span class="linenos">246</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span>
+</span><span id="CardMaker-246"><a href="#CardMaker-246"><span class="linenos">246</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span><span class="p">)</span>
 </span><span id="CardMaker-247"><a href="#CardMaker-247"><span class="linenos">247</span></a>
 </span><span id="CardMaker-248"><a href="#CardMaker-248"><span class="linenos">248</span></a>
 </span><span id="CardMaker-249"><a href="#CardMaker-249"><span class="linenos">249</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-250"><a href="#CardMaker-250"><span class="linenos">250</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker-250"><a href="#CardMaker-250"><span class="linenos">250</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 </span><span id="CardMaker-251"><a href="#CardMaker-251"><span class="linenos">251</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-252"><a href="#CardMaker-252"><span class="linenos">252</span></a><span class="sd">        The gutter size of the card, in millimetres.</span>
+</span><span id="CardMaker-252"><a href="#CardMaker-252"><span class="linenos">252</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in millimetres.</span>
 </span><span id="CardMaker-253"><a href="#CardMaker-253"><span class="linenos">253</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-254"><a href="#CardMaker-254"><span class="linenos">254</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span>
+</span><span id="CardMaker-254"><a href="#CardMaker-254"><span class="linenos">254</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span><span class="p">)</span>
 </span><span id="CardMaker-255"><a href="#CardMaker-255"><span class="linenos">255</span></a>
 </span><span id="CardMaker-256"><a href="#CardMaker-256"><span class="linenos">256</span></a>
-</span><span id="CardMaker-257"><a href="#CardMaker-257"><span class="linenos">257</span></a>    <span class="c1"># ------------ Text line spacing -------------</span>
-</span><span id="CardMaker-258"><a href="#CardMaker-258"><span class="linenos">258</span></a>
-</span><span id="CardMaker-259"><a href="#CardMaker-259"><span class="linenos">259</span></a>
-</span><span id="CardMaker-260"><a href="#CardMaker-260"><span class="linenos">260</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-261"><a href="#CardMaker-261"><span class="linenos">261</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="CardMaker-262"><a href="#CardMaker-262"><span class="linenos">262</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-263"><a href="#CardMaker-263"><span class="linenos">263</span></a><span class="sd">        The line spacing for text, in the default unit.</span>
-</span><span id="CardMaker-264"><a href="#CardMaker-264"><span class="linenos">264</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-265"><a href="#CardMaker-265"><span class="linenos">265</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span>
-</span><span id="CardMaker-266"><a href="#CardMaker-266"><span class="linenos">266</span></a>
-</span><span id="CardMaker-267"><a href="#CardMaker-267"><span class="linenos">267</span></a>    <span class="nd">@text_line_spacing</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="CardMaker-268"><a href="#CardMaker-268"><span class="linenos">268</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="CardMaker-269"><a href="#CardMaker-269"><span class="linenos">269</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-270"><a href="#CardMaker-270"><span class="linenos">270</span></a><span class="sd">        Set the line spacing for text, in the default unit.</span>
-</span><span id="CardMaker-271"><a href="#CardMaker-271"><span class="linenos">271</span></a><span class="sd">        Setting to None reverts to the default (1.5mm equivalent).</span>
-</span><span id="CardMaker-272"><a href="#CardMaker-272"><span class="linenos">272</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-273"><a href="#CardMaker-273"><span class="linenos">273</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="CardMaker-274"><a href="#CardMaker-274"><span class="linenos">274</span></a>            <span class="n">default_spacing_px</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULT_TEXT_LINE_SPACING_MM</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span>
-</span><span id="CardMaker-275"><a href="#CardMaker-275"><span class="linenos">275</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_px</span><span class="p">(</span><span class="n">default_spacing_px</span><span class="p">)</span>
-</span><span id="CardMaker-276"><a href="#CardMaker-276"><span class="linenos">276</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="CardMaker-277"><a href="#CardMaker-277"><span class="linenos">277</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
-</span><span id="CardMaker-278"><a href="#CardMaker-278"><span class="linenos">278</span></a>
-</span><span id="CardMaker-279"><a href="#CardMaker-279"><span class="linenos">279</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-280"><a href="#CardMaker-280"><span class="linenos">280</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="CardMaker-281"><a href="#CardMaker-281"><span class="linenos">281</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-282"><a href="#CardMaker-282"><span class="linenos">282</span></a><span class="sd">        The line spacing for text, in millimetres.</span>
-</span><span id="CardMaker-283"><a href="#CardMaker-283"><span class="linenos">283</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-284"><a href="#CardMaker-284"><span class="linenos">284</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_mm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
+</span><span id="CardMaker-257"><a href="#CardMaker-257"><span class="linenos">257</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker-258"><a href="#CardMaker-258"><span class="linenos">258</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="CardMaker-259"><a href="#CardMaker-259"><span class="linenos">259</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-260"><a href="#CardMaker-260"><span class="linenos">260</span></a><span class="sd">        The (width, height) of the card, including gutters, in the default unit.</span>
+</span><span id="CardMaker-261"><a href="#CardMaker-261"><span class="linenos">261</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-262"><a href="#CardMaker-262"><span class="linenos">262</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">,</span>
+</span><span id="CardMaker-263"><a href="#CardMaker-263"><span class="linenos">263</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">)</span>
+</span><span id="CardMaker-264"><a href="#CardMaker-264"><span class="linenos">264</span></a>
+</span><span id="CardMaker-265"><a href="#CardMaker-265"><span class="linenos">265</span></a>
+</span><span id="CardMaker-266"><a href="#CardMaker-266"><span class="linenos">266</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker-267"><a href="#CardMaker-267"><span class="linenos">267</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+</span><span id="CardMaker-268"><a href="#CardMaker-268"><span class="linenos">268</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-269"><a href="#CardMaker-269"><span class="linenos">269</span></a><span class="sd">        The (width, height) of the card, including gutters, in pixels.</span>
+</span><span id="CardMaker-270"><a href="#CardMaker-270"><span class="linenos">270</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-271"><a href="#CardMaker-271"><span class="linenos">271</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">,</span>
+</span><span id="CardMaker-272"><a href="#CardMaker-272"><span class="linenos">272</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">)</span>
+</span><span id="CardMaker-273"><a href="#CardMaker-273"><span class="linenos">273</span></a>
+</span><span id="CardMaker-274"><a href="#CardMaker-274"><span class="linenos">274</span></a>
+</span><span id="CardMaker-275"><a href="#CardMaker-275"><span class="linenos">275</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker-276"><a href="#CardMaker-276"><span class="linenos">276</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="CardMaker-277"><a href="#CardMaker-277"><span class="linenos">277</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-278"><a href="#CardMaker-278"><span class="linenos">278</span></a><span class="sd">        The (width, height) of the card, including gutters, in millimetres.</span>
+</span><span id="CardMaker-279"><a href="#CardMaker-279"><span class="linenos">279</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-280"><a href="#CardMaker-280"><span class="linenos">280</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">,</span>
+</span><span id="CardMaker-281"><a href="#CardMaker-281"><span class="linenos">281</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">)</span>
+</span><span id="CardMaker-282"><a href="#CardMaker-282"><span class="linenos">282</span></a>
+</span><span id="CardMaker-283"><a href="#CardMaker-283"><span class="linenos">283</span></a>
+</span><span id="CardMaker-284"><a href="#CardMaker-284"><span class="linenos">284</span></a>    <span class="c1"># -------------------</span>
 </span><span id="CardMaker-285"><a href="#CardMaker-285"><span class="linenos">285</span></a>
-</span><span id="CardMaker-286"><a href="#CardMaker-286"><span class="linenos">286</span></a>    <span class="nd">@text_line_spacing_mm</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="CardMaker-287"><a href="#CardMaker-287"><span class="linenos">287</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="CardMaker-288"><a href="#CardMaker-288"><span class="linenos">288</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-289"><a href="#CardMaker-289"><span class="linenos">289</span></a><span class="sd">        Set the line spacing for text, in millimetres.</span>
-</span><span id="CardMaker-290"><a href="#CardMaker-290"><span class="linenos">290</span></a><span class="sd">        Setting to None reverts to the default (1.5mm).</span>
-</span><span id="CardMaker-291"><a href="#CardMaker-291"><span class="linenos">291</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-292"><a href="#CardMaker-292"><span class="linenos">292</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="CardMaker-293"><a href="#CardMaker-293"><span class="linenos">293</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">text_line_spacing</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="CardMaker-294"><a href="#CardMaker-294"><span class="linenos">294</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="CardMaker-295"><a href="#CardMaker-295"><span class="linenos">295</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span>
-</span><span id="CardMaker-296"><a href="#CardMaker-296"><span class="linenos">296</span></a>                <span class="k">case</span> <span class="s1">&#39;mm&#39;</span><span class="p">:</span>
-</span><span id="CardMaker-297"><a href="#CardMaker-297"><span class="linenos">297</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
-</span><span id="CardMaker-298"><a href="#CardMaker-298"><span class="linenos">298</span></a>                <span class="k">case</span> <span class="s1">&#39;px&#39;</span><span class="p">:</span>
-</span><span id="CardMaker-299"><a href="#CardMaker-299"><span class="linenos">299</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span>
-</span><span id="CardMaker-300"><a href="#CardMaker-300"><span class="linenos">300</span></a>
-</span><span id="CardMaker-301"><a href="#CardMaker-301"><span class="linenos">301</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-302"><a href="#CardMaker-302"><span class="linenos">302</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="CardMaker-303"><a href="#CardMaker-303"><span class="linenos">303</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-304"><a href="#CardMaker-304"><span class="linenos">304</span></a><span class="sd">        The line spacing for text, in pixels.</span>
-</span><span id="CardMaker-305"><a href="#CardMaker-305"><span class="linenos">305</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-306"><a href="#CardMaker-306"><span class="linenos">306</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_px</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
-</span><span id="CardMaker-307"><a href="#CardMaker-307"><span class="linenos">307</span></a>
-</span><span id="CardMaker-308"><a href="#CardMaker-308"><span class="linenos">308</span></a>    <span class="nd">@text_line_spacing_px</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="CardMaker-309"><a href="#CardMaker-309"><span class="linenos">309</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="CardMaker-310"><a href="#CardMaker-310"><span class="linenos">310</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-311"><a href="#CardMaker-311"><span class="linenos">311</span></a><span class="sd">        Set the line spacing for text, in pixels.</span>
-</span><span id="CardMaker-312"><a href="#CardMaker-312"><span class="linenos">312</span></a><span class="sd">        Setting to None reverts to the default (1.5mm equivalent).</span>
-</span><span id="CardMaker-313"><a href="#CardMaker-313"><span class="linenos">313</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-314"><a href="#CardMaker-314"><span class="linenos">314</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="CardMaker-315"><a href="#CardMaker-315"><span class="linenos">315</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">text_line_spacing</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="CardMaker-316"><a href="#CardMaker-316"><span class="linenos">316</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="CardMaker-317"><a href="#CardMaker-317"><span class="linenos">317</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span>
-</span><span id="CardMaker-318"><a href="#CardMaker-318"><span class="linenos">318</span></a>                <span class="k">case</span> <span class="s1">&#39;px&#39;</span><span class="p">:</span>
-</span><span id="CardMaker-319"><a href="#CardMaker-319"><span class="linenos">319</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
-</span><span id="CardMaker-320"><a href="#CardMaker-320"><span class="linenos">320</span></a>                <span class="k">case</span> <span class="s1">&#39;mm&#39;</span><span class="p">:</span>
-</span><span id="CardMaker-321"><a href="#CardMaker-321"><span class="linenos">321</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span>
-</span><span id="CardMaker-322"><a href="#CardMaker-322"><span class="linenos">322</span></a>
+</span><span id="CardMaker-286"><a href="#CardMaker-286"><span class="linenos">286</span></a>
+</span><span id="CardMaker-287"><a href="#CardMaker-287"><span class="linenos">287</span></a>    <span class="c1"># ------------ Gutter -------------</span>
+</span><span id="CardMaker-288"><a href="#CardMaker-288"><span class="linenos">288</span></a>
+</span><span id="CardMaker-289"><a href="#CardMaker-289"><span class="linenos">289</span></a>
+</span><span id="CardMaker-290"><a href="#CardMaker-290"><span class="linenos">290</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker-291"><a href="#CardMaker-291"><span class="linenos">291</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker-292"><a href="#CardMaker-292"><span class="linenos">292</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-293"><a href="#CardMaker-293"><span class="linenos">293</span></a><span class="sd">        The gutter size of the card, in the default unit.</span>
+</span><span id="CardMaker-294"><a href="#CardMaker-294"><span class="linenos">294</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-295"><a href="#CardMaker-295"><span class="linenos">295</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span>
+</span><span id="CardMaker-296"><a href="#CardMaker-296"><span class="linenos">296</span></a>
+</span><span id="CardMaker-297"><a href="#CardMaker-297"><span class="linenos">297</span></a>
+</span><span id="CardMaker-298"><a href="#CardMaker-298"><span class="linenos">298</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker-299"><a href="#CardMaker-299"><span class="linenos">299</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="CardMaker-300"><a href="#CardMaker-300"><span class="linenos">300</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-301"><a href="#CardMaker-301"><span class="linenos">301</span></a><span class="sd">        The gutter size of the card, in pixels.</span>
+</span><span id="CardMaker-302"><a href="#CardMaker-302"><span class="linenos">302</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-303"><a href="#CardMaker-303"><span class="linenos">303</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span>
+</span><span id="CardMaker-304"><a href="#CardMaker-304"><span class="linenos">304</span></a>
+</span><span id="CardMaker-305"><a href="#CardMaker-305"><span class="linenos">305</span></a>
+</span><span id="CardMaker-306"><a href="#CardMaker-306"><span class="linenos">306</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker-307"><a href="#CardMaker-307"><span class="linenos">307</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker-308"><a href="#CardMaker-308"><span class="linenos">308</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-309"><a href="#CardMaker-309"><span class="linenos">309</span></a><span class="sd">        The gutter size of the card, in millimetres.</span>
+</span><span id="CardMaker-310"><a href="#CardMaker-310"><span class="linenos">310</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-311"><a href="#CardMaker-311"><span class="linenos">311</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span>
+</span><span id="CardMaker-312"><a href="#CardMaker-312"><span class="linenos">312</span></a>
+</span><span id="CardMaker-313"><a href="#CardMaker-313"><span class="linenos">313</span></a>
+</span><span id="CardMaker-314"><a href="#CardMaker-314"><span class="linenos">314</span></a>    <span class="c1"># ------------ Text line spacing -------------</span>
+</span><span id="CardMaker-315"><a href="#CardMaker-315"><span class="linenos">315</span></a>
+</span><span id="CardMaker-316"><a href="#CardMaker-316"><span class="linenos">316</span></a>
+</span><span id="CardMaker-317"><a href="#CardMaker-317"><span class="linenos">317</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker-318"><a href="#CardMaker-318"><span class="linenos">318</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker-319"><a href="#CardMaker-319"><span class="linenos">319</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-320"><a href="#CardMaker-320"><span class="linenos">320</span></a><span class="sd">        The line spacing for text, in the default unit.</span>
+</span><span id="CardMaker-321"><a href="#CardMaker-321"><span class="linenos">321</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-322"><a href="#CardMaker-322"><span class="linenos">322</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span>
 </span><span id="CardMaker-323"><a href="#CardMaker-323"><span class="linenos">323</span></a>
-</span><span id="CardMaker-324"><a href="#CardMaker-324"><span class="linenos">324</span></a>    <span class="c1"># ------------ Size -------------</span>
-</span><span id="CardMaker-325"><a href="#CardMaker-325"><span class="linenos">325</span></a>
-</span><span id="CardMaker-326"><a href="#CardMaker-326"><span class="linenos">326</span></a>
-</span><span id="CardMaker-327"><a href="#CardMaker-327"><span class="linenos">327</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-328"><a href="#CardMaker-328"><span class="linenos">328</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="CardMaker-329"><a href="#CardMaker-329"><span class="linenos">329</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-330"><a href="#CardMaker-330"><span class="linenos">330</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in the default unit.</span>
-</span><span id="CardMaker-331"><a href="#CardMaker-331"><span class="linenos">331</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-332"><a href="#CardMaker-332"><span class="linenos">332</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span><span class="p">)</span>
-</span><span id="CardMaker-333"><a href="#CardMaker-333"><span class="linenos">333</span></a>
-</span><span id="CardMaker-334"><a href="#CardMaker-334"><span class="linenos">334</span></a>
-</span><span id="CardMaker-335"><a href="#CardMaker-335"><span class="linenos">335</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-336"><a href="#CardMaker-336"><span class="linenos">336</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-</span><span id="CardMaker-337"><a href="#CardMaker-337"><span class="linenos">337</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-338"><a href="#CardMaker-338"><span class="linenos">338</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in pixels.</span>
-</span><span id="CardMaker-339"><a href="#CardMaker-339"><span class="linenos">339</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-340"><a href="#CardMaker-340"><span class="linenos">340</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span><span class="p">)</span>
-</span><span id="CardMaker-341"><a href="#CardMaker-341"><span class="linenos">341</span></a>
+</span><span id="CardMaker-324"><a href="#CardMaker-324"><span class="linenos">324</span></a>    <span class="nd">@text_line_spacing</span><span class="o">.</span><span class="n">setter</span>
+</span><span id="CardMaker-325"><a href="#CardMaker-325"><span class="linenos">325</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="CardMaker-326"><a href="#CardMaker-326"><span class="linenos">326</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-327"><a href="#CardMaker-327"><span class="linenos">327</span></a><span class="sd">        Set the line spacing for text, in the default unit.</span>
+</span><span id="CardMaker-328"><a href="#CardMaker-328"><span class="linenos">328</span></a><span class="sd">        Setting to None reverts to the default (1.5mm equivalent).</span>
+</span><span id="CardMaker-329"><a href="#CardMaker-329"><span class="linenos">329</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-330"><a href="#CardMaker-330"><span class="linenos">330</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="CardMaker-331"><a href="#CardMaker-331"><span class="linenos">331</span></a>            <span class="n">default_spacing_px</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULT_TEXT_LINE_SPACING_MM</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span>
+</span><span id="CardMaker-332"><a href="#CardMaker-332"><span class="linenos">332</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_px</span><span class="p">(</span><span class="n">default_spacing_px</span><span class="p">)</span>
+</span><span id="CardMaker-333"><a href="#CardMaker-333"><span class="linenos">333</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="CardMaker-334"><a href="#CardMaker-334"><span class="linenos">334</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
+</span><span id="CardMaker-335"><a href="#CardMaker-335"><span class="linenos">335</span></a>
+</span><span id="CardMaker-336"><a href="#CardMaker-336"><span class="linenos">336</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker-337"><a href="#CardMaker-337"><span class="linenos">337</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker-338"><a href="#CardMaker-338"><span class="linenos">338</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-339"><a href="#CardMaker-339"><span class="linenos">339</span></a><span class="sd">        The line spacing for text, in millimetres.</span>
+</span><span id="CardMaker-340"><a href="#CardMaker-340"><span class="linenos">340</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-341"><a href="#CardMaker-341"><span class="linenos">341</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_mm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
 </span><span id="CardMaker-342"><a href="#CardMaker-342"><span class="linenos">342</span></a>
-</span><span id="CardMaker-343"><a href="#CardMaker-343"><span class="linenos">343</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-344"><a href="#CardMaker-344"><span class="linenos">344</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="CardMaker-343"><a href="#CardMaker-343"><span class="linenos">343</span></a>    <span class="nd">@text_line_spacing_mm</span><span class="o">.</span><span class="n">setter</span>
+</span><span id="CardMaker-344"><a href="#CardMaker-344"><span class="linenos">344</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="CardMaker-345"><a href="#CardMaker-345"><span class="linenos">345</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-346"><a href="#CardMaker-346"><span class="linenos">346</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in millimetres.</span>
-</span><span id="CardMaker-347"><a href="#CardMaker-347"><span class="linenos">347</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-348"><a href="#CardMaker-348"><span class="linenos">348</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span><span class="p">)</span>
-</span><span id="CardMaker-349"><a href="#CardMaker-349"><span class="linenos">349</span></a>
-</span><span id="CardMaker-350"><a href="#CardMaker-350"><span class="linenos">350</span></a>
-</span><span id="CardMaker-351"><a href="#CardMaker-351"><span class="linenos">351</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-352"><a href="#CardMaker-352"><span class="linenos">352</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="CardMaker-353"><a href="#CardMaker-353"><span class="linenos">353</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-354"><a href="#CardMaker-354"><span class="linenos">354</span></a><span class="sd">        The (width, height) of the card, including gutters, in the default unit.</span>
-</span><span id="CardMaker-355"><a href="#CardMaker-355"><span class="linenos">355</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-356"><a href="#CardMaker-356"><span class="linenos">356</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">,</span>
-</span><span id="CardMaker-357"><a href="#CardMaker-357"><span class="linenos">357</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">)</span>
-</span><span id="CardMaker-358"><a href="#CardMaker-358"><span class="linenos">358</span></a>
-</span><span id="CardMaker-359"><a href="#CardMaker-359"><span class="linenos">359</span></a>
-</span><span id="CardMaker-360"><a href="#CardMaker-360"><span class="linenos">360</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-361"><a href="#CardMaker-361"><span class="linenos">361</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-</span><span id="CardMaker-362"><a href="#CardMaker-362"><span class="linenos">362</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-363"><a href="#CardMaker-363"><span class="linenos">363</span></a><span class="sd">        The (width, height) of the card, including gutters, in pixels.</span>
-</span><span id="CardMaker-364"><a href="#CardMaker-364"><span class="linenos">364</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-365"><a href="#CardMaker-365"><span class="linenos">365</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">,</span>
-</span><span id="CardMaker-366"><a href="#CardMaker-366"><span class="linenos">366</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">)</span>
-</span><span id="CardMaker-367"><a href="#CardMaker-367"><span class="linenos">367</span></a>
-</span><span id="CardMaker-368"><a href="#CardMaker-368"><span class="linenos">368</span></a>
-</span><span id="CardMaker-369"><a href="#CardMaker-369"><span class="linenos">369</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker-370"><a href="#CardMaker-370"><span class="linenos">370</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="CardMaker-371"><a href="#CardMaker-371"><span class="linenos">371</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker-372"><a href="#CardMaker-372"><span class="linenos">372</span></a><span class="sd">        The (width, height) of the card, including gutters, in millimetres.</span>
-</span><span id="CardMaker-373"><a href="#CardMaker-373"><span class="linenos">373</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker-374"><a href="#CardMaker-374"><span class="linenos">374</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">,</span>
-</span><span id="CardMaker-375"><a href="#CardMaker-375"><span class="linenos">375</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">)</span>
-</span><span id="CardMaker-376"><a href="#CardMaker-376"><span class="linenos">376</span></a>
-</span><span id="CardMaker-377"><a href="#CardMaker-377"><span class="linenos">377</span></a>
-</span><span id="CardMaker-378"><a href="#CardMaker-378"><span class="linenos">378</span></a>    <span class="c1"># -------------------</span>
+</span><span id="CardMaker-346"><a href="#CardMaker-346"><span class="linenos">346</span></a><span class="sd">        Set the line spacing for text, in millimetres.</span>
+</span><span id="CardMaker-347"><a href="#CardMaker-347"><span class="linenos">347</span></a><span class="sd">        Setting to None reverts to the default (1.5mm).</span>
+</span><span id="CardMaker-348"><a href="#CardMaker-348"><span class="linenos">348</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-349"><a href="#CardMaker-349"><span class="linenos">349</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="CardMaker-350"><a href="#CardMaker-350"><span class="linenos">350</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">text_line_spacing</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="CardMaker-351"><a href="#CardMaker-351"><span class="linenos">351</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="CardMaker-352"><a href="#CardMaker-352"><span class="linenos">352</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span>
+</span><span id="CardMaker-353"><a href="#CardMaker-353"><span class="linenos">353</span></a>                <span class="k">case</span> <span class="s1">&#39;mm&#39;</span><span class="p">:</span>
+</span><span id="CardMaker-354"><a href="#CardMaker-354"><span class="linenos">354</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
+</span><span id="CardMaker-355"><a href="#CardMaker-355"><span class="linenos">355</span></a>                <span class="k">case</span> <span class="s1">&#39;px&#39;</span><span class="p">:</span>
+</span><span id="CardMaker-356"><a href="#CardMaker-356"><span class="linenos">356</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span>
+</span><span id="CardMaker-357"><a href="#CardMaker-357"><span class="linenos">357</span></a>
+</span><span id="CardMaker-358"><a href="#CardMaker-358"><span class="linenos">358</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker-359"><a href="#CardMaker-359"><span class="linenos">359</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker-360"><a href="#CardMaker-360"><span class="linenos">360</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-361"><a href="#CardMaker-361"><span class="linenos">361</span></a><span class="sd">        The line spacing for text, in pixels.</span>
+</span><span id="CardMaker-362"><a href="#CardMaker-362"><span class="linenos">362</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-363"><a href="#CardMaker-363"><span class="linenos">363</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_px</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
+</span><span id="CardMaker-364"><a href="#CardMaker-364"><span class="linenos">364</span></a>
+</span><span id="CardMaker-365"><a href="#CardMaker-365"><span class="linenos">365</span></a>    <span class="nd">@text_line_spacing_px</span><span class="o">.</span><span class="n">setter</span>
+</span><span id="CardMaker-366"><a href="#CardMaker-366"><span class="linenos">366</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="CardMaker-367"><a href="#CardMaker-367"><span class="linenos">367</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker-368"><a href="#CardMaker-368"><span class="linenos">368</span></a><span class="sd">        Set the line spacing for text, in pixels.</span>
+</span><span id="CardMaker-369"><a href="#CardMaker-369"><span class="linenos">369</span></a><span class="sd">        Setting to None reverts to the default (1.5mm equivalent).</span>
+</span><span id="CardMaker-370"><a href="#CardMaker-370"><span class="linenos">370</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker-371"><a href="#CardMaker-371"><span class="linenos">371</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="CardMaker-372"><a href="#CardMaker-372"><span class="linenos">372</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">text_line_spacing</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="CardMaker-373"><a href="#CardMaker-373"><span class="linenos">373</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="CardMaker-374"><a href="#CardMaker-374"><span class="linenos">374</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span>
+</span><span id="CardMaker-375"><a href="#CardMaker-375"><span class="linenos">375</span></a>                <span class="k">case</span> <span class="s1">&#39;px&#39;</span><span class="p">:</span>
+</span><span id="CardMaker-376"><a href="#CardMaker-376"><span class="linenos">376</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span>
+</span><span id="CardMaker-377"><a href="#CardMaker-377"><span class="linenos">377</span></a>                <span class="k">case</span> <span class="s1">&#39;mm&#39;</span><span class="p">:</span>
+</span><span id="CardMaker-378"><a href="#CardMaker-378"><span class="linenos">378</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span>
 </span><span id="CardMaker-379"><a href="#CardMaker-379"><span class="linenos">379</span></a>
 </span><span id="CardMaker-380"><a href="#CardMaker-380"><span class="linenos">380</span></a>
 </span><span id="CardMaker-381"><a href="#CardMaker-381"><span class="linenos">381</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_px</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -2463,144 +2463,6 @@ a border and we want to make lots of cards based on that</p>
 
 
                             </div>
-                            <div id="CardMaker.gutter" class="classattr">
-                                        <input id="CardMaker.gutter-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr variable">
-            <span class="name">gutter</span><span class="annotation">: float</span>
-
-                <label class="view-source-button" for="CardMaker.gutter-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#CardMaker.gutter"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.gutter-233"><a href="#CardMaker.gutter-233"><span class="linenos">233</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.gutter-234"><a href="#CardMaker.gutter-234"><span class="linenos">234</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="CardMaker.gutter-235"><a href="#CardMaker.gutter-235"><span class="linenos">235</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.gutter-236"><a href="#CardMaker.gutter-236"><span class="linenos">236</span></a><span class="sd">        The gutter size of the card, in the default unit.</span>
-</span><span id="CardMaker.gutter-237"><a href="#CardMaker.gutter-237"><span class="linenos">237</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.gutter-238"><a href="#CardMaker.gutter-238"><span class="linenos">238</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>The gutter size of the card, in the default unit.</p>
-</div>
-
-
-                            </div>
-                            <div id="CardMaker.gutter_px" class="classattr">
-                                        <input id="CardMaker.gutter_px-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr variable">
-            <span class="name">gutter_px</span><span class="annotation">: int</span>
-
-                <label class="view-source-button" for="CardMaker.gutter_px-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#CardMaker.gutter_px"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.gutter_px-241"><a href="#CardMaker.gutter_px-241"><span class="linenos">241</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.gutter_px-242"><a href="#CardMaker.gutter_px-242"><span class="linenos">242</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="CardMaker.gutter_px-243"><a href="#CardMaker.gutter_px-243"><span class="linenos">243</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.gutter_px-244"><a href="#CardMaker.gutter_px-244"><span class="linenos">244</span></a><span class="sd">        The gutter size of the card, in pixels.</span>
-</span><span id="CardMaker.gutter_px-245"><a href="#CardMaker.gutter_px-245"><span class="linenos">245</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.gutter_px-246"><a href="#CardMaker.gutter_px-246"><span class="linenos">246</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>The gutter size of the card, in pixels.</p>
-</div>
-
-
-                            </div>
-                            <div id="CardMaker.gutter_mm" class="classattr">
-                                        <input id="CardMaker.gutter_mm-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr variable">
-            <span class="name">gutter_mm</span><span class="annotation">: float</span>
-
-                <label class="view-source-button" for="CardMaker.gutter_mm-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#CardMaker.gutter_mm"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.gutter_mm-249"><a href="#CardMaker.gutter_mm-249"><span class="linenos">249</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.gutter_mm-250"><a href="#CardMaker.gutter_mm-250"><span class="linenos">250</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="CardMaker.gutter_mm-251"><a href="#CardMaker.gutter_mm-251"><span class="linenos">251</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.gutter_mm-252"><a href="#CardMaker.gutter_mm-252"><span class="linenos">252</span></a><span class="sd">        The gutter size of the card, in millimetres.</span>
-</span><span id="CardMaker.gutter_mm-253"><a href="#CardMaker.gutter_mm-253"><span class="linenos">253</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.gutter_mm-254"><a href="#CardMaker.gutter_mm-254"><span class="linenos">254</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>The gutter size of the card, in millimetres.</p>
-</div>
-
-
-                            </div>
-                            <div id="CardMaker.text_line_spacing" class="classattr">
-                                        <input id="CardMaker.text_line_spacing-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr variable">
-            <span class="name">text_line_spacing</span><span class="annotation">: float</span>
-
-                <label class="view-source-button" for="CardMaker.text_line_spacing-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#CardMaker.text_line_spacing"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.text_line_spacing-260"><a href="#CardMaker.text_line_spacing-260"><span class="linenos">260</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.text_line_spacing-261"><a href="#CardMaker.text_line_spacing-261"><span class="linenos">261</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="CardMaker.text_line_spacing-262"><a href="#CardMaker.text_line_spacing-262"><span class="linenos">262</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.text_line_spacing-263"><a href="#CardMaker.text_line_spacing-263"><span class="linenos">263</span></a><span class="sd">        The line spacing for text, in the default unit.</span>
-</span><span id="CardMaker.text_line_spacing-264"><a href="#CardMaker.text_line_spacing-264"><span class="linenos">264</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.text_line_spacing-265"><a href="#CardMaker.text_line_spacing-265"><span class="linenos">265</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>The line spacing for text, in the default unit.</p>
-</div>
-
-
-                            </div>
-                            <div id="CardMaker.text_line_spacing_mm" class="classattr">
-                                        <input id="CardMaker.text_line_spacing_mm-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr variable">
-            <span class="name">text_line_spacing_mm</span><span class="annotation">: float</span>
-
-                <label class="view-source-button" for="CardMaker.text_line_spacing_mm-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#CardMaker.text_line_spacing_mm"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.text_line_spacing_mm-279"><a href="#CardMaker.text_line_spacing_mm-279"><span class="linenos">279</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.text_line_spacing_mm-280"><a href="#CardMaker.text_line_spacing_mm-280"><span class="linenos">280</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="CardMaker.text_line_spacing_mm-281"><a href="#CardMaker.text_line_spacing_mm-281"><span class="linenos">281</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.text_line_spacing_mm-282"><a href="#CardMaker.text_line_spacing_mm-282"><span class="linenos">282</span></a><span class="sd">        The line spacing for text, in millimetres.</span>
-</span><span id="CardMaker.text_line_spacing_mm-283"><a href="#CardMaker.text_line_spacing_mm-283"><span class="linenos">283</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.text_line_spacing_mm-284"><a href="#CardMaker.text_line_spacing_mm-284"><span class="linenos">284</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_mm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>The line spacing for text, in millimetres.</p>
-</div>
-
-
-                            </div>
-                            <div id="CardMaker.text_line_spacing_px" class="classattr">
-                                        <input id="CardMaker.text_line_spacing_px-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr variable">
-            <span class="name">text_line_spacing_px</span><span class="annotation">: float</span>
-
-                <label class="view-source-button" for="CardMaker.text_line_spacing_px-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#CardMaker.text_line_spacing_px"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.text_line_spacing_px-301"><a href="#CardMaker.text_line_spacing_px-301"><span class="linenos">301</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.text_line_spacing_px-302"><a href="#CardMaker.text_line_spacing_px-302"><span class="linenos">302</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="CardMaker.text_line_spacing_px-303"><a href="#CardMaker.text_line_spacing_px-303"><span class="linenos">303</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.text_line_spacing_px-304"><a href="#CardMaker.text_line_spacing_px-304"><span class="linenos">304</span></a><span class="sd">        The line spacing for text, in pixels.</span>
-</span><span id="CardMaker.text_line_spacing_px-305"><a href="#CardMaker.text_line_spacing_px-305"><span class="linenos">305</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.text_line_spacing_px-306"><a href="#CardMaker.text_line_spacing_px-306"><span class="linenos">306</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_px</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>The line spacing for text, in pixels.</p>
-</div>
-
-
-                            </div>
                             <div id="CardMaker.size" class="classattr">
                                         <input id="CardMaker.size-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr variable">
@@ -2610,12 +2472,12 @@ a border and we want to make lots of cards based on that</p>
 
     </div>
     <a class="headerlink" href="#CardMaker.size"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size-327"><a href="#CardMaker.size-327"><span class="linenos">327</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.size-328"><a href="#CardMaker.size-328"><span class="linenos">328</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="CardMaker.size-329"><a href="#CardMaker.size-329"><span class="linenos">329</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.size-330"><a href="#CardMaker.size-330"><span class="linenos">330</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in the default unit.</span>
-</span><span id="CardMaker.size-331"><a href="#CardMaker.size-331"><span class="linenos">331</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.size-332"><a href="#CardMaker.size-332"><span class="linenos">332</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size-233"><a href="#CardMaker.size-233"><span class="linenos">233</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.size-234"><a href="#CardMaker.size-234"><span class="linenos">234</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="CardMaker.size-235"><a href="#CardMaker.size-235"><span class="linenos">235</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.size-236"><a href="#CardMaker.size-236"><span class="linenos">236</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in the default unit.</span>
+</span><span id="CardMaker.size-237"><a href="#CardMaker.size-237"><span class="linenos">237</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.size-238"><a href="#CardMaker.size-238"><span class="linenos">238</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2633,12 +2495,12 @@ a border and we want to make lots of cards based on that</p>
 
     </div>
     <a class="headerlink" href="#CardMaker.size_px"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_px-335"><a href="#CardMaker.size_px-335"><span class="linenos">335</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.size_px-336"><a href="#CardMaker.size_px-336"><span class="linenos">336</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-</span><span id="CardMaker.size_px-337"><a href="#CardMaker.size_px-337"><span class="linenos">337</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_px-338"><a href="#CardMaker.size_px-338"><span class="linenos">338</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in pixels.</span>
-</span><span id="CardMaker.size_px-339"><a href="#CardMaker.size_px-339"><span class="linenos">339</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_px-340"><a href="#CardMaker.size_px-340"><span class="linenos">340</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_px-241"><a href="#CardMaker.size_px-241"><span class="linenos">241</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.size_px-242"><a href="#CardMaker.size_px-242"><span class="linenos">242</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+</span><span id="CardMaker.size_px-243"><a href="#CardMaker.size_px-243"><span class="linenos">243</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_px-244"><a href="#CardMaker.size_px-244"><span class="linenos">244</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in pixels.</span>
+</span><span id="CardMaker.size_px-245"><a href="#CardMaker.size_px-245"><span class="linenos">245</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_px-246"><a href="#CardMaker.size_px-246"><span class="linenos">246</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2656,12 +2518,12 @@ a border and we want to make lots of cards based on that</p>
 
     </div>
     <a class="headerlink" href="#CardMaker.size_mm"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_mm-343"><a href="#CardMaker.size_mm-343"><span class="linenos">343</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.size_mm-344"><a href="#CardMaker.size_mm-344"><span class="linenos">344</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="CardMaker.size_mm-345"><a href="#CardMaker.size_mm-345"><span class="linenos">345</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_mm-346"><a href="#CardMaker.size_mm-346"><span class="linenos">346</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in millimetres.</span>
-</span><span id="CardMaker.size_mm-347"><a href="#CardMaker.size_mm-347"><span class="linenos">347</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_mm-348"><a href="#CardMaker.size_mm-348"><span class="linenos">348</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_mm-249"><a href="#CardMaker.size_mm-249"><span class="linenos">249</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.size_mm-250"><a href="#CardMaker.size_mm-250"><span class="linenos">250</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="CardMaker.size_mm-251"><a href="#CardMaker.size_mm-251"><span class="linenos">251</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_mm-252"><a href="#CardMaker.size_mm-252"><span class="linenos">252</span></a><span class="sd">        The (width, height) of the card, excluding gutters, in millimetres.</span>
+</span><span id="CardMaker.size_mm-253"><a href="#CardMaker.size_mm-253"><span class="linenos">253</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_mm-254"><a href="#CardMaker.size_mm-254"><span class="linenos">254</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2679,13 +2541,13 @@ a border and we want to make lots of cards based on that</p>
 
     </div>
     <a class="headerlink" href="#CardMaker.size_with_gutters"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_with_gutters-351"><a href="#CardMaker.size_with_gutters-351"><span class="linenos">351</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.size_with_gutters-352"><a href="#CardMaker.size_with_gutters-352"><span class="linenos">352</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="CardMaker.size_with_gutters-353"><a href="#CardMaker.size_with_gutters-353"><span class="linenos">353</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_with_gutters-354"><a href="#CardMaker.size_with_gutters-354"><span class="linenos">354</span></a><span class="sd">        The (width, height) of the card, including gutters, in the default unit.</span>
-</span><span id="CardMaker.size_with_gutters-355"><a href="#CardMaker.size_with_gutters-355"><span class="linenos">355</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_with_gutters-356"><a href="#CardMaker.size_with_gutters-356"><span class="linenos">356</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">,</span>
-</span><span id="CardMaker.size_with_gutters-357"><a href="#CardMaker.size_with_gutters-357"><span class="linenos">357</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_with_gutters-257"><a href="#CardMaker.size_with_gutters-257"><span class="linenos">257</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.size_with_gutters-258"><a href="#CardMaker.size_with_gutters-258"><span class="linenos">258</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="CardMaker.size_with_gutters-259"><a href="#CardMaker.size_with_gutters-259"><span class="linenos">259</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_with_gutters-260"><a href="#CardMaker.size_with_gutters-260"><span class="linenos">260</span></a><span class="sd">        The (width, height) of the card, including gutters, in the default unit.</span>
+</span><span id="CardMaker.size_with_gutters-261"><a href="#CardMaker.size_with_gutters-261"><span class="linenos">261</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_with_gutters-262"><a href="#CardMaker.size_with_gutters-262"><span class="linenos">262</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">,</span>
+</span><span id="CardMaker.size_with_gutters-263"><a href="#CardMaker.size_with_gutters-263"><span class="linenos">263</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2703,13 +2565,13 @@ a border and we want to make lots of cards based on that</p>
 
     </div>
     <a class="headerlink" href="#CardMaker.size_with_gutters_px"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_with_gutters_px-360"><a href="#CardMaker.size_with_gutters_px-360"><span class="linenos">360</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.size_with_gutters_px-361"><a href="#CardMaker.size_with_gutters_px-361"><span class="linenos">361</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-</span><span id="CardMaker.size_with_gutters_px-362"><a href="#CardMaker.size_with_gutters_px-362"><span class="linenos">362</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_with_gutters_px-363"><a href="#CardMaker.size_with_gutters_px-363"><span class="linenos">363</span></a><span class="sd">        The (width, height) of the card, including gutters, in pixels.</span>
-</span><span id="CardMaker.size_with_gutters_px-364"><a href="#CardMaker.size_with_gutters_px-364"><span class="linenos">364</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_with_gutters_px-365"><a href="#CardMaker.size_with_gutters_px-365"><span class="linenos">365</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">,</span>
-</span><span id="CardMaker.size_with_gutters_px-366"><a href="#CardMaker.size_with_gutters_px-366"><span class="linenos">366</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_with_gutters_px-266"><a href="#CardMaker.size_with_gutters_px-266"><span class="linenos">266</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.size_with_gutters_px-267"><a href="#CardMaker.size_with_gutters_px-267"><span class="linenos">267</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+</span><span id="CardMaker.size_with_gutters_px-268"><a href="#CardMaker.size_with_gutters_px-268"><span class="linenos">268</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_with_gutters_px-269"><a href="#CardMaker.size_with_gutters_px-269"><span class="linenos">269</span></a><span class="sd">        The (width, height) of the card, including gutters, in pixels.</span>
+</span><span id="CardMaker.size_with_gutters_px-270"><a href="#CardMaker.size_with_gutters_px-270"><span class="linenos">270</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_with_gutters_px-271"><a href="#CardMaker.size_with_gutters_px-271"><span class="linenos">271</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">,</span>
+</span><span id="CardMaker.size_with_gutters_px-272"><a href="#CardMaker.size_with_gutters_px-272"><span class="linenos">272</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_px</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2727,17 +2589,155 @@ a border and we want to make lots of cards based on that</p>
 
     </div>
     <a class="headerlink" href="#CardMaker.size_with_gutters_mm"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_with_gutters_mm-369"><a href="#CardMaker.size_with_gutters_mm-369"><span class="linenos">369</span></a>    <span class="nd">@property</span>
-</span><span id="CardMaker.size_with_gutters_mm-370"><a href="#CardMaker.size_with_gutters_mm-370"><span class="linenos">370</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-</span><span id="CardMaker.size_with_gutters_mm-371"><a href="#CardMaker.size_with_gutters_mm-371"><span class="linenos">371</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_with_gutters_mm-372"><a href="#CardMaker.size_with_gutters_mm-372"><span class="linenos">372</span></a><span class="sd">        The (width, height) of the card, including gutters, in millimetres.</span>
-</span><span id="CardMaker.size_with_gutters_mm-373"><a href="#CardMaker.size_with_gutters_mm-373"><span class="linenos">373</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="CardMaker.size_with_gutters_mm-374"><a href="#CardMaker.size_with_gutters_mm-374"><span class="linenos">374</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">,</span>
-</span><span id="CardMaker.size_with_gutters_mm-375"><a href="#CardMaker.size_with_gutters_mm-375"><span class="linenos">375</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.size_with_gutters_mm-275"><a href="#CardMaker.size_with_gutters_mm-275"><span class="linenos">275</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.size_with_gutters_mm-276"><a href="#CardMaker.size_with_gutters_mm-276"><span class="linenos">276</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">size_with_gutters_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+</span><span id="CardMaker.size_with_gutters_mm-277"><a href="#CardMaker.size_with_gutters_mm-277"><span class="linenos">277</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_with_gutters_mm-278"><a href="#CardMaker.size_with_gutters_mm-278"><span class="linenos">278</span></a><span class="sd">        The (width, height) of the card, including gutters, in millimetres.</span>
+</span><span id="CardMaker.size_with_gutters_mm-279"><a href="#CardMaker.size_with_gutters_mm-279"><span class="linenos">279</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.size_with_gutters_mm-280"><a href="#CardMaker.size_with_gutters_mm-280"><span class="linenos">280</span></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">,</span>
+</span><span id="CardMaker.size_with_gutters_mm-281"><a href="#CardMaker.size_with_gutters_mm-281"><span class="linenos">281</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span><span class="p">)</span>
 </span></pre></div>
 
 
             <div class="docstring"><p>The (width, height) of the card, including gutters, in millimetres.</p>
+</div>
+
+
+                            </div>
+                            <div id="CardMaker.gutter" class="classattr">
+                                        <input id="CardMaker.gutter-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">gutter</span><span class="annotation">: float</span>
+
+                <label class="view-source-button" for="CardMaker.gutter-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CardMaker.gutter"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.gutter-290"><a href="#CardMaker.gutter-290"><span class="linenos">290</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.gutter-291"><a href="#CardMaker.gutter-291"><span class="linenos">291</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker.gutter-292"><a href="#CardMaker.gutter-292"><span class="linenos">292</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.gutter-293"><a href="#CardMaker.gutter-293"><span class="linenos">293</span></a><span class="sd">        The gutter size of the card, in the default unit.</span>
+</span><span id="CardMaker.gutter-294"><a href="#CardMaker.gutter-294"><span class="linenos">294</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.gutter-295"><a href="#CardMaker.gutter-295"><span class="linenos">295</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The gutter size of the card, in the default unit.</p>
+</div>
+
+
+                            </div>
+                            <div id="CardMaker.gutter_px" class="classattr">
+                                        <input id="CardMaker.gutter_px-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">gutter_px</span><span class="annotation">: int</span>
+
+                <label class="view-source-button" for="CardMaker.gutter_px-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CardMaker.gutter_px"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.gutter_px-298"><a href="#CardMaker.gutter_px-298"><span class="linenos">298</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.gutter_px-299"><a href="#CardMaker.gutter_px-299"><span class="linenos">299</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="CardMaker.gutter_px-300"><a href="#CardMaker.gutter_px-300"><span class="linenos">300</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.gutter_px-301"><a href="#CardMaker.gutter_px-301"><span class="linenos">301</span></a><span class="sd">        The gutter size of the card, in pixels.</span>
+</span><span id="CardMaker.gutter_px-302"><a href="#CardMaker.gutter_px-302"><span class="linenos">302</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.gutter_px-303"><a href="#CardMaker.gutter_px-303"><span class="linenos">303</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_px</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The gutter size of the card, in pixels.</p>
+</div>
+
+
+                            </div>
+                            <div id="CardMaker.gutter_mm" class="classattr">
+                                        <input id="CardMaker.gutter_mm-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">gutter_mm</span><span class="annotation">: float</span>
+
+                <label class="view-source-button" for="CardMaker.gutter_mm-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CardMaker.gutter_mm"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.gutter_mm-306"><a href="#CardMaker.gutter_mm-306"><span class="linenos">306</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.gutter_mm-307"><a href="#CardMaker.gutter_mm-307"><span class="linenos">307</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">gutter_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker.gutter_mm-308"><a href="#CardMaker.gutter_mm-308"><span class="linenos">308</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.gutter_mm-309"><a href="#CardMaker.gutter_mm-309"><span class="linenos">309</span></a><span class="sd">        The gutter size of the card, in millimetres.</span>
+</span><span id="CardMaker.gutter_mm-310"><a href="#CardMaker.gutter_mm-310"><span class="linenos">310</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.gutter_mm-311"><a href="#CardMaker.gutter_mm-311"><span class="linenos">311</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gutter_mm</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The gutter size of the card, in millimetres.</p>
+</div>
+
+
+                            </div>
+                            <div id="CardMaker.text_line_spacing" class="classattr">
+                                        <input id="CardMaker.text_line_spacing-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">text_line_spacing</span><span class="annotation">: float</span>
+
+                <label class="view-source-button" for="CardMaker.text_line_spacing-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CardMaker.text_line_spacing"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.text_line_spacing-317"><a href="#CardMaker.text_line_spacing-317"><span class="linenos">317</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.text_line_spacing-318"><a href="#CardMaker.text_line_spacing-318"><span class="linenos">318</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker.text_line_spacing-319"><a href="#CardMaker.text_line_spacing-319"><span class="linenos">319</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.text_line_spacing-320"><a href="#CardMaker.text_line_spacing-320"><span class="linenos">320</span></a><span class="sd">        The line spacing for text, in the default unit.</span>
+</span><span id="CardMaker.text_line_spacing-321"><a href="#CardMaker.text_line_spacing-321"><span class="linenos">321</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.text_line_spacing-322"><a href="#CardMaker.text_line_spacing-322"><span class="linenos">322</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The line spacing for text, in the default unit.</p>
+</div>
+
+
+                            </div>
+                            <div id="CardMaker.text_line_spacing_mm" class="classattr">
+                                        <input id="CardMaker.text_line_spacing_mm-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">text_line_spacing_mm</span><span class="annotation">: float</span>
+
+                <label class="view-source-button" for="CardMaker.text_line_spacing_mm-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CardMaker.text_line_spacing_mm"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.text_line_spacing_mm-336"><a href="#CardMaker.text_line_spacing_mm-336"><span class="linenos">336</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.text_line_spacing_mm-337"><a href="#CardMaker.text_line_spacing_mm-337"><span class="linenos">337</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_mm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker.text_line_spacing_mm-338"><a href="#CardMaker.text_line_spacing_mm-338"><span class="linenos">338</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.text_line_spacing_mm-339"><a href="#CardMaker.text_line_spacing_mm-339"><span class="linenos">339</span></a><span class="sd">        The line spacing for text, in millimetres.</span>
+</span><span id="CardMaker.text_line_spacing_mm-340"><a href="#CardMaker.text_line_spacing_mm-340"><span class="linenos">340</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.text_line_spacing_mm-341"><a href="#CardMaker.text_line_spacing_mm-341"><span class="linenos">341</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_mm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The line spacing for text, in millimetres.</p>
+</div>
+
+
+                            </div>
+                            <div id="CardMaker.text_line_spacing_px" class="classattr">
+                                        <input id="CardMaker.text_line_spacing_px-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">text_line_spacing_px</span><span class="annotation">: float</span>
+
+                <label class="view-source-button" for="CardMaker.text_line_spacing_px-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CardMaker.text_line_spacing_px"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CardMaker.text_line_spacing_px-358"><a href="#CardMaker.text_line_spacing_px-358"><span class="linenos">358</span></a>    <span class="nd">@property</span>
+</span><span id="CardMaker.text_line_spacing_px-359"><a href="#CardMaker.text_line_spacing_px-359"><span class="linenos">359</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">text_line_spacing_px</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="CardMaker.text_line_spacing_px-360"><a href="#CardMaker.text_line_spacing_px-360"><span class="linenos">360</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CardMaker.text_line_spacing_px-361"><a href="#CardMaker.text_line_spacing_px-361"><span class="linenos">361</span></a><span class="sd">        The line spacing for text, in pixels.</span>
+</span><span id="CardMaker.text_line_spacing_px-362"><a href="#CardMaker.text_line_spacing_px-362"><span class="linenos">362</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CardMaker.text_line_spacing_px-363"><a href="#CardMaker.text_line_spacing_px-363"><span class="linenos">363</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_px</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_line_spacing</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The line spacing for text, in pixels.</p>
 </div>
 
 

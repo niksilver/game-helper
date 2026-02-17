@@ -226,6 +226,60 @@ class CardMaker:
         return self._gutter_mm + self._height_mm + self._gutter_mm
 
 
+    # ------------ Size -------------
+
+
+    @property
+    def size(self) -> tuple[float, float]:
+        """
+        The (width, height) of the card, excluding gutters, in the default unit.
+        """
+        return (self._width, self._height)
+
+
+    @property
+    def size_px(self) -> tuple[int, int]:
+        """
+        The (width, height) of the card, excluding gutters, in pixels.
+        """
+        return (self._width_px, self._height_px)
+
+
+    @property
+    def size_mm(self) -> tuple[float, float]:
+        """
+        The (width, height) of the card, excluding gutters, in millimetres.
+        """
+        return (self._width_mm, self._height_mm)
+
+
+    @property
+    def size_with_gutters(self) -> tuple[float, float]:
+        """
+        The (width, height) of the card, including gutters, in the default unit.
+        """
+        return (self._gutter + self._width + self._gutter,
+                self._gutter + self._height + self._gutter)
+
+
+    @property
+    def size_with_gutters_px(self) -> tuple[int, int]:
+        """
+        The (width, height) of the card, including gutters, in pixels.
+        """
+        return (self._gutter_px + self._width_px + self._gutter_px,
+                self._gutter_px + self._height_px + self._gutter_px)
+
+
+    @property
+    def size_with_gutters_mm(self) -> tuple[float, float]:
+        """
+        The (width, height) of the card, including gutters, in millimetres.
+        """
+        return (self._gutter_mm + self._width_mm + self._gutter_mm,
+                self._gutter_mm + self._height_mm + self._gutter_mm)
+
+
     # ------------ Gutter -------------
 
 
@@ -318,60 +372,6 @@ class CardMaker:
                     self._text_line_spacing = value
                 case 'mm':
                     self._text_line_spacing = value * self._width_mm / self._width_px
-
-
-    # ------------ Size -------------
-
-
-    @property
-    def size(self) -> tuple[float, float]:
-        """
-        The (width, height) of the card, excluding gutters, in the default unit.
-        """
-        return (self._width, self._height)
-
-
-    @property
-    def size_px(self) -> tuple[int, int]:
-        """
-        The (width, height) of the card, excluding gutters, in pixels.
-        """
-        return (self._width_px, self._height_px)
-
-
-    @property
-    def size_mm(self) -> tuple[float, float]:
-        """
-        The (width, height) of the card, excluding gutters, in millimetres.
-        """
-        return (self._width_mm, self._height_mm)
-
-
-    @property
-    def size_with_gutters(self) -> tuple[float, float]:
-        """
-        The (width, height) of the card, including gutters, in the default unit.
-        """
-        return (self._gutter + self._width + self._gutter,
-                self._gutter + self._height + self._gutter)
-
-
-    @property
-    def size_with_gutters_px(self) -> tuple[int, int]:
-        """
-        The (width, height) of the card, including gutters, in pixels.
-        """
-        return (self._gutter_px + self._width_px + self._gutter_px,
-                self._gutter_px + self._height_px + self._gutter_px)
-
-
-    @property
-    def size_with_gutters_mm(self) -> tuple[float, float]:
-        """
-        The (width, height) of the card, including gutters, in millimetres.
-        """
-        return (self._gutter_mm + self._width_mm + self._gutter_mm,
-                self._gutter_mm + self._height_mm + self._gutter_mm)
 
 
     # -------------------
