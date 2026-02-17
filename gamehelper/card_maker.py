@@ -657,12 +657,45 @@ class CardMaker:
         return self._html2image
 
 
+    @staticmethod
+    def _h_align(h_align: str | None,
+                 left:    float | None,
+                 right:   float | None,
+                 center:  float | None,
+                 ) -> str:
+        """Return the resolved h_align, defaulting based on position parameters."""
+        if h_align is not None:
+            return h_align
+        if center is not None:
+            return "center"
+        if right is not None and left is None:
+            return "right"
+        return "left"
+
+    @staticmethod
+    def _v_align(v_align: str | None,
+                 top:     float | None,
+                 bottom:  float | None,
+                 middle:  float | None,
+                 ) -> str:
+        """Return the resolved v_align, defaulting based on position parameters."""
+        if v_align is not None:
+            return v_align
+        if middle is not None:
+            return "middle"
+        if bottom is not None and top is None:
+            return "bottom"
+        return "top"
+
+
     def html(self,
              content:     str,
              left:        float | None = None,
              top:         float | None = None,
              right:       float | None = None,
              bottom:      float | None = None,
+             center:      float | None = None,
+             middle:      float | None = None,
              width:       float | None = None,
              height:      float | None = None,
              h_align:     str | None   = None,
@@ -674,9 +707,10 @@ class CardMaker:
         Render some HTML content in a box of the given size.
         As usual, all lengths are in the default unit.
         The box is defined by some combination of `left`, `top`, `right`,
-        `bottom`, `width`, and `height`.
+        `bottom`, `center`, `middle`, `width`, and `height`.
         The width defaults to the card width.
         The height defaults to the card height.
+        `h_align` and `v_align` default based on the position parameter given.
         `font_family` sets the document font family (must be registered
         via `font_families()` if it's a custom font).
 
@@ -684,10 +718,15 @@ class CardMaker:
         but it may be more convenient to manage.
         """
 
+        h_align = self._h_align(h_align, left, right, center)
+        v_align = self._v_align(v_align, top, bottom, middle)
+
         left, top, right, bottom, width, height = utils.box(left           = left,
                                                             top            = top,
                                                             right          = right,
                                                             bottom         = bottom,
+                                                            center         = center,
+                                                            middle         = middle,
                                                             width          = width,
                                                             height         = height,
                                                             default_width  = self._width,
@@ -771,23 +810,8 @@ class CardMaker:
         This is relative to the top of the card content, excluding the gutter.
         """
 
-        # Default h_align based on which position parameter was given
-        if h_align is None:
-            if center is not None:
-                h_align = "center"
-            elif right is not None and left is None:
-                h_align = "right"
-            else:
-                h_align = "left"
-
-        # Default v_align based on which position parameter was given
-        if v_align is None:
-            if middle is not None:
-                v_align = "middle"
-            elif bottom is not None and top is None:
-                v_align = "bottom"
-            else:
-                v_align = "top"
+        h_align = self._h_align(h_align, left, right, center)
+        v_align = self._v_align(v_align, top, bottom, middle)
 
         left, top, right, bottom, width, height = utils.box(left           = left,
                                                              top            = top,
