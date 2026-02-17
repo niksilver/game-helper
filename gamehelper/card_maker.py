@@ -661,8 +661,8 @@ class CardMaker:
              content:     str,
              left:        float,
              top:         float,
-             width:       float,
-             height:      float        = None,
+             width:       float | None = None,
+             height:      float | None = None,
              h_align:     str | None   = None,
              v_align:     str | None   = None,
              font_size:   float | None = None,
@@ -671,8 +671,8 @@ class CardMaker:
         """
         Render some HTML content in a box of the given size.
         As usual, all lengths are in the default unit.
-        The height defaults to the maximum available from the
-        `top` to the bottom of the card including the gutter.
+        The width defaults to the card width.
+        The height defaults to the card height.
         `font_family` sets the document font family (must be registered
         via `font_families()` if it's a custom font).
 
@@ -680,8 +680,8 @@ class CardMaker:
         but it may be more convenient to manage.
         """
 
-        if not(height):
-            height = self.height_with_gutters - top - self.gutter
+        width_px  = int(self.to_px(width))  if width  else self._width_px
+        height_px = int(self.to_px(height)) if height else self._height_px
 
         font_size_css   = f'font-size:      {self.to_px(font_size)};' if font_size   else ""
         font_family_css = f"font-family:    '{font_family}';"         if font_family else ""
@@ -692,9 +692,6 @@ class CardMaker:
         for name, path in self._font_families.items():
             font_face_css.append(f"@font-face {{ font-family: '{name}'; "
                                  f"src: url('{path}'); }}")
-
-        width_px  = int(self.to_px(width))
-        height_px = int(self.to_px(height))
 
         hti      = self._get_HTML2Image()
         out_path = hti.screenshot(html_str = content,
