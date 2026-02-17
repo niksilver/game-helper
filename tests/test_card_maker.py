@@ -862,39 +862,54 @@ class TestText:
                        )
 
         # Width wraps text to fit
-        bbox = maker.text("This is a long piece of text that should be wrapped to fit",
-                          left  = 0,
-                          top   = 0,
-                          font  = ImageFont.load_default(),
-                          width = 200,
-                          )
-        assert bbox[2] - bbox[0] <= 200
+        left, top, right, bottom = maker.text("This is a long piece of text that should be wrapped",
+                                              left  = 0,
+                                              top   = 0,
+                                              font  = ImageFont.load_default(),
+                                              width = 200,
+                                              )
+        width = right - left
+        assert 0 <= left <= 5
+        assert 100 <= right <= 200
+        assert 100 <= width <= 200
 
         # Left/top positioning
-        bbox = maker.text("Hello",
-                          left = 10,
-                          top  = 20,
-                          font = ImageFont.load_default(),
-                          )
-        assert bbox[0] >= 10
-        assert bbox[1] >= 20
+        left, top, right, bottom = maker.text("Hello",
+                                              left = 10,
+                                              top  = 20,
+                                              font = ImageFont.load_default(),
+                                              )
+        width  = right - left
+        height = bottom - top
+        assert 10 <= left <= 15
+        assert 20 <= top <= 25
+        assert right > left
+        assert width > 0
+        assert bottom > top
+        assert height > 0
 
         # Right-aligned text ends near the right edge
-        bbox = maker.text("Hello",
-                          left    = 0,
-                          top     = 0,
-                          right   = 200,
-                          font    = ImageFont.load_default(),
-                          h_align = "right",
-                          )
-        assert bbox[2] <= 200
+        left, top, right, bottom = maker.text("Hello",
+                                              left    = 0,
+                                              top     = 0,
+                                              right   = 200,
+                                              font    = ImageFont.load_default(),
+                                              h_align = "right",
+                                              )
+        width = right - left
+        assert 150 <= left <= 200
+        assert 195 <= right <= 200
+        assert 0 < width <= 200
 
         # Bottom-aligned text ends near the bottom edge
-        bbox = maker.text("Hello",
-                          left    = 0,
-                          top     = 0,
-                          bottom  = 200,
-                          font    = ImageFont.load_default(),
-                          v_align = "bottom",
-                          )
-        assert bbox[3] <= 200
+        left, top, right, bottom = maker.text("Hello",
+                                              left    = 0,
+                                              top     = 0,
+                                              bottom  = 200,
+                                              font    = ImageFont.load_default(),
+                                              v_align = "bottom",
+                                              )
+        height = bottom - top
+        assert 150 <= top <= 200
+        assert 195 <= bottom <= 200
+        assert 0 < height <= 200
