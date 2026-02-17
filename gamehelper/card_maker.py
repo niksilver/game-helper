@@ -735,6 +735,8 @@ class CardMaker:
              top:           float | None                 = None,
              right:         float | None                 = None,
              bottom:        float | None                 = None,
+             center:        float | None                 = None,
+             middle:        float | None                 = None,
              width:         float | None                 = None,
              height:        float | None                 = None,
              h_align:       str | None                   = None,
@@ -747,11 +749,15 @@ class CardMaker:
         """
         Add some text to the card.
         - The box is defined by some combination of `left`, `top`, `right`,
-          `bottom`, `width`, and `height`.
+          `bottom`, `center`, `middle`, `width`, and `height`.
         - The width defaults to the card width.
         - The height defaults to the card height.
-        - `h_align` is "left" (default), "center", or "right".
-        - `v_align` is "top" (default), "middle", or "bottom".
+        - `h_align` is "left", "center", or "right".
+          Defaults based on the position parameter given: `left` → "left",
+          `right` → "right", `center` → "center".
+        - `v_align` is "top", "middle", or "bottom".
+          Defaults based on the position parameter given: `top` → "top",
+          `bottom` → "bottom", `middle` → "middle".
         - The font must be an ImageFont object.
         - `spacing` is the spacing between lines, in the default unit.
           If None, defaults to `text_line_spacing`.
@@ -765,10 +771,30 @@ class CardMaker:
         This is relative to the top of the card content, excluding the gutter.
         """
 
+        # Default h_align based on which position parameter was given
+        if h_align is None:
+            if center is not None:
+                h_align = "center"
+            elif right is not None and left is None:
+                h_align = "right"
+            else:
+                h_align = "left"
+
+        # Default v_align based on which position parameter was given
+        if v_align is None:
+            if middle is not None:
+                v_align = "middle"
+            elif bottom is not None and top is None:
+                v_align = "bottom"
+            else:
+                v_align = "top"
+
         left, top, right, bottom, width, height = utils.box(left           = left,
                                                              top            = top,
                                                              right          = right,
                                                              bottom         = bottom,
+                                                             center         = center,
+                                                             middle         = middle,
                                                              width          = width,
                                                              height         = height,
                                                              default_width  = self._width,
@@ -792,7 +818,7 @@ class CardMaker:
         spacing = self.to_px(spacing)
 
         # Horizontal alignment
-        if h_align is None or h_align == "left":
+        if h_align == "left":
             x_pos    = left + self._gutter_px
             h_anchor = "l"
             align    = "left"
@@ -806,7 +832,7 @@ class CardMaker:
             align    = "right"
 
         # Vertical alignment
-        if v_align is None or v_align == "top":
+        if v_align == "top":
             y_pos    = top + self._gutter_px
             v_anchor = "a"
         elif v_align == "middle":

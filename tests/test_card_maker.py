@@ -913,3 +913,51 @@ class TestText:
         assert 150 <= top <= 200
         assert 195 <= bottom <= 200
         assert 0 < height <= 200
+
+        # center → h_align defaults to "center"
+        left, top, right, bottom = maker.text("Hello",
+                                              center = 200,
+                                              top    = 0,
+                                              width  = 100,
+                                              font   = ImageFont.load_default(),
+                                              )
+        width = right - left
+        assert 150 <= left <= 200
+        assert 200 <= right <= 250
+        assert 0 < width <= 100
+
+        # middle → v_align defaults to "middle"
+        left, top, right, bottom = maker.text("Hello",
+                                              left   = 0,
+                                              middle = 200,
+                                              height = 100,
+                                              font   = ImageFont.load_default(),
+                                              )
+        height = bottom - top
+        assert 150 <= top <= 200
+        assert 200 <= bottom <= 250
+        assert 0 < height <= 100
+
+        # right without left → h_align defaults to "right"
+        left, top, right, bottom = maker.text("Hello",
+                                              right = 200,
+                                              top   = 0,
+                                              width = 100,
+                                              font  = ImageFont.load_default(),
+                                              )
+        width = right - left
+        assert 150 <= left <= 200
+        assert 195 <= right <= 200
+        assert 0 < width <= 100
+
+        # bottom without top → v_align defaults to "bottom"
+        left, top, right, bottom = maker.text("Hello",
+                                              left   = 0,
+                                              bottom = 200,
+                                              height = 100,
+                                              font   = ImageFont.load_default(),
+                                              )
+        height = bottom - top
+        assert 150 <= top <= 200
+        assert 195 <= bottom <= 200
+        assert 0 < height <= 100
