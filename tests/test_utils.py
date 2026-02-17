@@ -170,7 +170,77 @@ class TestBox:
                    default_height = 100,
                    ) == (0, 10, 50, 110, 50, 100)
 
-        # All three horizontal → error
+        # center + width → left and right
+        assert box(center         = 60,
+                   top            = 0,
+                   width          = 100,
+                   height         = 50,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (10, 0, 110, 50, 100, 50)
+
+        # center + left → right and width
+        assert box(left           = 10,
+                   center         = 60,
+                   top            = 0,
+                   height         = 50,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (10, 0, 110, 50, 100, 50)
+
+        # center + right → left and width
+        assert box(center         = 60,
+                   right          = 110,
+                   top            = 0,
+                   height         = 50,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (10, 0, 110, 50, 100, 50)
+
+        # middle + height → top and bottom
+        assert box(left           = 0,
+                   width          = 50,
+                   middle         = 25,
+                   height         = 30,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (0, 10, 50, 40, 50, 30)
+
+        # middle + top → bottom and height
+        assert box(left           = 0,
+                   width          = 50,
+                   top            = 10,
+                   middle         = 25,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (0, 10, 50, 40, 50, 30)
+
+        # middle + bottom → top and height
+        assert box(left           = 0,
+                   width          = 50,
+                   middle         = 25,
+                   bottom         = 40,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (0, 10, 50, 40, 50, 30)
+
+        # Only center given → width defaults to default_width
+        assert box(center         = 110,
+                   top            = 0,
+                   height         = 50,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (10, 0, 210, 50, 200, 50)
+
+        # Only middle given → height defaults to default_height
+        assert box(left           = 0,
+                   width          = 50,
+                   middle         = 60,
+                   default_width  = 200,
+                   default_height = 100,
+                   ) == (0, 10, 50, 110, 50, 100)
+
+        # Too many horizontal values → error
         with pytest.raises(ValueError):
             box(left           = 10,
                 right          = 110,
@@ -181,13 +251,33 @@ class TestBox:
                 default_height = 200,
                 )
 
-        # All three vertical → error
+        with pytest.raises(ValueError):
+            box(left           = 10,
+                center         = 60,
+                right          = 110,
+                top            = 0,
+                height         = 50,
+                default_width  = 200,
+                default_height = 200,
+                )
+
+        # Too many vertical values → error
         with pytest.raises(ValueError):
             box(left           = 0,
                 width          = 50,
                 top            = 10,
                 bottom         = 40,
                 height         = 30,
+                default_width  = 200,
+                default_height = 200,
+                )
+
+        with pytest.raises(ValueError):
+            box(left           = 0,
+                width          = 50,
+                top            = 10,
+                middle         = 25,
+                bottom         = 40,
                 default_width  = 200,
                 default_height = 200,
                 )

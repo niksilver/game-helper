@@ -73,29 +73,41 @@ def box(left:           float | None = None,
         bottom:         float | None = None,
         width:          float | None = None,
         height:         float | None = None,
+        center:         float | None = None,
+        middle:         float | None = None,
         default_width:  float        = 100,
         default_height: float        = 100,
         ) -> tuple[float, float, float, float, float, float]:
     """
     Calculate a complete box from partial parameters.
 
-    For each axis, exactly 2 of the 3 values must be determinable.
+    For each axis, exactly 2 of the values must be determinable.
+    Horizontal: `left`, `right`, `width`, `center`.
+    Vertical: `top`, `bottom`, `height`, `middle`.
     If only 1 is given, `default_width` or `default_height` fills in
     for `width` or `height` respectively.
 
-    Raises `ValueError` if 0 or 3 values are given for either axis.
+    Raises `ValueError` if too many or too few values are given.
 
     Returns `(left, top, right, bottom, width, height)`.
     """
 
-    # Horizontal axis
-    h_count = sum(x is not None for x in (left, right, width))
+    # Horizontal axis — resolve center into left or right
+    h_count = sum(x is not None for x in (left, right, width, center))
     if h_count == 0:
-        raise ValueError("Must specify at least one of left, right, width")
-    if h_count == 3:
-        raise ValueError("Cannot specify all of left, right, width")
+        raise ValueError("Must specify at least one of left, right, width, center")
+    if h_count > 2:
+        raise ValueError("Too many horizontal values specified")
     if h_count == 1 and width is None:
         width = default_width
+    if center is not None:
+        if width is not None:
+            left  = center - width / 2
+            right = center + width / 2
+        elif left is not None:
+            right = left + 2 * (center - left)
+        elif right is not None:
+            left = right - 2 * (right - center)
 
     if left is None:
         left  = right - width
@@ -104,14 +116,22 @@ def box(left:           float | None = None,
     if right is None:
         right = left + width
 
-    # Vertical axis
-    v_count = sum(x is not None for x in (top, bottom, height))
+    # Vertical axis — resolve middle into top or bottom
+    v_count = sum(x is not None for x in (top, bottom, height, middle))
     if v_count == 0:
-        raise ValueError("Must specify at least one of top, bottom, height")
-    if v_count == 3:
-        raise ValueError("Cannot specify all of top, bottom, height")
+        raise ValueError("Must specify at least one of top, bottom, height, middle")
+    if v_count > 2:
+        raise ValueError("Too many vertical values specified")
     if v_count == 1 and height is None:
         height = default_height
+    if middle is not None:
+        if height is not None:
+            top    = middle - height / 2
+            bottom = middle + height / 2
+        elif top is not None:
+            bottom = top + 2 * (middle - top)
+        elif bottom is not None:
+            top = bottom - 2 * (bottom - middle)
 
     if top is None:
         top    = bottom - height
