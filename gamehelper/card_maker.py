@@ -8,7 +8,7 @@ from   PIL              import ImageChops
 from   fpdf             import FPDF
 from   html2image       import Html2Image
 import cairosvg
-from   gamehelper.utils import optimise
+from   gamehelper.utils import optimise, box
 
 
 class CardMaker:
@@ -659,8 +659,10 @@ class CardMaker:
 
     def html(self,
              content:     str,
-             left:        float,
-             top:         float,
+             left:        float | None = None,
+             top:         float | None = None,
+             right:       float | None = None,
+             bottom:      float | None = None,
              width:       float | None = None,
              height:      float | None = None,
              h_align:     str | None   = None,
@@ -671,6 +673,8 @@ class CardMaker:
         """
         Render some HTML content in a box of the given size.
         As usual, all lengths are in the default unit.
+        The box is defined by some combination of `left`, `top`, `right`,
+        `bottom`, `width`, and `height`.
         The width defaults to the card width.
         The height defaults to the card height.
         `font_family` sets the document font family (must be registered
@@ -680,8 +684,17 @@ class CardMaker:
         but it may be more convenient to manage.
         """
 
-        width_px  = int(self.to_px(width))  if width  else self._width_px
-        height_px = int(self.to_px(height)) if height else self._height_px
+        left, top, right, bottom, width, height = box(left           = left,
+                                                      top            = top,
+                                                      right          = right,
+                                                      bottom         = bottom,
+                                                      width          = width,
+                                                      height         = height,
+                                                      default_width  = self._width,
+                                                      default_height = self._height,
+                                                      )
+        width_px  = int(self.to_px(width))
+        height_px = int(self.to_px(height))
 
         font_size_css   = f'font-size:      {self.to_px(font_size)};' if font_size   else ""
         font_family_css = f"font-family:    '{font_family}';"         if font_family else ""
