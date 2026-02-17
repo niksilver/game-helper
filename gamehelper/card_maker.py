@@ -730,37 +730,50 @@ class CardMaker:
 
 
     def text(self,
-             text:          str                       = "Default",
-             x_left:        float | None              = None,
-             x_centre:      float | None              = None,
-             x_right:       float | None              = None,
-             y_ascender:    float | None              = None,
-             y_top:         float | None              = None,
-             y_middle:      float | None              = None,
-             y_baseline:    float | None              = None,
-             y_bottom:      float | None              = None,
-             y_descender:   float | None              = None,
-             fill:          tuple[int, int, int]      = (0, 0, 0),
+             text:          str                          = "Default",
+             left:          float | None                 = None,
+             top:           float | None                 = None,
+             right:         float | None                 = None,
+             bottom:        float | None                 = None,
+             width:         float | None                 = None,
+             height:        float | None                 = None,
+             h_align:       str | None                   = None,
+             v_align:       str | None                   = None,
+             fill:          tuple[int, int, int]          = (0, 0, 0),
              font:          ImageFont.FreeTypeFont | None = None,
-             spacing:       float | None              = None,
-             chrs_per_line: int | None                = None,
-             width:         float | None              = None,
+             spacing:       float | None                 = None,
+             chrs_per_line: int | None                   = None,
              ) -> tuple[float, float, float, float]:
         """
         Add some text to the card.
-        - x, y are relative to the top left of the card excluding the gutters.
+        - The box is defined by some combination of `left`, `top`, `right`,
+          `bottom`, `width`, and `height`.
+        - The width defaults to the card width.
+        - The height defaults to the card height.
+        - `h_align` is "left" (default), "center", or "right".
+        - `v_align` is "top" (default), "middle", or "bottom".
         - The font must be an ImageFont object.
         - `spacing` is the spacing between lines, in the default unit.
           If None, defaults to `text_line_spacing`.
         - If given, newlines will be inserted at `chrs_per_line`.
-        - `width` is the desired width of the text box, in the default unit.
-          Cannot be specified together with `chrs_per_line`.
+        - `width` can also be used to auto-calculate `chrs_per_line`.
+          Cannot specify both `width` and `chrs_per_line`.
 
         Returns the bounding box, as per
         https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.textbbox
         but in the default unit.
         This is relative to the top of the card content, excluding the gutter.
         """
+
+        left, top, right, bottom, width, height = utils.box(left           = left,
+                                                             top            = top,
+                                                             right          = right,
+                                                             bottom         = bottom,
+                                                             width          = width,
+                                                             height         = height,
+                                                             default_width  = self._width,
+                                                             default_height = self._height,
+                                                             )
 
         if width is not None and chrs_per_line is not None:
             raise ValueError("Cannot specify both 'width' and 'chrs_per_line'")
@@ -770,51 +783,37 @@ class CardMaker:
 
         # Switch to pixels
 
-        x_left      = self.to_px(x_left)
-        x_centre    = self.to_px(x_centre)
-        x_right     = self.to_px(x_right)
-        y_ascender  = self.to_px(y_ascender)
-        y_top       = self.to_px(y_top)
-        y_middle    = self.to_px(y_middle)
-        y_baseline  = self.to_px(y_baseline)
-        y_bottom    = self.to_px(y_bottom)
-        y_descender = self.to_px(y_descender)
-        spacing     = self.to_px(spacing)
+        left    = self.to_px(left)
+        top     = self.to_px(top)
+        right   = self.to_px(right)
+        bottom  = self.to_px(bottom)
+        width   = self.to_px(width)
+        height  = self.to_px(height)
+        spacing = self.to_px(spacing)
 
-        x_pos, y_pos       = None, None
-        h_anchor, v_anchor = None, None
-        align              = None
-
-        if not(x_left is None):
-            x_pos    = x_left + self._gutter_px
+        # Horizontal alignment
+        if h_align is None or h_align == "left":
+            x_pos    = left + self._gutter_px
             h_anchor = "l"
             align    = "left"
-        if not(x_centre is None):
-            x_pos    = x_centre + self._gutter_px
+        elif h_align == "center":
+            x_pos    = left + width / 2 + self._gutter_px
             h_anchor = "m"
             align    = "center"
-        if not(x_right is None):
-            x_pos    = x_right + self._gutter_px
+        elif h_align == "right":
+            x_pos    = right + self._gutter_px
             h_anchor = "r"
             align    = "right"
-        
-        if not(y_ascender is None):
-            y_pos    = y_ascender + self._gutter_px
+
+        # Vertical alignment
+        if v_align is None or v_align == "top":
+            y_pos    = top + self._gutter_px
             v_anchor = "a"
-        if not(y_top is None):
-            y_pos    = y_top + self._gutter_px
-            v_anchor = "t"
-        if not(y_middle is None):
-            y_pos    = y_middle + self._gutter_px
+        elif v_align == "middle":
+            y_pos    = top + height / 2 + self._gutter_px
             v_anchor = "m"
-        if not(y_baseline is None):
-            y_pos    = y_baseline + self._gutter_px
-            v_anchor = "s"
-        if not(y_bottom is None):
-            y_pos    = y_bottom + self._gutter_px
-            v_anchor = "b"
-        if not(y_descender is None):
-            y_pos    = y_descender + self._gutter_px
+        elif v_align == "bottom":
+            y_pos    = bottom + self._gutter_px
             v_anchor = "d"
 
         chrs_per_line = self._calc_chrs_per_line(text, width, chrs_per_line,

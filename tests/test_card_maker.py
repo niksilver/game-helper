@@ -844,34 +844,57 @@ class TestFontFamilies:
 class TestText:
     """Tests for the text() method."""
 
-    def test_width_and_chrs_per_line_raises_error(self):
-        """Should raise an error if both width and chrs_per_line are specified."""
-        maker = CardMaker(width    = 100,
-                          height   = 100,
-                          unit     = 'px',
-                          width_mm = 100,
-                          )
-        with pytest.raises(ValueError):
-            maker.text("Hello world",
-                       x_left        = 0,
-                       y_top         = 0,
-                       width         = 50,
-                       chrs_per_line = 10,
-                       )
-
-    def test_width_wraps_text_to_fit(self):
-        """When width is given, text should be wrapped to fit within that width."""
+    def test_text(self):
+        """Tests for positioning, alignment, and width wrapping."""
         maker = CardMaker(width    = 500,
                           height   = 500,
                           unit     = 'px',
                           width_mm = 500,
                           )
-        font = ImageFont.load_default()
-        long_text = "This is a long piece of text that should be wrapped to fit"
-        bbox = maker.text(long_text,
-                          x_left     = 0,
-                          y_ascender = 0,
-                          font       = font,
-                          width      = 200,
+
+        # Width and chrs_per_line cannot both be specified
+        with pytest.raises(ValueError):
+            maker.text("Hello world",
+                       left          = 0,
+                       top           = 0,
+                       width         = 50,
+                       chrs_per_line = 10,
+                       )
+
+        # Width wraps text to fit
+        bbox = maker.text("This is a long piece of text that should be wrapped to fit",
+                          left  = 0,
+                          top   = 0,
+                          font  = ImageFont.load_default(),
+                          width = 200,
                           )
         assert bbox[2] - bbox[0] <= 200
+
+        # Left/top positioning
+        bbox = maker.text("Hello",
+                          left = 10,
+                          top  = 20,
+                          font = ImageFont.load_default(),
+                          )
+        assert bbox[0] >= 10
+        assert bbox[1] >= 20
+
+        # Right-aligned text ends near the right edge
+        bbox = maker.text("Hello",
+                          left    = 0,
+                          top     = 0,
+                          right   = 200,
+                          font    = ImageFont.load_default(),
+                          h_align = "right",
+                          )
+        assert bbox[2] <= 200
+
+        # Bottom-aligned text ends near the bottom edge
+        bbox = maker.text("Hello",
+                          left    = 0,
+                          top     = 0,
+                          bottom  = 200,
+                          font    = ImageFont.load_default(),
+                          v_align = "bottom",
+                          )
+        assert bbox[3] <= 200
