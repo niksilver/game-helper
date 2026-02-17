@@ -810,6 +810,9 @@ class CardMaker:
         This is relative to the top of the card content, excluding the gutter.
         """
 
+        if width is not None and chrs_per_line is not None:
+            raise ValueError("Cannot specify both 'width' and 'chrs_per_line'")
+
         h_align = self._h_align(h_align, left, right, center)
         v_align = self._v_align(v_align, top, bottom, middle)
 
@@ -824,9 +827,6 @@ class CardMaker:
                                                             default_width  = self._width,
                                                             default_height = self._height,
                                                             )
-
-        if width is not None and chrs_per_line is not None:
-            raise ValueError("Cannot specify both 'width' and 'chrs_per_line'")
 
         if spacing is None:
             spacing = self.text_line_spacing

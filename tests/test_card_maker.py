@@ -962,6 +962,24 @@ class TestText:
         assert 195 <= bottom <= 200
         assert 0 < height <= 100
 
+    def test_text_center_with_chrs_per_line(self):
+        """center + chrs_per_line should not raise an error."""
+        maker = CardMaker(width    = 500,
+                          height   = 500,
+                          unit     = 'px',
+                          width_mm = 500,
+                          )
+        left, top, right, bottom = maker.text("This is a long piece of text that should be wrapped",
+                                              center        = 250,
+                                              top           = 0,
+                                              font          = ImageFont.load_default(),
+                                              chrs_per_line = 10,
+                                              )
+        width  = right - left
+        height = bottom - top
+        assert width > 0
+        assert height > 0
+
     def test_text_wrapping_with_mm_units(self):
         """Width parameter should correctly wrap text when default unit is mm."""
         maker = CardMaker(width    = 60,
