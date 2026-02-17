@@ -124,6 +124,65 @@ class CardMaker:
         return dup
 
 
+    # -------------------
+
+
+    def to_px(self, x: float | None) -> float | None:
+        """
+        Convert from a number in the default unit to pixels.
+        """
+        if x is None:
+            return None
+
+        match self._unit:
+            case 'px':
+                return x
+            case 'mm':
+                return x * self._width_px / self._width_mm
+
+
+    def to_mm(self, x: float | None) -> float | None:
+        """
+        Convert from a number in the default unit to mm.
+        """
+        if x is None:
+            return None
+
+        match self._unit:
+            case 'mm':
+                return x
+            case 'px':
+                return x * self._width_mm / self._width_px
+
+
+    def from_px(self, x: float | None) -> float | None:
+        """
+        Convert from some number of pixels to the default unit.
+        """
+        if x is None:
+            return None
+
+        match self._unit:
+            case 'px':
+                return x
+            case 'mm':
+                return x * self._width_mm / self._width_px
+
+
+    def from_mm(self, x: float | None) -> float | None:
+        """
+        Convert from some number of millimetres to the default unit.
+        """
+        if x is None:
+            return None
+
+        match self._unit:
+            case 'mm':
+                return x
+            case 'px':
+                return x * self._width_px / self._width_mm
+
+
     # ------------ Width -------------
 
 
@@ -372,65 +431,6 @@ class CardMaker:
                     self._text_line_spacing = value
                 case 'mm':
                     self._text_line_spacing = value * self._width_mm / self._width_px
-
-
-    # -------------------
-
-
-    def to_px(self, x: float | None) -> float | None:
-        """
-        Convert from a number in the default unit to pixels.
-        """
-        if x is None:
-            return None
-
-        match self._unit:
-            case 'px':
-                return x
-            case 'mm':
-                return x * self._width_px / self._width_mm
-
-
-    def to_mm(self, x: float | None) -> float | None:
-        """
-        Convert from a number in the default unit to mm.
-        """
-        if x is None:
-            return None
-
-        match self._unit:
-            case 'mm':
-                return x
-            case 'px':
-                return x * self._width_mm / self._width_px
-
-
-    def from_px(self, x: float | None) -> float | None:
-        """
-        Convert from some number of pixels to the default unit.
-        """
-        if x is None:
-            return None
-
-        match self._unit:
-            case 'px':
-                return x
-            case 'mm':
-                return x * self._width_mm / self._width_px
-
-
-    def from_mm(self, x: float | None) -> float | None:
-        """
-        Convert from some number of millimetres to the default unit.
-        """
-        if x is None:
-            return None
-
-        match self._unit:
-            case 'mm':
-                return x
-            case 'px':
-                return x * self._width_px / self._width_mm
 
 
     # -------------------
