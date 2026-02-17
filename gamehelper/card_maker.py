@@ -447,8 +447,7 @@ class CardMaker:
         If `filename` points to an SVG it will be converted to a PNG.
 
         Units should be in the default unit.
-        `im` may be an Image object or a filename.
-        (If it's a filename it may be an SVG.)
+        `filename` may be an SVG.
         `size`, `width` and `height` are all optional.
         `size` is a (width, height) pair.
         If only `width` or `height` is given then the image will scale
