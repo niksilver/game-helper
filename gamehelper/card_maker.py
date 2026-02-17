@@ -937,8 +937,7 @@ class CardMaker:
         if width is None:
             return None
 
-        target_width_px = self.to_px(width)
-        draw            = ImageDraw.Draw(self._im_with_gutters)
+        draw = ImageDraw.Draw(self._im_with_gutters)
 
         def assessment(chrs):
             wrapped    = self._insert_new_lines(text, chrs)
@@ -948,8 +947,8 @@ class CardMaker:
                                        spacing = spacing,
                                        )
             bbox_width = bbox[2] - bbox[0]
-            acceptable = bbox_width <= target_width_px
-            return (bbox_width - target_width_px, acceptable)
+            acceptable = bbox_width <= width
+            return (bbox_width - width, acceptable)
 
         return utils.optimise(len(text), assessment)
 

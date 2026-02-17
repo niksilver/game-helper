@@ -961,3 +961,20 @@ class TestText:
         assert 150 <= top <= 200
         assert 195 <= bottom <= 200
         assert 0 < height <= 100
+
+    def test_text_wrapping_with_mm_units(self):
+        """Width parameter should correctly wrap text when default unit is mm."""
+        maker = CardMaker(width    = 60,
+                          height   = 80,
+                          unit     = 'mm',
+                          width_px = 600,
+                          )
+        long_text = "This is a long piece of text that should be wrapped to fit within the box"
+        left, top, right, bottom = maker.text(long_text,
+                                              left  = 0,
+                                              top   = 0,
+                                              font  = ImageFont.load_default(size = 30),
+                                              width = 55,
+                                              )
+        width = right - left
+        assert 0 < width <= 55
