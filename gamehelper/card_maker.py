@@ -24,12 +24,12 @@ class CardMaker:
     def __init__(self,
                  width:    float,
                  height:   float,
-                 width_mm: float | None               = None,
-                 width_px: int | None                 = None,
-                 gutter:   float                      = 0,
-                 image:    Image.Image | None         = None,
-                 colour:   tuple[int, int, int, int]  = (0, 0, 0, 0),
-                 unit:     str | None                 = None,
+                 width_mm: float | None              = None,
+                 width_px: int | None                = None,
+                 gutter:   float                     = 0,
+                 image:    Image.Image | None        = None,
+                 colour:   tuple[int, int, int, int] = (0, 0, 0, 0),
+                 unit:     str | None                = None,
                  ) -> None:
         """
         A maker for card with the given dimensions, excluding the gutter.
@@ -769,21 +769,21 @@ class CardMaker:
 
 
     def text(self,
-             text:          str                          = "Default",
-             left:          float | None                 = None,
-             top:           float | None                 = None,
-             right:         float | None                 = None,
-             bottom:        float | None                 = None,
-             center:        float | None                 = None,
-             middle:        float | None                 = None,
-             width:         float | None                 = None,
-             height:        float | None                 = None,
-             h_align:       str | None                   = None,
-             v_align:       str | None                   = None,
+             text:          str                           = "Default",
+             left:          float | None                  = None,
+             top:           float | None                  = None,
+             right:         float | None                  = None,
+             bottom:        float | None                  = None,
+             center:        float | None                  = None,
+             middle:        float | None                  = None,
+             width:         float | None                  = None,
+             height:        float | None                  = None,
+             h_align:       str | None                    = None,
+             v_align:       str | None                    = None,
              fill:          tuple[int, int, int]          = (0, 0, 0),
              font:          ImageFont.FreeTypeFont | None = None,
-             spacing:       float | None                 = None,
-             chrs_per_line: int | None                   = None,
+             spacing:       float | None                  = None,
+             chrs_per_line: int | None                    = None,
              ) -> tuple[float, float, float, float]:
         """
         Add some text to the card.
@@ -814,16 +814,16 @@ class CardMaker:
         v_align = self._v_align(v_align, top, bottom, middle)
 
         left, top, right, bottom, width, height = utils.box(left           = left,
-                                                             top            = top,
-                                                             right          = right,
-                                                             bottom         = bottom,
-                                                             center         = center,
-                                                             middle         = middle,
-                                                             width          = width,
-                                                             height         = height,
-                                                             default_width  = self._width,
-                                                             default_height = self._height,
-                                                             )
+                                                            top            = top,
+                                                            right          = right,
+                                                            bottom         = bottom,
+                                                            center         = center,
+                                                            middle         = middle,
+                                                            width          = width,
+                                                            height         = height,
+                                                            default_width  = self._width,
+                                                            default_height = self._height,
+                                                            )
 
         if width is not None and chrs_per_line is not None:
             raise ValueError("Cannot specify both 'width' and 'chrs_per_line'")
