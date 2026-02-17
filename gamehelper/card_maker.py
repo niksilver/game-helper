@@ -1,14 +1,14 @@
 import copy
 import io
 
-from   PIL              import Image
-from   PIL              import ImageDraw
-from   PIL              import ImageFont
-from   PIL              import ImageChops
-from   fpdf             import FPDF
-from   html2image       import Html2Image
+from   PIL        import Image
+from   PIL        import ImageDraw
+from   PIL        import ImageFont
+from   PIL        import ImageChops
+from   fpdf       import FPDF
+from   html2image import Html2Image
 import cairosvg
-from   gamehelper.utils import optimise, box
+from   gamehelper import utils
 
 
 class CardMaker:
@@ -684,15 +684,15 @@ class CardMaker:
         but it may be more convenient to manage.
         """
 
-        left, top, right, bottom, width, height = box(left           = left,
-                                                      top            = top,
-                                                      right          = right,
-                                                      bottom         = bottom,
-                                                      width          = width,
-                                                      height         = height,
-                                                      default_width  = self._width,
-                                                      default_height = self._height,
-                                                      )
+        left, top, right, bottom, width, height = utils.box(left           = left,
+                                                            top            = top,
+                                                            right          = right,
+                                                            bottom         = bottom,
+                                                            width          = width,
+                                                            height         = height,
+                                                            default_width  = self._width,
+                                                            default_height = self._height,
+                                                            )
         width_px  = int(self.to_px(width))
         height_px = int(self.to_px(height))
 
@@ -902,7 +902,7 @@ class CardMaker:
             acceptable = bbox_width <= target_width_px
             return (bbox_width - target_width_px, acceptable)
 
-        return optimise(len(text), assessment)
+        return utils.optimise(len(text), assessment)
 
 
     def image(self) -> Image.Image:
