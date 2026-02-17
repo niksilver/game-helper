@@ -1,6 +1,6 @@
 import pytest
 
-from gamehelper.utils import optimise
+from gamehelper.utils import optimise, box
 
 
 class TestOptimise:
@@ -92,3 +92,118 @@ class TestOptimise:
 
         with pytest.raises(ValueError):
             optimise(100, assess)
+
+
+class TestBox:
+    """Tests for the box() function."""
+
+    def test_box(self):
+        """Should calculate the missing values from the given ones."""
+
+        # left + width → right
+        assert box(left           = 10,
+                   top            = 20,
+                   width          = 100,
+                   height         = 50,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (10, 20, 110, 70, 100, 50)
+
+        # left + right → width
+        assert box(left           = 10,
+                   top            = 20,
+                   right          = 110,
+                   bottom         = 70,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (10, 20, 110, 70, 100, 50)
+
+        # right + width → left
+        assert box(top            = 20,
+                   right          = 110,
+                   width          = 100,
+                   height         = 50,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (10, 20, 110, 70, 100, 50)
+
+        # top + height → bottom
+        assert box(left           = 0,
+                   top            = 10,
+                   width          = 50,
+                   height         = 30,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (0, 10, 50, 40, 50, 30)
+
+        # top + bottom → height
+        assert box(left           = 0,
+                   top            = 10,
+                   width          = 50,
+                   bottom         = 40,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (0, 10, 50, 40, 50, 30)
+
+        # bottom + height → top
+        assert box(left           = 0,
+                   width          = 50,
+                   bottom         = 40,
+                   height         = 30,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (0, 10, 50, 40, 50, 30)
+
+        # Only left given → width defaults to default_width
+        assert box(left           = 10,
+                   top            = 0,
+                   height         = 50,
+                   default_width  = 200,
+                   default_height = 200,
+                   ) == (10, 0, 210, 50, 200, 50)
+
+        # Only top given → height defaults to default_height
+        assert box(left           = 0,
+                   top            = 10,
+                   width          = 50,
+                   default_width  = 200,
+                   default_height = 100,
+                   ) == (0, 10, 50, 110, 50, 100)
+
+        # All three horizontal → error
+        with pytest.raises(ValueError):
+            box(left           = 10,
+                right          = 110,
+                top            = 0,
+                height         = 50,
+                width          = 100,
+                default_width  = 200,
+                default_height = 200,
+                )
+
+        # All three vertical → error
+        with pytest.raises(ValueError):
+            box(left           = 0,
+                width          = 50,
+                top            = 10,
+                bottom         = 40,
+                height         = 30,
+                default_width  = 200,
+                default_height = 200,
+                )
+
+        # No horizontal values → error
+        with pytest.raises(ValueError):
+            box(top            = 0,
+                height         = 50,
+                default_width  = 200,
+                default_height = 200,
+                )
+
+        # No vertical values → error
+        with pytest.raises(ValueError):
+            box(left           = 0,
+                width          = 50,
+                default_width  = 200,
+                default_height = 200,
+                )

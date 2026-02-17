@@ -65,3 +65,59 @@ def optimise(initial_guess:  int,
         return best_acceptable
 
     raise ValueError("Could not find an acceptable value")
+
+
+def box(left:           float | None = None,
+        top:            float | None = None,
+        right:          float | None = None,
+        bottom:         float | None = None,
+        width:          float | None = None,
+        height:         float | None = None,
+        default_width:  float        = 100,
+        default_height: float        = 100,
+        ) -> tuple[float, float, float, float, float, float]:
+    """
+    Calculate a complete box from partial parameters.
+
+    For each axis, exactly 2 of the 3 values must be determinable.
+    If only 1 is given, `default_width` or `default_height` fills in
+    for `width` or `height` respectively.
+
+    Raises `ValueError` if 0 or 3 values are given for either axis.
+
+    Returns `(left, top, right, bottom, width, height)`.
+    """
+
+    # Horizontal axis
+    h_count = sum(x is not None for x in (left, right, width))
+    if h_count == 0:
+        raise ValueError("Must specify at least one of left, right, width")
+    if h_count == 3:
+        raise ValueError("Cannot specify all of left, right, width")
+    if h_count == 1 and width is None:
+        width = default_width
+
+    if left is None:
+        left  = right - width
+    if width is None:
+        width = right - left
+    if right is None:
+        right = left + width
+
+    # Vertical axis
+    v_count = sum(x is not None for x in (top, bottom, height))
+    if v_count == 0:
+        raise ValueError("Must specify at least one of top, bottom, height")
+    if v_count == 3:
+        raise ValueError("Cannot specify all of top, bottom, height")
+    if v_count == 1 and height is None:
+        height = default_height
+
+    if top is None:
+        top    = bottom - height
+    if height is None:
+        height = bottom - top
+    if bottom is None:
+        bottom = top + height
+
+    return (left, top, right, bottom, width, height)
