@@ -498,15 +498,15 @@ class CardMaker:
 
     def paste(self,
               im_or_filename: Image.Image | str,
-              size:           tuple[float, float] | None = None,
-              width:          float | None               = None,
-              height:         float | None               = None,
-              x_left:         float | None               = None,
-              x_centre:       float | None               = None,
-              x_right:        float | None               = None,
-              y_top:          float | None               = None,
-              y_middle:       float | None               = None,
-              y_bottom:       float | None               = None,
+              size:         tuple[float, float] | None = None,
+              width:        float | None               = None,
+              height:       float | None               = None,
+              left:         float | None               = None,
+              center:       float | None               = None,
+              right:        float | None               = None,
+              top:          float | None               = None,
+              middle:       float | None               = None,
+              bottom:       float | None               = None,
               ) -> None:
         """
         Paste a given image onto the card; it will use itself as a mask.
@@ -518,8 +518,8 @@ class CardMaker:
 
         # Require the correct x and y arguments
 
-        x_vals = [x_left, x_centre, x_right]
-        y_vals = [y_top, y_middle, y_bottom]
+        x_vals = [left, center, right]
+        y_vals = [top, middle, bottom]
 
         def count_vals(s):
             count = 0
@@ -527,15 +527,15 @@ class CardMaker:
                 if val is not None: count = count + 1
             return count
 
-        x_count = count_vals([x_left, x_centre, x_right])
+        x_count = count_vals([left, center, right])
         if x_count != 1:
             raise ValueError(f"Must specify exactly one of "
-                             f"x_left, x_centre, x_right but got {x_count}")
+                             f"left, center, right but got {x_count}")
 
-        y_count = count_vals([y_top, y_middle, y_bottom])
+        y_count = count_vals([top, middle, bottom])
         if y_count != 1:
             raise ValueError(f"Must specify exactly one of "
-                             f"y_top, y_middle, y_bottom but got {y_count}")
+                             f"top, middle, bottom but got {y_count}")
 
         # Make sure we have an Image and it's the specified size.
 
@@ -552,28 +552,28 @@ class CardMaker:
 
         # Switch to pixels
 
-        x_left   = self.to_px(x_left)
-        x_centre = self.to_px(x_centre)
-        x_right  = self.to_px(x_right)
-        y_top    = self.to_px(y_top)
-        y_middle = self.to_px(y_middle)
-        y_bottom = self.to_px(y_bottom)
+        left   = self.to_px(left)
+        center = self.to_px(center)
+        right  = self.to_px(right)
+        top    = self.to_px(top)
+        middle = self.to_px(middle)
+        bottom = self.to_px(bottom)
 
         x_pos, y_pos = None, None
 
-        if not(x_left is None):
-            x_pos = x_left + self._gutter_px
-        if not(x_right is None):
-            x_pos = x_right - im.width + self._gutter_px
-        if not(x_centre is None):
-            x_pos = int(x_centre - int(im.width / 2)) + self._gutter_px
+        if not(left is None):
+            x_pos = left + self._gutter_px
+        if not(right is None):
+            x_pos = right - im.width + self._gutter_px
+        if not(center is None):
+            x_pos = int(center - int(im.width / 2)) + self._gutter_px
 
-        if not(y_top is None):
-            y_pos = y_top + self._gutter_px
-        if not(y_bottom is None):
-            y_pos = y_bottom - im.height + self._gutter_px
-        if not(y_middle is None):
-            y_pos = int(y_middle - (im.height / 2)) + self._gutter_px
+        if not(top is None):
+            y_pos = top + self._gutter_px
+        if not(bottom is None):
+            y_pos = bottom - im.height + self._gutter_px
+        if not(middle is None):
+            y_pos = int(middle - (im.height / 2)) + self._gutter_px
 
         # Paste the image in the right place
 
@@ -763,8 +763,8 @@ class CardMaker:
         im       = im.convert('RGBA')
 
         self.paste(im,
-                   x_left = left,
-                   y_top  = top,
+                   left = left,
+                   top  = top,
                    )
 
 

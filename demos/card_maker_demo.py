@@ -53,19 +53,19 @@ def simple(wording):
     maker = base_maker.copy()
 
     maker.paste(assets_dir + '/card-border-with-gutter.png',
-                size   = maker.size_with_gutters_px,
-                x_left = -maker.gutter,
-                y_top  = -maker.gutter,
+                size = maker.size_with_gutters_px,
+                left = -maker.gutter,
+                top  = -maker.gutter,
                 )
     maker.text(text   = 'This is top left (and in a bit)',
-               x_left = 20,
-               y_top  = 20,
+               left = 20,
+               top  = 20,
                font   = font_tiny,
                )
-    maker.text(text     = wording,
-               x_centre = maker.width / 2,
-               y_middle = maker.height / 2,
-               font     = font_large,
+    maker.text(text   = wording,
+               center = maker.width / 2,
+               middle = maker.height / 2,
+               font   = font_large,
                )
     return maker
 
@@ -78,9 +78,9 @@ def svg():
     maker = base_maker.copy()
 
     maker.paste(assets_dir + '/atom.svg',
-                size      = maker.size_px,
-                x_centre  = maker.width / 2,
-                y_middle  = maker.height / 2,
+                size    = maker.size_px,
+                center  = maker.width / 2,
+                middle  = maker.height / 2,
                 )
     return maker
 
@@ -94,54 +94,54 @@ def text_positioning():
     maker = base_maker_mm.copy()
 
     # Text on the top line
-    maker.text(text   = 'Left-top',
-               x_left = 0,
-               y_top  = 0,
+    maker.text(text = 'Left-top',
+               left = 0,
+               top  = 0,
+               font = font_small,
+               )
+    maker.text(text   = 'CT',
+               center = maker.width / 2,
+               top    = 0,
                font   = font_small,
                )
-    maker.text(text     = 'CT',
-               x_centre = maker.width / 2,
-               y_top    = 0,
-               font     = font_small,
-               )
-    maker.text(text    = 'Right-top',
-               x_right = maker.width,
-               y_top   = 0,
-               font    = font_small,
+    maker.text(text  = 'Right-top',
+               right = maker.width,
+               top   = 0,
+               font  = font_small,
                )
 
     # Text in the middle
-    maker.text(text     = 'LM',
-               x_left   = 0,
-               y_middle = maker.height / 2,
-               font     = font_small,
+    maker.text(text   = 'LM',
+               left   = 0,
+               middle = maker.height / 2,
+               font   = font_small,
                )
-    maker.text(text     = 'Centre-middle.',
-               x_centre = maker.width / 2,
-               y_middle = maker.height / 2,
-               font     = font_small,
+    maker.text(text   = 'Centre-middle.',
+               center = maker.width / 2,
+               middle = maker.height / 2,
+               font   = font_small,
                )
-    maker.text(text     = 'RM',
-               x_right  = maker.width,
-               y_middle = maker.height / 2,
-               font     = font_small,
+    maker.text(text   = 'RM',
+               right  = maker.width,
+               middle = maker.height / 2,
+               font   = font_small,
                )
 
     # Text on the bottom
-    maker.text(text        = 'Left-bottom',
-               x_left      = 0,
-               y_descender = maker.height,
-               font        = font_small,
+    maker.text(text   = 'Left-bottom',
+               left   = 0,
+               bottom = maker.height,
+               font   = font_small,
                )
-    maker.text(text        = 'CB',
-               x_centre    = maker.width / 2,
-               y_descender = maker.height,
-               font        = font_small,
+    maker.text(text   = 'CB',
+               center = maker.width / 2,
+               bottom = maker.height,
+               font   = font_small,
                )
-    maker.text(text        = 'Right-bottom',
-               x_right     = maker.width,
-               y_descender = maker.height,
-               font        = font_small,
+    maker.text(text     = 'Right-bottom',
+               right  = maker.width,
+               bottom = maker.height,
+               font   = font_small,
                )
 
     return maker
@@ -194,23 +194,23 @@ def bounding_box_demo():
     maker = base_maker_mm.copy()
 
     maker.paste(assets_dir + '/card-border-with-gutter.png',
-                size   = maker.size_with_gutters_mm,
-                x_left = -maker.gutter,
-                y_top  = -maker.gutter,
+                size = maker.size_with_gutters_mm,
+                left = -maker.gutter,
+                top  = -maker.gutter,
                 )
 
     text1 = f"This card is {maker.width_mm}mm wide and {maker.height_mm}mm high."
     bbox  = maker.text(text          = text1,
-                       x_left        = 10,
-                       y_ascender    = 10,
+                       left          = 10,
+                       top           = 10,
                        font          = font_tiny,
                        chrs_per_line = 20,
                        )
 
     text2 = f"Bounding box for above text:\nleft = {bbox[0]}mm\ntop = {bbox[1]}mm\nright = {bbox[2]}mm\nbottom = {bbox[3]}mm"
     bbox  = maker.text(text          = text2,
-                       x_left        = 10,
-                       y_ascender    = maker.height_mm * 0.60,
+                       left          = 10,
+                       top           = maker.height_mm * 0.60,
                        font          = font_tiny,
                        chrs_per_line = 30,
                        )
@@ -226,9 +226,9 @@ def colour_wash():
     maker = base_maker.copy()
 
     maker.paste(assets_dir + '/womble.jpg',
-                size   = maker.size_with_gutters_px,
-                x_left = -maker.gutter,
-                y_top  = -maker.gutter,
+                size = maker.size_with_gutters_px,
+                left = -maker.gutter,
+                top  = -maker.gutter,
                 )
     maker.colour_wash((255,0,0))    # Red
     return maker
