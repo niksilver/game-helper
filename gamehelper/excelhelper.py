@@ -312,8 +312,8 @@ class ExcelHelper(object):
 
         ## Parameters
 
-        - `last_column_label`: If given, the last column is the one whose
-          header matches this label, rather than the last non-empty header
+        - `last_column_label`: If given, the last header column is the one
+          that matches this label, rather than the last non-empty header
           cell.
         """
 
@@ -348,3 +348,56 @@ class ExcelHelper(object):
         table = table[:-1]
 
         return table
+
+
+    def vertical_dicts(self, coordinate_or_cell, last_column_label = None):
+        """
+        Given a starting cell, which is the first cell of a table header,
+        return a list of cells below that. Each element of the list is a
+        row of the table expressed as a dict. The keys in each dict are the
+        values in the header.
+
+        The list stops just before the first row of all empty cells.
+
+        ## Parameters
+
+        - `last_column_label`: If given, the last header column is the one
+          that matches this label, rather than the last non-empty header
+          cell.
+        """
+
+        coord, cell = self.cc(coordinate_or_cell)
+
+        # How many columns in the table?
+
+        cols = self._count_columns(cell, last_column_label)
+
+        # Read the header labels
+
+        headers = [self.right(cell, i).value for i in range(cols)]
+
+        # Read the rows, stop when we have our first blank row
+
+        rows          = []
+        got_blank_row = False
+        start_cell    = self.down(cell)
+
+        while not(got_blank_row):
+            found_cell_content = False
+            row = {}
+            for i in range(cols):
+                val             = self.right(start_cell, i).value
+                row[headers[i]] = val
+
+                if not(val is None):
+                    found_cell_content = True
+
+            rows.append(row)
+            start_cell    = self.down(start_cell)
+            got_blank_row = not(found_cell_content)
+
+        # We've appended a blank row, so fix that
+
+        rows = rows[:-1]
+
+        return rows

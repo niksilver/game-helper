@@ -451,6 +451,72 @@ class TestExcelHelper:
         assert len(table) == 0
 
 
+    def test_vertical_dicts(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score'],
+                [None   , 11    , None   , 'Not in table'],
+                ['Bob'  , None  , None   ],
+                ['Dave' , 13    , 104    , 'Still not'   ],
+                [None   , None  , 102    ],
+               ]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row    = r+10,
+                        column = c+5,
+                        value  = data[r][c])
+
+        table = xh.vertical_dicts('E10')
+
+        assert table[0] == {'Name': None , 'Age': 11  , 'Score': None}
+        assert table[1] == {'Name': 'Bob', 'Age': None, 'Score': None}
+        assert table[2] == {'Name': 'Dave', 'Age': 13 , 'Score': 104 }
+        assert table[3] == {'Name': None , 'Age': None, 'Score': 102 }
+        assert len(table) == 4
+
+
+    def test_vertical_dict_last_column_label(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score', 'Extra'],
+                ['Alice', 11    , 100    , 'x'    ],
+                ['Bob'  , 12    , 101    , 'y'    ],
+               ]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row    = r+10,
+                        column = c+5,
+                        value  = data[r][c])
+
+        table = xh.vertical_dicts('E10', last_column_label = 'Score')
+
+        assert table[0] == {'Name': 'Alice', 'Age': 11, 'Score': 100}
+        assert table[1] == {'Name': 'Bob'  , 'Age': 12, 'Score': 101}
+        assert len(table) == 2
+
+
+    def test_vertical_dict_handles_no_rows(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [['Name', 'Age', 'Score'],
+               ]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row    = r+10,
+                        column = c+5,
+                        value  = data[r][c])
+
+        table = xh.vertical_dicts('E10')
+
+        assert len(table) == 0
+
+
     def test_workbook_property(self):
         wb = Workbook()
         xh = ExcelHelper(wb)
