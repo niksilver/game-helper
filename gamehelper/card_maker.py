@@ -869,7 +869,7 @@ class CardMaker:
         chrs_per_line = self._calc_chrs_per_line(text, width, chrs_per_line,
                                                  font, spacing)
         if chrs_per_line:
-            text = self._insert_new_lines(text, chrs_per_line)
+            text = utils.insert_new_lines(text, chrs_per_line)
 
         draw = ImageDraw.Draw(self._im_with_gutters)
         draw.text(xy      = (int(x_pos), int(y_pos)),
@@ -892,29 +892,6 @@ class CardMaker:
                 self.from_px(bbox[2] - self._gutter_px),
                 self.from_px(bbox[3] - self._gutter_px),
                 )
-
-
-    @staticmethod
-    def _insert_new_lines(text: str, len: int) -> str:
-        """
-        Given a text string and a line length, replace spaces with new line
-        characters to fit the length.
-        """
-        space = 0    # Index of last space
-        count = 0    # Number of characters consumed
-
-        for i, char in enumerate(text):
-            count = count + 1
-            if char == ' ':
-                space = i
-            elif char == '\n':
-                text = text[:i] + '\n' + text[i+1:]
-                count = 0
-            if count+1 == len:
-                text = text[:space] + '\n' + text[space+1:]
-                count = i - space
-
-        return text
 
 
     def _calc_chrs_per_line(self,
@@ -940,7 +917,7 @@ class CardMaker:
         draw = ImageDraw.Draw(self._im_with_gutters)
 
         def assessment(chrs):
-            wrapped    = self._insert_new_lines(text, chrs)
+            wrapped    = utils.insert_new_lines(text, chrs)
             bbox       = draw.textbbox(xy      = (0, 0),
                                        text    = wrapped,
                                        font    = font,

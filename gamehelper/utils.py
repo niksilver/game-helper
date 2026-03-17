@@ -1,6 +1,42 @@
 from collections.abc import Callable
 
 
+def insert_new_lines(text: str, length: int) -> str:
+    """
+    Given a text string and a line length, replace spaces with newline
+    characters so that no line exceeds `length` characters.
+    """
+    space = None   # Index of last space seen in current line
+    count = 0      # Characters consumed since last newline
+
+    for i, char in enumerate(text):
+        if char == '\n':
+            # Existing newline resets the line
+            count = 0
+            space = None
+        elif char == ' ':
+            count += 1
+            if count > length:
+                # Space pushed us over — wrap at the previous space if there
+                # is one, otherwise wrap here (word exactly filled the line)
+                wrap_at = space if space is not None else i
+                text    = text[:wrap_at] + '\n' + text[wrap_at+1:]
+                count   = i - wrap_at
+                space   = i if wrap_at != i else None
+            else:
+                # Still within the limit — record as a potential wrap point
+                space = i
+        else:
+            count += 1
+            if count > length and space is not None:
+                # Non-space pushed us over — wrap at the last space
+                text  = text[:space] + '\n' + text[space+1:]
+                count = i - space
+                space = None
+
+    return text
+
+
 def optimise(initial_guess:  int,
              assessment:     Callable[[int], tuple[int, bool]],
              ) -> int:

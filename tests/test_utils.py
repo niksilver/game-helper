@@ -1,6 +1,6 @@
 import pytest
 
-from gamehelper.utils import optimise, box
+from gamehelper.utils import optimise, box, insert_new_lines
 
 
 class TestOptimise:
@@ -297,3 +297,56 @@ class TestBox:
                 default_width  = 200,
                 default_height = 200,
                 )
+
+
+class TestInsertNewLines:
+    """Tests for the insert_new_lines() function."""
+
+    def test_short_text_unchanged(self):
+        """Text shorter than the line length should be unchanged."""
+        assert insert_new_lines("Hello world", 20) == "Hello world"
+
+    def test_wraps_at_space(self):
+        """Should replace a space with a newline to fit the line length."""
+        result = insert_new_lines("Hello world", 7)
+        assert result == "Hello\nworld"
+        for line in result.split('\n'):
+            assert len(line) <= 7
+
+    def test_wraps_at_word_boundary(self):
+        """Should wrap at the last space that fits within the line length."""
+        result = insert_new_lines("one two three", 8)
+        assert result == "one two\nthree"
+        for line in result.split('\n'):
+            assert len(line) <= 8
+
+    def test_wraps_on_exact_word_boundary(self):
+        """Should wrap correctly when a word fills the line exactly."""
+        result = insert_new_lines("Hello world", 5)
+        assert result == "Hello\nworld"
+        for line in result.split('\n'):
+            assert len(line) <= 5
+
+    def test_wraps_on_two_exact_word_boundaries(self):
+        """Should wrap correctly when each word fills the line exactly."""
+        result = insert_new_lines("Hello world folks", 5)
+        assert result == "Hello\nworld\nfolks"
+        for line in result.split('\n'):
+            assert len(line) <= 5
+
+    def test_preserves_existing_newlines(self):
+        """Existing newlines should reset the character count."""
+        result = insert_new_lines("one\ntwo three", 8)
+        assert result == "one\ntwo\nthree"
+        for line in result.split('\n'):
+            assert len(line) <= 8
+
+    def test_no_wrap_when_text_fits(self):
+        """Text that fits within the length should not be wrapped."""
+        assert insert_new_lines("Hello world", 13) == "Hello world"
+
+    def test_wraps_when_word_fills_line(self):
+        """Should wrap correctly even when a word exactly fills the line."""
+        result = insert_new_lines("+1 Recognition if you voted Yes and Gov Auth inc'd", 12)
+        for line in result.split('\n'):
+            assert len(line) <= 12
