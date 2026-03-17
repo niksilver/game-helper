@@ -623,71 +623,71 @@ class TestCardMaker:
 
         with pytest.raises(ValueError) as valerr:
             im = maker.paste('tests/100x150.png')
-        assert 'one of x_left, x_centre, x_right' in valerr.value.args[0]
+        assert 'one of left, center, right' in valerr.value.args[0]
 
         with pytest.raises(ValueError) as valerr:
             im = maker.paste('tests/100x150.png',
-                             x_left   = 0,
-                             x_centre = 0,
-                             y_top    = 0,
+                             left   = 0,
+                             center = 0,
+                             top    = 0,
                              )
-        assert 'one of x_left, x_centre, x_right' in valerr.value.args[0]
+        assert 'one of left, center, right' in valerr.value.args[0]
 
         with pytest.raises(ValueError) as valerr:
             im = maker.paste('tests/100x150.png',
-                             x_centre = 0,
-                             x_right  = 0,
-                             y_top    = 0,
+                             center = 0,
+                             right  = 0,
+                             top    = 0,
                              )
-        assert 'one of x_left, x_centre, x_right' in valerr.value.args[0]
+        assert 'one of left, center, right' in valerr.value.args[0]
 
         with pytest.raises(ValueError) as valerr:
             im = maker.paste('tests/100x150.png',
-                             x_left   = 0,
-                             x_centre = 0,
-                             x_right  = 0,
-                             y_top    = 0,
+                             left   = 0,
+                             center = 0,
+                             right  = 0,
+                             top    = 0,
                              )
-        assert 'one of x_left, x_centre, x_right' in valerr.value.args[0]
+        assert 'one of left, center, right' in valerr.value.args[0]
 
-        im = maker.paste('tests/100x150.png', x_left   = 0, y_top = 0)    # Okay
-        im = maker.paste('tests/100x150.png', x_centre = 0, y_top = 0)    # Okay
-        im = maker.paste('tests/100x150.png', x_right  = 0, y_top = 0)    # Okay
+        im = maker.paste('tests/100x150.png', left   = 0, top = 0)    # Okay
+        im = maker.paste('tests/100x150.png', center = 0, top = 0)    # Okay
+        im = maker.paste('tests/100x150.png', right  = 0, top = 0)    # Okay
 
         # Needs exactly one y argument
 
         with pytest.raises(ValueError) as valerr:
-            im = maker.paste('tests/100x150.png', x_left = 0)
-        assert 'one of y_top, y_middle, y_bottom' in valerr.value.args[0]
+            im = maker.paste('tests/100x150.png', left = 0)
+        assert 'one of top, middle, bottom' in valerr.value.args[0]
 
         with pytest.raises(ValueError) as valerr:
             im = maker.paste('tests/100x150.png',
-                             x_left   = 0,
-                             y_top    = 0,
-                             y_middle = 0,
+                             left   = 0,
+                             top    = 0,
+                             middle = 0,
                              )
-        assert 'one of y_top, y_middle, y_bottom' in valerr.value.args[0]
+        assert 'one of top, middle, bottom' in valerr.value.args[0]
 
         with pytest.raises(ValueError) as valerr:
             im = maker.paste('tests/100x150.png',
-                             x_left   = 0,
-                             y_middle = 0,
-                             y_bottom = 0,
+                             left   = 0,
+                             middle = 0,
+                             bottom = 0,
                              )
-        assert 'one of y_top, y_middle, y_bottom' in valerr.value.args[0]
+        assert 'one of top, middle, bottom' in valerr.value.args[0]
 
         with pytest.raises(ValueError) as valerr:
             im = maker.paste('tests/100x150.png',
-                             x_left   = 0,
-                             y_top    = 0,
-                             y_middle = 0,
-                             y_bottom = 0,
+                             left   = 0,
+                             top    = 0,
+                             middle = 0,
+                             bottom = 0,
                              )
-        assert 'one of y_top, y_middle, y_bottom' in valerr.value.args[0]
+        assert 'one of top, middle, bottom' in valerr.value.args[0]
 
-        im = maker.paste('tests/100x150.png', x_left = 0, y_top    = 0)    # Okay
-        im = maker.paste('tests/100x150.png', x_left = 0, y_middle = 0)    # Okay
-        im = maker.paste('tests/100x150.png', x_left = 0, y_bottom = 0)    # Okay
+        im = maker.paste('tests/100x150.png', left = 0, top    = 0)    # Okay
+        im = maker.paste('tests/100x150.png', left = 0, middle = 0)    # Okay
+        im = maker.paste('tests/100x150.png', left = 0, bottom = 0)    # Okay
 
 
 class TestTextLineSpacing:
