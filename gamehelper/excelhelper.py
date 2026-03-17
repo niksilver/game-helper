@@ -14,7 +14,10 @@ class ExcelHelper(object):
     wb.active = wb['Book 1']
     ```
 
-    # Then use the methods of the ExcelHelper.
+    Then use the methods of the ExcelHelper.
+
+    If you want cells to return calculated values (rather than formulas)
+    then use `load_workbook(..., data_only = True)`.
     """
 
 
@@ -277,23 +280,48 @@ class ExcelHelper(object):
         return ws.cell(row = cell.row + row, column = cell.column + column).value
 
 
-    def vertical_table(self, coordinate_or_cell):
+    def _count_columns(self, header_cell, last_column_label = None):
+        """
+        Count the number of columns in the table starting at `header_cell`.
+
+        ## Parameters
+
+        - `last_column_label`: If `None`, count until the last non-empty
+          header cell. If given, count up to and including the column with
+          that label.
+        """
+        cols = 0
+        if last_column_label is None:
+            while not(header_cell.value is None):
+                cols += 1
+                header_cell = self.right(header_cell)
+        else:
+            while header_cell.value != last_column_label:
+                cols += 1
+                header_cell = self.right(header_cell)
+            cols += 1
+        return cols
+
+
+    def vertical_table(self, coordinate_or_cell, last_column_label = None):
         """
         Given a starting cell, which is the first cell of a table header,
         return a table of cells below that. Each element of the table is a
         row of the table. These are the length of the header. The table
         stops just before the first row of all empty cells.
+
+        ## Parameters
+
+        - `last_column_label`: If given, the last column is the one whose
+          header matches this label, rather than the last non-empty header
+          cell.
         """
 
         coord, cell = self.cc(coordinate_or_cell)
 
         # How many columns in the table?
 
-        header_cell = cell
-        cols = 0
-        while not(header_cell.value is None):
-            cols += 1
-            header_cell = self.right(header_cell)
+        cols = self._count_columns(cell, last_column_label)
 
         # Read the rows, stop when we have our first blank
 

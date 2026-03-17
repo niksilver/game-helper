@@ -408,6 +408,28 @@ class TestExcelHelper:
         assert len(table) == 0
 
 
+    def test_vertical_table_last_column_label(self):
+        wb = Workbook()
+        xh = ExcelHelper(wb)
+        ws = wb.active
+
+        data = [['Name' , 'Age' , 'Score', 'Extra'],
+                ['Alice', 11    , 100    , 'x'    ],
+                ['Bob'  , 12    , 101    , 'y'    ],
+               ]
+        for r in range(len(data)):
+            for c in range(len(data[r])):
+                ws.cell(row    = r+10,
+                        column = c+5,
+                        value  = data[r][c])
+
+        table = xh.vertical_table('E10', last_column_label = 'Score')
+
+        assert table[0] == ['Alice', 11, 100]
+        assert table[1] == ['Bob'  , 12, 101]
+        assert len(table) == 2
+
+
     def test_vertical_table_handles_no_columns(self):
         wb = Workbook()
         xh = ExcelHelper(wb)
