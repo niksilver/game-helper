@@ -1,3 +1,4 @@
+import time
 import pytest
 from datetime import datetime
 
@@ -38,3 +39,11 @@ class TestPDFSheetsOutput:
     def test_output_accepts_datetime(self, tmp_path):
         """Should accept a datetime object for the date parameter."""
         self._make_pdf(tmp_path / 'out.pdf', date = datetime(2024, 1, 1))
+
+
+    def test_output_is_deterministic_with_default_date(self, tmp_path):
+        """Two calls with no date argument should produce identical binary output."""
+        a = self._make_pdf(tmp_path / 'a.pdf')
+        time.sleep(1)
+        b = self._make_pdf(tmp_path / 'b.pdf')
+        assert a == b
