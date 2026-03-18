@@ -1,5 +1,5 @@
 import math
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fpdf import FPDF
 from PIL  import Image
@@ -325,13 +325,19 @@ class PDFSheets:
         self.y = top_margin_fronts_page
 
 
-    def output(self, filename: str, date: datetime | None = None) -> None:
+    def output(self, filename: str, date: datetime | int = 0) -> None:
         """
         Write the PDF sheets to the given file.
-        `date` must be a `datetime` object and defaults to the current date
-        and time. Useful if we want to ensure consistency between different
-        runs of the output.
+
+        ## Parameters
+
+        - `date`: Sets the PDF creation date, which determines the binary
+          output. May be a `datetime` object or an `int` (seconds since the
+          Unix Epoch). Defaults to `0` (the Epoch), which ensures identical
+          binary output across runs. Pass `datetime.now()` to embed the
+          current time instead.
         """
-        if not(date is None):
-            self.pdf.set_creation_date(date = date)
+        if isinstance(date, int):
+            date = datetime.fromtimestamp(date, tz = timezone.utc)
+        self.pdf.set_creation_date(date = date)
         self.pdf.output(filename)
