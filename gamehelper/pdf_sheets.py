@@ -325,19 +325,21 @@ class PDFSheets:
         self.y = top_margin_fronts_page
 
 
-    def output(self, filename: str, date: datetime | int = 0) -> None:
+    def output(self, filename: str, date: datetime | int | None = 0) -> None:
         """
         Write the PDF sheets to the given file.
 
         ## Parameters
 
         - `date`: Sets the PDF creation date, which determines the binary
-          output. May be a `datetime` object or an `int` (seconds since the
-          Unix Epoch). Defaults to `0` (the Epoch), which ensures identical
-          binary output across runs. Pass `datetime.now()` to embed the
-          current time instead.
+          output. May be a `datetime` object, an `int` (seconds since the
+          Unix Epoch), or `None` (which uses the current date and time).
+          Defaults to `0` (the Epoch), which ensures identical binary
+          output across runs.
         """
-        if isinstance(date, int):
+        if date is None:
+            date = datetime.now(tz = timezone.utc)
+        elif isinstance(date, int):
             date = datetime.fromtimestamp(date, tz = timezone.utc)
         self.pdf.set_creation_date(date = date)
         self.pdf.output(filename)
