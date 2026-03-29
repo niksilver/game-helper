@@ -635,12 +635,16 @@ class CardMaker:
         return (resize, (int(width), int(height)))
 
 
-    def font_families(self, families: dict[str, str]) -> None:
+    def font_families(self, families: list[dict]) -> None:
         """
-        Register font families for use in `html()`.
-        Each key is a font family name and its value is the path to the font file.
+        Register font families for use in `text()` and `html()`.
+        Each entry is a dict with at least a `family` key (the family name)
+        and a `file` key (path to the font file).
         """
-        self._font_families = families
+        self._font_families = {
+            f['family']: {k: v for k, v in f.items() if k != 'family'}
+            for f in families
+        }
 
     def _get_HTML2Image(self) -> Html2Image:
         """
@@ -758,9 +762,9 @@ class CardMaker:
         v_align_css     = f'align-items: {v_align};'               if v_align     else ""
 
         font_face_css = []
-        for name, path in self._font_families.items():
+        for name, data in self._font_families.items():
             font_face_css.append(f"@font-face {{ font-family: '{name}'; "
-                                 f"src: url('{path}'); }}")
+                                 f"src: url('{data['file']}'); }}")
         html_str = f'<body><span>{content}</span></body>'
         css_str  = font_face_css + ['body {',
                     'margin: 0px;',

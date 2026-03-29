@@ -823,9 +823,9 @@ class TestFontFamilies:
                           unit     = 'mm',
                           width_px = 200,
                           )
-        maker.font_families({'MyFont': '/path/to/font.ttf'})
+        maker.font_families([{'family': 'MyFont', 'file': '/path/to/font.ttf'}])
         dup = maker.copy()
-        assert dup._font_families == {'MyFont': '/path/to/font.ttf'}
+        assert dup._font_families == {'MyFont': {'file': '/path/to/font.ttf'}}
 
     def test_copy_font_families_are_independent(self):
         """Changing font families on a copy should not affect the original."""
@@ -834,11 +834,11 @@ class TestFontFamilies:
                           unit     = 'mm',
                           width_px = 200,
                           )
-        maker.font_families({'MyFont': '/path/to/font.ttf'})
+        maker.font_families([{'family': 'MyFont', 'file': '/path/to/font.ttf'}])
         dup = maker.copy()
-        dup.font_families({'Other': '/path/to/other.ttf'})
-        assert maker._font_families == {'MyFont': '/path/to/font.ttf'}
-        assert dup._font_families   == {'Other': '/path/to/other.ttf'}
+        dup.font_families([{'family': 'Other', 'file': '/path/to/other.ttf'}])
+        assert maker._font_families == {'MyFont': {'file': '/path/to/font.ttf'}}
+        assert dup._font_families   == {'Other':  {'file': '/path/to/other.ttf'}}
 
 
 class TestText:
