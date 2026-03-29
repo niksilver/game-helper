@@ -5,6 +5,9 @@ from PIL import Image, ImageFont
 from gamehelper.card_maker import CardMaker
 
 
+FONT_FILE = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
+
+
 class TestCardMaker:
 
 
@@ -839,6 +842,59 @@ class TestFontFamilies:
         dup.font_families([{'family': 'Other', 'file': '/path/to/other.ttf'}])
         assert maker._font_families == {'MyFont': {'file': '/path/to/font.ttf'}}
         assert dup._font_families   == {'Other':  {'file': '/path/to/other.ttf'}}
+
+
+class TestFontName:
+    """Tests for font_name()."""
+
+    def test_font_name_stores_preset(self):
+        """font_name() should store the family and size in _font_names."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_name('title', family='Test', size=5)
+        assert maker._font_names['title']['family'] == 'Test'
+        assert maker._font_names['title']['size']   == 5
+
+    def test_font_name_raises_for_unknown_family(self):
+        """font_name() should raise ValueError if the family is not registered."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        with pytest.raises(ValueError):
+            maker.font_name('title', family='Unknown', size=5)
+
+    def test_copy_preserves_font_names(self):
+        """Copying a CardMaker should preserve the font names."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_name('title', family='Test', size=5)
+        dup = maker.copy()
+        assert dup._font_names['title']['family'] == 'Test'
+        assert dup._font_names['title']['size']   == 5
+
+    def test_copy_font_names_are_independent(self):
+        """Calling font_name() on a copy should not affect the original."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_name('title', family='Test', size=5)
+        dup = maker.copy()
+        dup.font_name('body', family='Test', size=3)
+        assert 'body' not in maker._font_names
+        assert 'body' in dup._font_names
 
 
 class TestText:

@@ -69,6 +69,7 @@ class CardMaker:
         self._im_with_gutters = image
         self._html2image      = None
         self._font_families   = {}
+        self._font_names      = {}
 
         # Set default text line spacing (1.5mm in the default unit)
         default_spacing_px      = self._DEFAULT_TEXT_LINE_SPACING_MM * self._width_px / self._width_mm
@@ -645,6 +646,22 @@ class CardMaker:
             f['family']: {k: v for k, v in f.items() if k != 'family'}
             for f in families
         }
+
+    def font_name(self,
+                  name:   str,
+                  *,
+                  family: str,
+                  size:   float,
+                  ) -> None:
+        """
+        Register a named font preset for use in `text()` and `html()`.
+        `family` must be a family name registered via `font_families()`.
+        `size` is in the default unit of this `CardMaker`.
+        """
+        if family not in self._font_families:
+            raise ValueError(f"Font family '{family}' is not registered. "
+                             f"Call font_families() first.")
+        self._font_names = {**self._font_names, name: {'family': family, 'size': size}}
 
     def _get_HTML2Image(self) -> Html2Image:
         """
