@@ -672,6 +672,7 @@ class CardMaker:
             return "right"
         return "left"
 
+
     @staticmethod
     def _v_align(v_align: str | None,
                  top:     float | None,
@@ -686,6 +687,22 @@ class CardMaker:
         if bottom is not None and top is None:
             return "bottom"
         return "top"
+
+
+    @staticmethod
+    def _v_align_flex(v_align: str | None,
+                      top:     float | None,
+                      bottom:  float | None,
+                      middle:  float | None,
+                      ) -> str:
+        """Return the flexbox vertical alighment value, defaulting based on position parameters."""
+        if v_align is not None:
+            return v_align
+        if (middle is not None) or (v_align == 'middle'):
+            return "anchor-center"
+        if (bottom is not None and top is None) or (v_align == 'bottom'):
+            return "flex-end"
+        return "flex-start"
 
 
     def html(self,
@@ -719,7 +736,7 @@ class CardMaker:
         """
 
         h_align = self._h_align(h_align, left, right, center)
-        v_align = self._v_align(v_align, top, bottom, middle)
+        v_align = self._v_align_flex(v_align, top, bottom, middle)
 
         left, top, right, bottom, width, height = utils.box(left           = left,
                                                             top            = top,
@@ -735,32 +752,48 @@ class CardMaker:
         width_px  = int(self.to_px(width))
         height_px = int(self.to_px(height))
 
-        font_size_css   = f'font-size:      {self.to_px(font_size)};' if font_size   else ""
-        font_family_css = f"font-family:    '{font_family}';"         if font_family else ""
-        h_align_css     = f'text-align:     {h_align};'               if h_align     else ""
-        v_align_css     = f'vertical-align: {v_align};'               if v_align     else ""
+        font_size_css   = f'font-size:   {self.to_px(font_size)};' if font_size   else ""
+        font_family_css = f"font-family: '{font_family}';"         if font_family else ""
+        h_align_css     = f'text-align:  {h_align};'               if h_align     else ""
+        v_align_css     = f'align-items: {v_align};'               if v_align     else ""
+        if '/' in content:
+            print(f"left, top, right, bottom: {left}, {top}, {right}, {bottom}")
+            print(f"size {(width_px, height_px)}")
+            print(f'width: {width_px}px;')
+            print(f"h_align: {h_align_css}")
+            print(f"v_align: {v_align_css}")
 
         font_face_css = []
         for name, path in self._font_families.items():
             font_face_css.append(f"@font-face {{ font-family: '{name}'; "
                                  f"src: url('{path}'); }}")
+        html_str = f'<body><span>{content}</span></body>'
+        css_str  = font_face_css + ['body {',
+                    'margin: 0px;',
+                    'display: flex;',
+                    'background: red;',
+                    f'width: {width_px}px;',
+                    f'height: {height_px}px;',
+                    font_size_css,
+                    font_family_css,
+                    v_align_css,
+                    '}',
+                    'span {',
+                    f'width: {width_px}px;',
+                    'background: green;',
+                    h_align_css,
+                    '}',
+                    ]
 
         hti      = self._get_HTML2Image()
-        out_path = hti.screenshot(html_str = content,
-                                  size     = (width_px, height_px),
-                                  css_str  = font_face_css +
-                                             ['body {',
-                                              'margin: 0px;',
-                                              f'width: {width_px}px;',
-                                              font_size_css,
-                                              font_family_css,
-                                              h_align_css,
-                                              v_align_css,
-                                              '}',
-                                              ]
+        out_path = hti.screenshot(html_str = html_str,
+                                  size     = (width_px+50, height_px+50),
+                                  css_str  = css_str,
                                   )
         im       = Image.open(out_path[0])
         im       = im.convert('RGBA')
+        print(f"Path(s) = {out_path}")
+        print(f"Output image size {im.size}")
 
         self.paste(im,
                    left = left,
