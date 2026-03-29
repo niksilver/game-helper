@@ -760,19 +760,18 @@ class CardMaker:
 
 
     def html(self,
-             content:     str,
-             left:        float | None = None,
-             top:         float | None = None,
-             right:       float | None = None,
-             bottom:      float | None = None,
-             center:      float | None = None,
-             middle:      float | None = None,
-             width:       float | None = None,
-             height:      float | None = None,
-             h_align:     str | None   = None,
-             v_align:     str | None   = None,
-             font_size:   float | None = None,
-             font_family: str | None   = None,
+             content: str,
+             left:    float | None = None,
+             top:     float | None = None,
+             right:   float | None = None,
+             bottom:  float | None = None,
+             center:  float | None = None,
+             middle:  float | None = None,
+             width:   float | None = None,
+             height:  float | None = None,
+             h_align: str | None   = None,
+             v_align: str | None   = None,
+             font:    str | None   = None,
              ) -> None:
         """
         Render some HTML content in a box of the given size.
@@ -782,8 +781,8 @@ class CardMaker:
         The width defaults to the card width.
         The height defaults to the card height.
         `h_align` and `v_align` default based on the position parameter given.
-        `font_family` sets the document font family (must be registered
-        via `font_families()` if it's a custom font).
+        `font` sets the document font family and size using a name registered
+        via `font_name()`.
 
         Rendering HTML is slower than the `text()` method if that's all you want,
         but it may be more convenient to manage.
@@ -806,8 +805,14 @@ class CardMaker:
         width_px  = int(self.to_px(width))
         height_px = int(self.to_px(height))
 
-        font_size_css   = f'font-size:   {self.to_px(font_size)};' if font_size   else ""
-        font_family_css = f"font-family: '{font_family}';"         if font_family else ""
+        font_size_css   = ""
+        font_family_css = ""
+        if font is not None:
+            file, size      = self._resolve_font_name(font)
+            family          = self._font_names[font]['family']
+            size_px         = int(self.to_px(size))
+            font_size_css   = f'font-size:   {size_px}px;'
+            font_family_css = f"font-family: '{family}';"
         h_align_css     = f'text-align:  {h_align};'               if h_align     else ""
         v_align_css     = f'align-items: {v_align};'               if v_align     else ""
 
