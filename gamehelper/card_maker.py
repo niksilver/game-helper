@@ -756,12 +756,6 @@ class CardMaker:
         font_family_css = f"font-family: '{font_family}';"         if font_family else ""
         h_align_css     = f'text-align:  {h_align};'               if h_align     else ""
         v_align_css     = f'align-items: {v_align};'               if v_align     else ""
-        if '/' in content:
-            print(f"left, top, right, bottom: {left}, {top}, {right}, {bottom}")
-            print(f"size {(width_px, height_px)}")
-            print(f'width: {width_px}px;')
-            print(f"h_align: {h_align_css}")
-            print(f"v_align: {v_align_css}")
 
         font_face_css = []
         for name, path in self._font_families.items():
@@ -771,7 +765,6 @@ class CardMaker:
         css_str  = font_face_css + ['body {',
                     'margin: 0px;',
                     'display: flex;',
-                    'background: red;',
                     f'width: {width_px}px;',
                     f'height: {height_px}px;',
                     font_size_css,
@@ -780,20 +773,17 @@ class CardMaker:
                     '}',
                     'span {',
                     f'width: {width_px}px;',
-                    'background: green;',
                     h_align_css,
                     '}',
                     ]
 
         hti      = self._get_HTML2Image()
         out_path = hti.screenshot(html_str = html_str,
-                                  size     = (width_px+50, height_px+50),
+                                  size     = (width_px, height_px),
                                   css_str  = css_str,
                                   )
         im       = Image.open(out_path[0])
         im       = im.convert('RGBA')
-        print(f"Path(s) = {out_path}")
-        print(f"Output image size {im.size}")
 
         self.paste(im,
                    left = left,
