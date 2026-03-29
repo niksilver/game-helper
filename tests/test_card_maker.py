@@ -1,6 +1,6 @@
 import pytest
 
-from PIL import Image, ImageFont
+from PIL import Image
 
 from gamehelper.card_maker import CardMaker
 
@@ -907,6 +907,8 @@ class TestText:
                           unit     = 'px',
                           width_mm = 500,
                           )
+        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_name('normal', family='Test', size=14)
 
         # Width and chrs_per_line cannot both be specified
         with pytest.raises(ValueError):
@@ -918,14 +920,15 @@ class TestText:
                        )
 
         # Width wraps text to fit
-        left, top, right, bottom = maker.text("This is a long piece of text that should be wrapped",
-                                              left  = 0,
-                                              top   = 0,
-                                              font  = ImageFont.load_default(),
-                                              width = 200,
-                                              )
+        left, top, right, bottom = maker.text(
+            "This is a long piece of text that should be wrapped",
+            left  = 0,
+            top   = 0,
+            font  = 'normal',
+            width = 200,
+            )
         width = right - left
-        assert 0 <= left <= 5
+        assert -2 <= left <= 5
         assert 100 <= right <= 200
         assert 100 <= width <= 200
 
@@ -933,7 +936,7 @@ class TestText:
         left, top, right, bottom = maker.text("Hello",
                                               left = 10,
                                               top  = 20,
-                                              font = ImageFont.load_default(),
+                                              font = 'normal',
                                               )
         width  = right - left
         height = bottom - top
@@ -949,7 +952,7 @@ class TestText:
                                               left    = 0,
                                               top     = 0,
                                               right   = 200,
-                                              font    = ImageFont.load_default(),
+                                              font    = 'normal',
                                               h_align = "right",
                                               )
         width = right - left
@@ -962,7 +965,7 @@ class TestText:
                                               left    = 0,
                                               top     = 0,
                                               bottom  = 200,
-                                              font    = ImageFont.load_default(),
+                                              font    = 'normal',
                                               v_align = "bottom",
                                               )
         height = bottom - top
@@ -975,7 +978,7 @@ class TestText:
                                               center = 200,
                                               top    = 0,
                                               width  = 100,
-                                              font   = ImageFont.load_default(),
+                                              font   = 'normal',
                                               )
         width = right - left
         assert 150 <= left <= 200
@@ -987,7 +990,7 @@ class TestText:
                                               left   = 0,
                                               middle = 200,
                                               height = 100,
-                                              font   = ImageFont.load_default(),
+                                              font   = 'normal',
                                               )
         height = bottom - top
         assert 150 <= top <= 200
@@ -999,7 +1002,7 @@ class TestText:
                                               right = 200,
                                               top   = 0,
                                               width = 100,
-                                              font  = ImageFont.load_default(),
+                                              font  = 'normal',
                                               )
         width = right - left
         assert 150 <= left <= 200
@@ -1011,7 +1014,7 @@ class TestText:
                                               left   = 0,
                                               bottom = 200,
                                               height = 100,
-                                              font   = ImageFont.load_default(),
+                                              font   = 'normal',
                                               )
         height = bottom - top
         assert 150 <= top <= 200
@@ -1025,12 +1028,15 @@ class TestText:
                           unit     = 'px',
                           width_mm = 500,
                           )
-        left, top, right, bottom = maker.text("This is a long piece of text that should be wrapped",
-                                              center        = 250,
-                                              top           = 0,
-                                              font          = ImageFont.load_default(),
-                                              chrs_per_line = 10,
-                                              )
+        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_name('normal', family='Test', size=14)
+        left, top, right, bottom = maker.text(
+            "This is a long piece of text that should be wrapped",
+            center        = 250,
+            top           = 0,
+            font          = 'normal',
+            chrs_per_line = 10,
+            )
         width  = right - left
         height = bottom - top
         assert width > 0
@@ -1043,12 +1049,61 @@ class TestText:
                           unit     = 'mm',
                           width_px = 600,
                           )
+        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_name('large', family='Test', size=3)  # 3mm = 30px
         long_text = "This is a long piece of text that should be wrapped to fit within the box"
         left, top, right, bottom = maker.text(long_text,
                                               left  = 0,
                                               top   = 0,
-                                              font  = ImageFont.load_default(size = 30),
+                                              font  = 'large',
                                               width = 55,
                                               )
         width = right - left
         assert 0 < width <= 55
+
+    def test_text_font_none_uses_default(self):
+        """text() with font=None should use PIL's default font without error."""
+        maker = CardMaker(width    = 500,
+                          height   = 500,
+                          unit     = 'px',
+                          width_mm = 500,
+                          )
+        left, top, right, bottom = maker.text("Hello",
+                                              left = 0,
+                                              top  = 0,
+                                              )
+        assert right > left
+        assert bottom > top
+
+    def test_text_unknown_font_raises(self):
+        """text() with an unregistered font name should raise ValueError."""
+        maker = CardMaker(width    = 500,
+                          height   = 500,
+                          unit     = 'px',
+                          width_mm = 500,
+                          )
+        with pytest.raises(ValueError):
+            maker.text("Hello",
+                       left = 0,
+                       top  = 0,
+                       font = 'nonexistent',
+                       )
+
+    def test_text_caches_font_object(self):
+        """text() should cache the ImageFont object after the first call."""
+        maker = CardMaker(width    = 500,
+                          height   = 500,
+                          unit     = 'px',
+                          width_mm = 500,
+                          )
+        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_name('normal', family='Test', size=14)
+
+        assert 'font_obj' not in maker._font_names['normal']
+
+        maker.text("Hello", left=0, top=0, font='normal')
+        assert 'font_obj' in maker._font_names['normal']
+
+        cached = maker._font_names['normal']['font_obj']
+        maker.text("World", left=0, top=20, font='normal')
+        assert maker._font_names['normal']['font_obj'] is cached

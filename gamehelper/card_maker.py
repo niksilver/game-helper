@@ -663,6 +663,39 @@ class CardMaker:
                              f"Call font_families() first.")
         self._font_names = {**self._font_names, name: {'family': family, 'size': size}}
 
+    def _resolve_font_name(self, name: str) -> tuple[str, float]:
+        """
+        Look up a registered font preset and return `(file_path, size)`.
+        `size` is in the default unit of this `CardMaker`.
+        Raises `ValueError` if the name or its family is not registered.
+        """
+        if name not in self._font_names:
+            raise ValueError(f"Font '{name}' is not registered. "
+                             f"Call font_name() first.")
+
+        preset = self._font_names[name]
+        family = preset['family']
+
+        if family not in self._font_families:
+            raise ValueError(f"Font family '{family}' is not registered. "
+                             f"Call font_families() first.")
+
+        return (self._font_families[family]['file'], preset['size'])
+
+    def _get_font_obj(self, name: str) -> ImageFont.FreeTypeFont:
+        """
+        Return the cached `ImageFont` for the named preset, creating it if needed.
+        Copies share `_font_names` inner dicts intentionally, so all copies
+        benefit from this cache.
+        """
+        file, size = self._resolve_font_name(name)
+        preset     = self._font_names[name]
+
+        if 'font_obj' not in preset:
+            preset['font_obj'] = ImageFont.truetype(file, int(self.to_px(size)))
+
+        return preset['font_obj']
+
     def _get_HTML2Image(self) -> Html2Image:
         """
         Get (or set up) our reusable instance of HTML2Image, including its
@@ -813,21 +846,21 @@ class CardMaker:
 
 
     def text(self,
-             text:          str                           = "Default",
-             left:          float | None                  = None,
-             top:           float | None                  = None,
-             right:         float | None                  = None,
-             bottom:        float | None                  = None,
-             center:        float | None                  = None,
-             middle:        float | None                  = None,
-             width:         float | None                  = None,
-             height:        float | None                  = None,
-             h_align:       str | None                    = None,
-             v_align:       str | None                    = None,
-             fill:          tuple[int, int, int]          = (0, 0, 0),
-             font:          ImageFont.FreeTypeFont | None = None,
-             spacing:       float | None                  = None,
-             chrs_per_line: int | None                    = None,
+             text:          str                  = "Default",
+             left:          float | None         = None,
+             top:           float | None         = None,
+             right:         float | None         = None,
+             bottom:        float | None         = None,
+             center:        float | None         = None,
+             middle:        float | None         = None,
+             width:         float | None         = None,
+             height:        float | None         = None,
+             h_align:       str | None           = None,
+             v_align:       str | None           = None,
+             fill:          tuple[int, int, int] = (0, 0, 0),
+             font:          str | None           = None,
+             spacing:       float | None         = None,
+             chrs_per_line: int | None           = None,
              ) -> tuple[float, float, float, float]:
         """
         Add some text to the card.
@@ -841,7 +874,8 @@ class CardMaker:
         - `v_align` is "top", "middle", or "bottom".
           Defaults based on the position parameter given: `top` → "top",
           `bottom` → "bottom", `middle` → "middle".
-        - The font must be an ImageFont object.
+        - The font must be a name registered via `font_name()`.
+          If `None`, PIL's default font is used.
         - `spacing` is the spacing between lines, in the default unit.
           If None, defaults to `text_line_spacing`.
         - If given, newlines will be inserted at `chrs_per_line`.
@@ -871,6 +905,8 @@ class CardMaker:
                                                             default_width  = self._width,
                                                             default_height = self._height,
                                                             )
+
+        font_obj = self._get_font_obj(font) if font is not None else None
 
         if spacing is None:
             spacing = self.text_line_spacing
@@ -910,8 +946,12 @@ class CardMaker:
             y_pos    = bottom + self._gutter_px
             v_anchor = "d"
 
-        chrs_per_line = self._calc_chrs_per_line(text, width, chrs_per_line,
-                                                 font, spacing)
+        chrs_per_line = self._calc_chrs_per_line(text          = text,
+                                                 width         = width,
+                                                 chrs_per_line = chrs_per_line,
+                                                 font          = font_obj,
+                                                 spacing       = spacing,
+                                                 )
         if chrs_per_line:
             text = utils.insert_new_lines(text, chrs_per_line)
 
@@ -920,14 +960,14 @@ class CardMaker:
                   anchor  = h_anchor + v_anchor,
                   text    = text,
                   fill    = fill,
-                  font    = font,
+                  font    = font_obj,
                   align   = align,
                   spacing = spacing,
                   )
         bbox = draw.textbbox(xy      = (int(x_pos), int(y_pos)),
                              anchor  = h_anchor + v_anchor,
                              text    = text,
-                             font    = font,
+                             font    = font_obj,
                              align   = align,
                              spacing = spacing,
                              )
