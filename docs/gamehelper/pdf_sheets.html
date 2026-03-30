@@ -109,7 +109,7 @@
                         <label class="view-source-button" for="mod-pdf_sheets-view-source"><span>View Source</span></label>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">  1</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">fpdf</span><span class="w"> </span><span class="kn">import</span> <span class="n">FPDF</span>
 </span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w">  </span><span class="kn">import</span> <span class="n">Image</span>
@@ -435,16 +435,24 @@
 </span><span id="L-325"><a href="#L-325"><span class="linenos">325</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">top_margin_fronts_page</span>
 </span><span id="L-326"><a href="#L-326"><span class="linenos">326</span></a>
 </span><span id="L-327"><a href="#L-327"><span class="linenos">327</span></a>
-</span><span id="L-328"><a href="#L-328"><span class="linenos">328</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-328"><a href="#L-328"><span class="linenos">328</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-329"><a href="#L-329"><span class="linenos">329</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-330"><a href="#L-330"><span class="linenos">330</span></a><span class="sd">        Write the PDF sheets to the given file.</span>
-</span><span id="L-331"><a href="#L-331"><span class="linenos">331</span></a><span class="sd">        `date` must be a `datetime` object and defaults to the current date</span>
-</span><span id="L-332"><a href="#L-332"><span class="linenos">332</span></a><span class="sd">        and time. Useful if we want to ensure consistency between different</span>
-</span><span id="L-333"><a href="#L-333"><span class="linenos">333</span></a><span class="sd">        runs of the output.</span>
-</span><span id="L-334"><a href="#L-334"><span class="linenos">334</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-335"><a href="#L-335"><span class="linenos">335</span></a>        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="L-336"><a href="#L-336"><span class="linenos">336</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">set_creation_date</span><span class="p">(</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="p">)</span>
-</span><span id="L-337"><a href="#L-337"><span class="linenos">337</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span><span id="L-331"><a href="#L-331"><span class="linenos">331</span></a>
+</span><span id="L-332"><a href="#L-332"><span class="linenos">332</span></a><span class="sd">        ## Parameters</span>
+</span><span id="L-333"><a href="#L-333"><span class="linenos">333</span></a>
+</span><span id="L-334"><a href="#L-334"><span class="linenos">334</span></a><span class="sd">        - `date`: Sets the PDF creation date, which determines the binary</span>
+</span><span id="L-335"><a href="#L-335"><span class="linenos">335</span></a><span class="sd">          output. May be a `datetime` object, an `int` (seconds since the</span>
+</span><span id="L-336"><a href="#L-336"><span class="linenos">336</span></a><span class="sd">          Unix Epoch), or `None` (which uses the current date and time).</span>
+</span><span id="L-337"><a href="#L-337"><span class="linenos">337</span></a><span class="sd">          Defaults to `0` (the Epoch), which ensures identical binary</span>
+</span><span id="L-338"><a href="#L-338"><span class="linenos">338</span></a><span class="sd">          output across runs.</span>
+</span><span id="L-339"><a href="#L-339"><span class="linenos">339</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-340"><a href="#L-340"><span class="linenos">340</span></a>        <span class="k">if</span> <span class="n">date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-341"><a href="#L-341"><span class="linenos">341</span></a>            <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>            <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">tz</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">set_creation_date</span><span class="p">(</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="p">)</span>
+</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -820,16 +828,24 @@
 </span><span id="PDFSheets-326"><a href="#PDFSheets-326"><span class="linenos">326</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">top_margin_fronts_page</span>
 </span><span id="PDFSheets-327"><a href="#PDFSheets-327"><span class="linenos">327</span></a>
 </span><span id="PDFSheets-328"><a href="#PDFSheets-328"><span class="linenos">328</span></a>
-</span><span id="PDFSheets-329"><a href="#PDFSheets-329"><span class="linenos">329</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PDFSheets-329"><a href="#PDFSheets-329"><span class="linenos">329</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="PDFSheets-330"><a href="#PDFSheets-330"><span class="linenos">330</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="PDFSheets-331"><a href="#PDFSheets-331"><span class="linenos">331</span></a><span class="sd">        Write the PDF sheets to the given file.</span>
-</span><span id="PDFSheets-332"><a href="#PDFSheets-332"><span class="linenos">332</span></a><span class="sd">        `date` must be a `datetime` object and defaults to the current date</span>
-</span><span id="PDFSheets-333"><a href="#PDFSheets-333"><span class="linenos">333</span></a><span class="sd">        and time. Useful if we want to ensure consistency between different</span>
-</span><span id="PDFSheets-334"><a href="#PDFSheets-334"><span class="linenos">334</span></a><span class="sd">        runs of the output.</span>
-</span><span id="PDFSheets-335"><a href="#PDFSheets-335"><span class="linenos">335</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="PDFSheets-336"><a href="#PDFSheets-336"><span class="linenos">336</span></a>        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="PDFSheets-337"><a href="#PDFSheets-337"><span class="linenos">337</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">set_creation_date</span><span class="p">(</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="p">)</span>
-</span><span id="PDFSheets-338"><a href="#PDFSheets-338"><span class="linenos">338</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span><span id="PDFSheets-332"><a href="#PDFSheets-332"><span class="linenos">332</span></a>
+</span><span id="PDFSheets-333"><a href="#PDFSheets-333"><span class="linenos">333</span></a><span class="sd">        ## Parameters</span>
+</span><span id="PDFSheets-334"><a href="#PDFSheets-334"><span class="linenos">334</span></a>
+</span><span id="PDFSheets-335"><a href="#PDFSheets-335"><span class="linenos">335</span></a><span class="sd">        - `date`: Sets the PDF creation date, which determines the binary</span>
+</span><span id="PDFSheets-336"><a href="#PDFSheets-336"><span class="linenos">336</span></a><span class="sd">          output. May be a `datetime` object, an `int` (seconds since the</span>
+</span><span id="PDFSheets-337"><a href="#PDFSheets-337"><span class="linenos">337</span></a><span class="sd">          Unix Epoch), or `None` (which uses the current date and time).</span>
+</span><span id="PDFSheets-338"><a href="#PDFSheets-338"><span class="linenos">338</span></a><span class="sd">          Defaults to `0` (the Epoch), which ensures identical binary</span>
+</span><span id="PDFSheets-339"><a href="#PDFSheets-339"><span class="linenos">339</span></a><span class="sd">          output across runs.</span>
+</span><span id="PDFSheets-340"><a href="#PDFSheets-340"><span class="linenos">340</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PDFSheets-341"><a href="#PDFSheets-341"><span class="linenos">341</span></a>        <span class="k">if</span> <span class="n">date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PDFSheets-342"><a href="#PDFSheets-342"><span class="linenos">342</span></a>            <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="PDFSheets-343"><a href="#PDFSheets-343"><span class="linenos">343</span></a>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="PDFSheets-344"><a href="#PDFSheets-344"><span class="linenos">344</span></a>            <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">tz</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="PDFSheets-345"><a href="#PDFSheets-345"><span class="linenos">345</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">set_creation_date</span><span class="p">(</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="p">)</span>
+</span><span id="PDFSheets-346"><a href="#PDFSheets-346"><span class="linenos">346</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -1089,29 +1105,44 @@ user will need to call it themselves at after adding the last card.</p>
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">output</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span><span class="return-annotation">) -> <span class="kc">None</span>:</span></span>
+        <span class="name">output</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">0</span></span><span class="return-annotation">) -> <span class="kc">None</span>:</span></span>
 
                 <label class="view-source-button" for="PDFSheets.output-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#PDFSheets.output"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="PDFSheets.output-329"><a href="#PDFSheets.output-329"><span class="linenos">329</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="PDFSheets.output-329"><a href="#PDFSheets.output-329"><span class="linenos">329</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="PDFSheets.output-330"><a href="#PDFSheets.output-330"><span class="linenos">330</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="PDFSheets.output-331"><a href="#PDFSheets.output-331"><span class="linenos">331</span></a><span class="sd">        Write the PDF sheets to the given file.</span>
-</span><span id="PDFSheets.output-332"><a href="#PDFSheets.output-332"><span class="linenos">332</span></a><span class="sd">        `date` must be a `datetime` object and defaults to the current date</span>
-</span><span id="PDFSheets.output-333"><a href="#PDFSheets.output-333"><span class="linenos">333</span></a><span class="sd">        and time. Useful if we want to ensure consistency between different</span>
-</span><span id="PDFSheets.output-334"><a href="#PDFSheets.output-334"><span class="linenos">334</span></a><span class="sd">        runs of the output.</span>
-</span><span id="PDFSheets.output-335"><a href="#PDFSheets.output-335"><span class="linenos">335</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="PDFSheets.output-336"><a href="#PDFSheets.output-336"><span class="linenos">336</span></a>        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="PDFSheets.output-337"><a href="#PDFSheets.output-337"><span class="linenos">337</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">set_creation_date</span><span class="p">(</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="p">)</span>
-</span><span id="PDFSheets.output-338"><a href="#PDFSheets.output-338"><span class="linenos">338</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span><span id="PDFSheets.output-332"><a href="#PDFSheets.output-332"><span class="linenos">332</span></a>
+</span><span id="PDFSheets.output-333"><a href="#PDFSheets.output-333"><span class="linenos">333</span></a><span class="sd">        ## Parameters</span>
+</span><span id="PDFSheets.output-334"><a href="#PDFSheets.output-334"><span class="linenos">334</span></a>
+</span><span id="PDFSheets.output-335"><a href="#PDFSheets.output-335"><span class="linenos">335</span></a><span class="sd">        - `date`: Sets the PDF creation date, which determines the binary</span>
+</span><span id="PDFSheets.output-336"><a href="#PDFSheets.output-336"><span class="linenos">336</span></a><span class="sd">          output. May be a `datetime` object, an `int` (seconds since the</span>
+</span><span id="PDFSheets.output-337"><a href="#PDFSheets.output-337"><span class="linenos">337</span></a><span class="sd">          Unix Epoch), or `None` (which uses the current date and time).</span>
+</span><span id="PDFSheets.output-338"><a href="#PDFSheets.output-338"><span class="linenos">338</span></a><span class="sd">          Defaults to `0` (the Epoch), which ensures identical binary</span>
+</span><span id="PDFSheets.output-339"><a href="#PDFSheets.output-339"><span class="linenos">339</span></a><span class="sd">          output across runs.</span>
+</span><span id="PDFSheets.output-340"><a href="#PDFSheets.output-340"><span class="linenos">340</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PDFSheets.output-341"><a href="#PDFSheets.output-341"><span class="linenos">341</span></a>        <span class="k">if</span> <span class="n">date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PDFSheets.output-342"><a href="#PDFSheets.output-342"><span class="linenos">342</span></a>            <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="PDFSheets.output-343"><a href="#PDFSheets.output-343"><span class="linenos">343</span></a>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="PDFSheets.output-344"><a href="#PDFSheets.output-344"><span class="linenos">344</span></a>            <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">tz</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="PDFSheets.output-345"><a href="#PDFSheets.output-345"><span class="linenos">345</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">set_creation_date</span><span class="p">(</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="p">)</span>
+</span><span id="PDFSheets.output-346"><a href="#PDFSheets.output-346"><span class="linenos">346</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Write the PDF sheets to the given file.
-<code>date</code> must be a <code>datetime</code> object and defaults to the current date
-and time. Useful if we want to ensure consistency between different
-runs of the output.</p>
+            <div class="docstring"><p>Write the PDF sheets to the given file.</p>
+
+<h2 id="parameters">Parameters</h2>
+
+<ul>
+<li><code>date</code>: Sets the PDF creation date, which determines the binary
+output. May be a <code>datetime</code> object, an <code>int</code> (seconds since the
+Unix Epoch), or <code>None</code> (which uses the current date and time).
+Defaults to <code>0</code> (the Epoch), which ensures identical binary
+output across runs.</li>
+</ul>
 </div>
 
 
