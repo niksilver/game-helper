@@ -792,6 +792,7 @@ class CardMaker:
 
         Returns the bounding box `(left, top, right, bottom)` in the default unit,
         relative to the top-left of the card, excluding the gutter.
+        Note that this is the bounding box of the given area, not just the content.
         """
 
         h_align = self._h_align(h_align, left, right, center)
