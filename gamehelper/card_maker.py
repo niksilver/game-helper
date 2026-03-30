@@ -636,16 +636,19 @@ class CardMaker:
         return (resize, (int(width), int(height)))
 
 
-    def font_families(self, families: list[dict]) -> None:
+    def font_family(self,
+                    name: str,
+                    *,
+                    file: str,
+                    ) -> None:
         """
-        Register font families for use in `text()` and `html()`.
-        Each entry is a dict with at least a `family` key (the family name)
-        and a `file` key (path to the font file).
+        Register a font family for use in `text()` and `html()`.
+        `name` is the family name used when registering presets via `font_name()`.
+        `file` is the path to the font file.
+        Call once per family; multiple families can be registered by calling
+        this method multiple times.
         """
-        self._font_families = {
-            f['family']: {k: v for k, v in f.items() if k != 'family'}
-            for f in families
-        }
+        self._font_families = {**self._font_families, name: {'file': file}}
 
     def font_name(self,
                   name:   str,
@@ -655,12 +658,12 @@ class CardMaker:
                   ) -> None:
         """
         Register a named font preset for use in `text()` and `html()`.
-        `family` must be a family name registered via `font_families()`.
+        `family` must be a family name registered via `font_family()`.
         `size` is in the default unit of this `CardMaker`.
         """
         if family not in self._font_families:
             raise ValueError(f"Font family '{family}' is not registered. "
-                             f"Call font_families() first.")
+                             f"Call font_family() first.")
         self._font_names = {**self._font_names, name: {'family': family, 'size': size}}
 
     def _resolve_font_name(self, name: str) -> tuple[str, float]:
@@ -678,7 +681,7 @@ class CardMaker:
 
         if family not in self._font_families:
             raise ValueError(f"Font family '{family}' is not registered. "
-                             f"Call font_families() first.")
+                             f"Call font_family() first.")
 
         return (self._font_families[family]['file'], preset['size'])
 

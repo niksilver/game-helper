@@ -816,8 +816,8 @@ class TestTextLineSpacing:
         assert maker.text_line_spacing_px == 3
 
 
-class TestFontFamilies:
-    """Tests for font_families()."""
+class TestFontFamily:
+    """Tests for font_family()."""
 
     def test_copy_preserves_font_families(self):
         """Copying a CardMaker should preserve the font families."""
@@ -826,22 +826,22 @@ class TestFontFamilies:
                           unit     = 'mm',
                           width_px = 200,
                           )
-        maker.font_families([{'family': 'MyFont', 'file': '/path/to/font.ttf'}])
+        maker.font_family('MyFont', file = '/path/to/font.ttf')
         dup = maker.copy()
         assert dup._font_families == {'MyFont': {'file': '/path/to/font.ttf'}}
 
     def test_copy_font_families_are_independent(self):
-        """Changing font families on a copy should not affect the original."""
+        """Adding a font family on a copy should not affect the original."""
         maker = CardMaker(width    = 100,
                           height   = 100,
                           unit     = 'mm',
                           width_px = 200,
                           )
-        maker.font_families([{'family': 'MyFont', 'file': '/path/to/font.ttf'}])
+        maker.font_family('MyFont', file = '/path/to/font.ttf')
         dup = maker.copy()
-        dup.font_families([{'family': 'Other', 'file': '/path/to/other.ttf'}])
-        assert maker._font_families == {'MyFont': {'file': '/path/to/font.ttf'}}
-        assert dup._font_families   == {'Other':  {'file': '/path/to/other.ttf'}}
+        dup.font_family('Other', file = '/path/to/other.ttf')
+        assert 'Other' not in maker._font_families
+        assert 'Other' in dup._font_families
 
 
 class TestFontName:
@@ -854,7 +854,7 @@ class TestFontName:
                           unit     = 'mm',
                           width_px = 200,
                           )
-        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_family('Test', file = FONT_FILE)
         maker.font_name('title', family='Test', size=5)
         assert maker._font_names['title']['family'] == 'Test'
         assert maker._font_names['title']['size']   == 5
@@ -876,7 +876,7 @@ class TestFontName:
                           unit     = 'mm',
                           width_px = 200,
                           )
-        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_family('Test', file = FONT_FILE)
         maker.font_name('title', family='Test', size=5)
         dup = maker.copy()
         assert dup._font_names['title']['family'] == 'Test'
@@ -889,7 +889,7 @@ class TestFontName:
                           unit     = 'mm',
                           width_px = 200,
                           )
-        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_family('Test', file = FONT_FILE)
         maker.font_name('title', family='Test', size=5)
         dup = maker.copy()
         dup.font_name('body', family='Test', size=3)
@@ -907,7 +907,7 @@ class TestText:
                           unit     = 'px',
                           width_mm = 500,
                           )
-        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_family('Test', file = FONT_FILE)
         maker.font_name('normal', family='Test', size=14)
 
         # Width and chrs_per_line cannot both be specified
@@ -1028,7 +1028,7 @@ class TestText:
                           unit     = 'px',
                           width_mm = 500,
                           )
-        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_family('Test', file = FONT_FILE)
         maker.font_name('normal', family='Test', size=14)
         left, top, right, bottom = maker.text(
             "This is a long piece of text that should be wrapped",
@@ -1049,7 +1049,7 @@ class TestText:
                           unit     = 'mm',
                           width_px = 600,
                           )
-        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_family('Test', file = FONT_FILE)
         maker.font_name('large', family='Test', size=3)  # 3mm = 30px
         long_text = "This is a long piece of text that should be wrapped to fit within the box"
         left, top, right, bottom = maker.text(long_text,
@@ -1096,7 +1096,7 @@ class TestText:
                           unit     = 'px',
                           width_mm = 500,
                           )
-        maker.font_families([{'family': 'Test', 'file': FONT_FILE}])
+        maker.font_family('Test', file = FONT_FILE)
         maker.font_name('normal', family='Test', size=14)
 
         assert 'font_obj' not in maker._font_names['normal']
