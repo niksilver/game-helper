@@ -775,7 +775,7 @@ class CardMaker:
              h_align: str | None   = None,
              v_align: str | None   = None,
              font:    str | None   = None,
-             ) -> None:
+             ) -> tuple[float, float, float, float]:
         """
         Render some HTML content in a box of the given size.
         As usual, all lengths are in the default unit.
@@ -789,6 +789,9 @@ class CardMaker:
 
         Rendering HTML is slower than the `text()` method if that's all you want,
         but it may be more convenient to manage.
+
+        Returns the bounding box `(left, top, right, bottom)` in the default unit,
+        relative to the top-left of the card, excluding the gutter.
         """
 
         h_align = self._h_align(h_align, left, right, center)
@@ -851,6 +854,8 @@ class CardMaker:
                    left = left,
                    top  = top,
                    )
+
+        return (left, top, right, bottom)
 
 
     def text(self,

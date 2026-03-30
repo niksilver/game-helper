@@ -1107,3 +1107,44 @@ class TestText:
         cached = maker._font_names['normal']['font_obj']
         maker.text("World", left=0, top=20, font='normal')
         assert maker._font_names['normal']['font_obj'] is cached
+
+
+class TestHtml:
+    """Tests for the html() method."""
+
+    def test_html_returns_bounding_box(self):
+        """html() should return (left, top, right, bottom) in the default unit."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        left, top, right, bottom = maker.html("<b>Hello</b>",
+                                              left   = 10,
+                                              top    = 10,
+                                              width  = 50,
+                                              height = 30,
+                                              )
+        assert left   == 10
+        assert top    == 10
+        assert right  == 60
+        assert bottom == 40
+
+    def test_html_bounding_box_does_not_expand_for_long_content(self):
+        """The bounding box should be fixed regardless of content length."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        left, top, right, bottom = maker.html(
+            "<b>" + "Hello world. " * 50 + "</b>",
+            left   = 10,
+            top    = 10,
+            width  = 50,
+            height = 30,
+            )
+        assert left   == 10
+        assert top    == 10
+        assert right  == 60
+        assert bottom == 40
