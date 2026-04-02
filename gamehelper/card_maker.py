@@ -656,19 +656,29 @@ class CardMaker:
                   family:  str,
                   size:    float | None = None,
                   size_pt: float | None = None,
+                  size_px: float | None = None,
+                  size_mm: float | None = None,
                   ) -> None:
         """
         Register a named font preset for use in `text()` and `html()`.
         `family` must be a family name registered via `font_family()`.
-        Specify exactly one of `size` (in the default unit) or `size_pt` (in points).
+        Specify exactly one of `size` (in the default unit), `size_pt` (in points),
+        `size_px` (in pixels), or `size_mm` (in millimetres).
         """
-        if size is not None and size_pt is not None:
-            raise ValueError("Cannot specify both 'size' and 'size_pt'.")
-        if size is None and size_pt is None:
-            raise ValueError("Must specify either 'size' or 'size_pt'.")
+        sizes = [s for s in [size, size_pt, size_px, size_mm] if s is not None]
+        if len(sizes) > 1:
+            raise ValueError("Cannot specify more than one of "
+                             "'size', 'size_pt', 'size_px', 'size_mm'.")
+        if len(sizes) == 0:
+            raise ValueError("Must specify exactly one of "
+                             "'size', 'size_pt', 'size_px', 'size_mm'.")
 
         if size_pt is not None:
             size = self.from_mm(size_pt * 25.4 / 72)
+        elif size_px is not None:
+            size = self.from_px(size_px)
+        elif size_mm is not None:
+            size = self.from_mm(size_mm)
 
         if family not in self._font_families:
             raise ValueError(f"Font family '{family}' is not registered. "

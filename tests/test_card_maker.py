@@ -919,6 +919,39 @@ class TestFontName:
         size_mm = 12 * 25.4 / 72
         assert maker._font_names['title']['size'] == pytest.approx(size_mm * 100 / 50, rel=1e-6)
 
+    def test_font_name_with_size_px(self):
+        """font_name() with size_px should convert to the default unit."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_family('Test', file = FONT_FILE)
+        maker.font_name('title', family='Test', size_px=20)
+        assert maker._font_names['title']['size'] == pytest.approx(20 * 100 / 200, rel=1e-6)
+
+    def test_font_name_with_size_mm(self):
+        """font_name() with size_mm should convert to the default unit."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'px',
+                          width_mm = 50,
+                          )
+        maker.font_family('Test', file = FONT_FILE)
+        maker.font_name('title', family='Test', size_mm=5)
+        assert maker._font_names['title']['size'] == pytest.approx(5 * 100 / 50, rel=1e-6)
+
+    def test_font_name_multiple_sizes_raises(self):
+        """font_name() should raise ValueError if more than one size is given."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_family('Test', file = FONT_FILE)
+        with pytest.raises(ValueError):
+            maker.font_name('title', family='Test', size_px=20, size_mm=5)
+
     def test_font_name_size_and_size_pt_are_mutually_exclusive(self):
         """font_name() should raise ValueError if both size and size_pt are given."""
         maker = CardMaker(width    = 100,
@@ -930,8 +963,8 @@ class TestFontName:
         with pytest.raises(ValueError):
             maker.font_name('title', family='Test', size=5, size_pt=12)
 
-    def test_font_name_requires_size_or_size_pt(self):
-        """font_name() should raise ValueError if neither size nor size_pt is given."""
+    def test_font_name_requires_exactly_one_size(self):
+        """font_name() should raise ValueError if no size is given."""
         maker = CardMaker(width    = 100,
                           height   = 100,
                           unit     = 'mm',
