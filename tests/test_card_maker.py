@@ -896,6 +896,51 @@ class TestFontName:
         assert 'body' not in maker._font_names
         assert 'body' in dup._font_names
 
+    def test_font_name_with_size_pt(self):
+        """font_name() with size_pt should convert points to the default unit."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_family('Test', file = FONT_FILE)
+        maker.font_name('title', family='Test', size_pt=12)
+        assert maker._font_names['title']['size'] == pytest.approx(12 * 25.4 / 72, rel=1e-6)
+
+    def test_font_name_size_pt_with_px_units(self):
+        """font_name() with size_pt should convert correctly when default unit is px."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'px',
+                          width_mm = 50,
+                          )
+        maker.font_family('Test', file = FONT_FILE)
+        maker.font_name('title', family='Test', size_pt=12)
+        size_mm = 12 * 25.4 / 72
+        assert maker._font_names['title']['size'] == pytest.approx(size_mm * 100 / 50, rel=1e-6)
+
+    def test_font_name_size_and_size_pt_are_mutually_exclusive(self):
+        """font_name() should raise ValueError if both size and size_pt are given."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_family('Test', file = FONT_FILE)
+        with pytest.raises(ValueError):
+            maker.font_name('title', family='Test', size=5, size_pt=12)
+
+    def test_font_name_requires_size_or_size_pt(self):
+        """font_name() should raise ValueError if neither size nor size_pt is given."""
+        maker = CardMaker(width    = 100,
+                          height   = 100,
+                          unit     = 'mm',
+                          width_px = 200,
+                          )
+        maker.font_family('Test', file = FONT_FILE)
+        with pytest.raises(ValueError):
+            maker.font_name('title', family='Test')
+
 
 class TestText:
     """Tests for the text() method."""

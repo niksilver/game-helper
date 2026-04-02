@@ -651,16 +651,25 @@ class CardMaker:
         self._font_families = {**self._font_families, name: {'file': file}}
 
     def font_name(self,
-                  name:   str,
+                  name:    str,
                   *,
-                  family: str,
-                  size:   float,
+                  family:  str,
+                  size:    float | None = None,
+                  size_pt: float | None = None,
                   ) -> None:
         """
         Register a named font preset for use in `text()` and `html()`.
         `family` must be a family name registered via `font_family()`.
-        `size` is in the default unit of this `CardMaker`.
+        Specify exactly one of `size` (in the default unit) or `size_pt` (in points).
         """
+        if size is not None and size_pt is not None:
+            raise ValueError("Cannot specify both 'size' and 'size_pt'.")
+        if size is None and size_pt is None:
+            raise ValueError("Must specify either 'size' or 'size_pt'.")
+
+        if size_pt is not None:
+            size = self.from_mm(size_pt * 25.4 / 72)
+
         if family not in self._font_families:
             raise ValueError(f"Font family '{family}' is not registered. "
                              f"Call font_family() first.")
