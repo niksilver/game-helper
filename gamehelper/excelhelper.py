@@ -301,7 +301,11 @@ class ExcelHelper(object):
         return ws.cell(row = r, column = c).value
 
 
-    def value_from(self, coordinate_or_cell, row = 0, column = 0):
+    def value_from(self,
+                   coordinate_or_cell: str | Cell,
+                   row:                int        = 0,
+                   column:             int        = 0,
+                   ) -> str | float | int | datetime.datetime:
         """
         Given starting coordinate or cell in the active workbook, get the value of the
         cell some number of rows and columns relative to this.
@@ -313,7 +317,10 @@ class ExcelHelper(object):
         return ws.cell(row = cell.row + row, column = cell.column + column).value
 
 
-    def _count_columns(self, header_cell, last_column_label = None):
+    def _count_columns(self,
+                       header_cell:       str,
+                       last_column_label: str = None,
+                       ) -> int:
         """
         Count the number of columns in the table starting at `header_cell`.
 
@@ -336,7 +343,11 @@ class ExcelHelper(object):
         return cols
 
 
-    def vertical_table(self, coordinate_or_cell, last_column_label = None):
+    def vertical_table(self,
+                       coordinate_or_cell: str | float | int | datetime.datetime,
+                       last_column_label:  str                                   = None,
+                       ) -> list[str | float | int | datetime.datetime,
+                                 str | float | int | datetime.datetime]:
         """
         Given a starting cell, which is the first cell of a table header,
         return a table of cells below that. Each element of the table is a
@@ -383,7 +394,11 @@ class ExcelHelper(object):
         return table
 
 
-    def vertical_dicts(self, coordinate_or_cell, last_column_label = None):
+    def vertical_dicts(self,
+                       coordinate_or_cell: str | Cell,
+                       last_column_label:  str        = None,
+                       ) -> list[dict[str | float | int | datetime.datetime,
+                                      str | float | int | datetime.datetime]]:
         """
         Given a starting cell, which is the first cell of a table header,
         return a list of cells below that. Each element of the list is a
