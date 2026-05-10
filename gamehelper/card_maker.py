@@ -142,6 +142,16 @@ class CardMaker:
                 return x * self._width_px / self._width_mm
 
 
+    def to_px_int(self, x: float | None) -> float | None:
+        """
+        Convert from a number in the default unit to pixels, then to an int.
+        """
+        if x is None:
+            return None
+
+        return int(self.to_px(x))
+
+
     def to_mm(self, x: float | None) -> float | None:
         """
         Convert from a number in the default unit to mm.
