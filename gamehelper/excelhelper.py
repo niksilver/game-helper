@@ -1,6 +1,9 @@
+import datetime
+
 import openpyxl
 
-from openpyxl import Workbook
+from openpyxl           import Workbook
+from openpyxl.cell.cell import Cell
 
 
 class ExcelHelper(object):
@@ -21,7 +24,7 @@ class ExcelHelper(object):
     """
 
 
-    def __init__(self, wb_or_filename):
+    def __init__(self, wb_or_filename : Workbook | str) -> None:
         """
         Call this with an OpenPyXL Workbook object or a string filename.
         """
@@ -42,7 +45,7 @@ class ExcelHelper(object):
         return self._wb
 
 
-    def cc(self, coordinate_or_cell):
+    def cc(self, coordinate_or_cell : str | Cell) -> (str, Cell):
         """
         Given a coordinate (string) or cell (object) return both the
         coordinate and the cell.
@@ -53,7 +56,7 @@ class ExcelHelper(object):
             return (coordinate_or_cell, self._wb.active[coordinate_or_cell])
 
 
-    def down(self, coordinate_or_cell, count = 1):
+    def down(self, coordinate_or_cell : str | Cell, count : int = 1) -> Cell:
         """
         Get the cell that is down one (or some other count) from the give cell
         in the active worksheet.
@@ -63,7 +66,10 @@ class ExcelHelper(object):
         return self._wb.active.cell(row = cell.row + count, column = cell.column)
 
 
-    def right(self, coordinate_or_cell, count = 1):
+    def right(self,
+              coordinate_or_cell : str | Cell,
+              count : int = 1,
+              ) -> Cell:
         """
         Get the cell that is right one (or some other count) from the give cell
         in the active worksheet.
@@ -73,7 +79,11 @@ class ExcelHelper(object):
         return self._wb.active.cell(row = cell.row, column = cell.column + count)
 
 
-    def find(self, value, column = 100, row = 100):
+    def find(self,
+             value : str | float | int | datetime.datetime,
+             column : int = 100,
+             row : int = 100
+             ) -> Cell:
         """
         Find the cell with the given value in the active workbook,
         searching from the top left as far as the given row and column.
@@ -88,7 +98,11 @@ class ExcelHelper(object):
         raise LookupError(f'Could not find {value} within {col}umn columns and {row} rows')
 
 
-    def find_value_beside(self, value, column = 100, row = 100):
+    def find_value_beside(self,
+                          value : str | float | int | datetime.datetime,
+                          column = 100,
+                          row = 100,
+                          ) -> str | float | int | datetime.datetime:
         """
         Find the cell with the given value in the active workbook, and return
         the value of the cell to its right.
