@@ -82,7 +82,7 @@ class ExcelHelper(object):
     def find(self,
              value : str | float | int | datetime.datetime,
              column : int = 100,
-             row : int = 100
+             row : int = 100,
              ) -> Cell:
         """
         Find the cell with the given value in the active workbook,
@@ -118,7 +118,9 @@ class ExcelHelper(object):
         raise LookupError(f'Could not find {value} within {column} columns and {row} rows')
 
 
-    def find_non_blank_below(self, coordinate_or_cell):
+    def find_non_blank_below(self,
+                             coordinate_or_cell : str | Cell,
+                             ) -> Cell:
         """
         Find the first non-blank cell below the given coordinate or cell.
         """
@@ -149,7 +151,9 @@ class ExcelHelper(object):
         return cell
 
 
-    def find_values_below(self, coordinate_or_cell):
+    def find_values_below(self,
+                          coordinate_or_cell : str | Cell,
+                          ) -> list[str | float | int | datetime.datetime]:
         """
         Find an array of values that sit strictly below the given coordinate or cell.
         Will start at the first non-blank, and stop before the first blank after
@@ -175,7 +179,10 @@ class ExcelHelper(object):
         return out
 
 
-    def put_values_below(self, coordinate_or_cell, array):
+    def put_values_below(self,
+                         coordinate_or_cell : str | Cell,
+                         array : list[str | float | int | datetime.datetime],
+                         ) -> None:
         """
         Put an array of values directly below the given coordinate or cell in the
         active workbook.
@@ -192,7 +199,9 @@ class ExcelHelper(object):
             ws.cell(column = col, row = row, value = val)
 
 
-    def find_values_beside(self, coordinate_or_cell):
+    def find_values_beside(self,
+                           coordinate_or_cell : str | Cell,
+                           ) -> list[str | float | int | datetime.datetime]:
         """
         Find an array of values that sit strictly to the right of the given coordinate
         or cell.
@@ -236,7 +245,10 @@ class ExcelHelper(object):
         return out
 
 
-    def put_values_beside(self, coordinate_or_cell, array):
+    def put_values_beside(self,
+                          coordinate_or_cell : str | Cell,
+                          array : list[str | float | int | datetime.datetime],
+                          ) -> None:
         """
         Put an array of values directly to the right of the given coordinate or cell
         in the active workbook.
@@ -253,7 +265,11 @@ class ExcelHelper(object):
             ws.cell(column = col, row = row, value = val)
 
 
-    def find_value_in_table(self, coordinate_or_cell, row_name, column_name):
+    def find_value_in_table(self,
+                            coordinate_or_cell : str | Cell,
+                            row_name : str,
+                            column_name : str,
+                            ) -> str | float | int | datetime.datetime:
         """
         Given a coordinate or cell, search down for the cell with the row name, across
         for the cell with the column name, and return the value in that cell.
