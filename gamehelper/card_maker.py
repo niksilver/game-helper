@@ -917,6 +917,7 @@ class CardMaker:
         - `v_align` is "top", "middle", or "bottom".
           Defaults based on the position parameter given: `top` → "top",
           `bottom` → "bottom", `middle` → "middle".
+        - The font fill colour may be semi-opaque.
         - The font must be a name registered via `font_name()`.
           If `None`, PIL's default font is used.
         - `spacing` is the spacing between lines, in the default unit.
@@ -998,7 +999,11 @@ class CardMaker:
         if chrs_per_line:
             text = utils.insert_new_lines(text, chrs_per_line)
 
-        draw = ImageDraw.Draw(self._im_with_gutters)
+        # To partial opacity text we need to draw on one surface then
+        # do an alpha composite onto the base image
+
+        base = Image.new('RGBA', self._im_with_gutters.size, (255, 255, 255, 0))
+        draw = ImageDraw.Draw(base)
         draw.text(xy      = (int(x_pos), int(y_pos)),
                   anchor  = h_anchor + v_anchor,
                   text    = text,
@@ -1007,6 +1012,8 @@ class CardMaker:
                   align   = align,
                   spacing = spacing,
                   )
+        self._im_with_gutters = Image.alpha_composite(self._im_with_gutters, base)
+
         bbox = draw.textbbox(xy      = (int(x_pos), int(y_pos)),
                              anchor  = h_anchor + v_anchor,
                              text    = text,
