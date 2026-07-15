@@ -900,8 +900,8 @@ class CardMaker:
              height:        float | None         = None,
              h_align:       str | None           = None,
              v_align:       str | None           = None,
-             fill:          tuple[int, int, int] = (0, 0, 0),
              font:          str | None           = None,
+             fill:          tuple[int, int, int] |  tuple[int, int, int] = (0, 0, 0),
              spacing:       float | None         = None,
              chrs_per_line: int | None           = None,
              ) -> tuple[float, float, float, float]:
@@ -917,9 +917,9 @@ class CardMaker:
         - `v_align` is "top", "middle", or "bottom".
           Defaults based on the position parameter given: `top` → "top",
           `bottom` → "bottom", `middle` → "middle".
-        - The font fill colour may be semi-opaque.
         - The font must be a name registered via `font_name()`.
           If `None`, PIL's default font is used.
+        - The font fill colour may be semi-opaque.
         - `spacing` is the spacing between lines, in the default unit.
           If None, defaults to `text_line_spacing`.
         - If given, newlines will be inserted at `chrs_per_line`.
