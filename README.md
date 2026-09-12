@@ -63,23 +63,19 @@ structure like this:
 ```
 myproject
  |_Makefile
- \_gamehelper
-    |_gamehelper
-    | |_card_maker.py
-    | |_image_sheet.py
-    | |_pdf_sheets.py
-    |
-    |_tests
-    \_demos
+ |_demos     # Demo scripts
+ |_src
+ | \_gamehelper
+ |    |_gamehelper
+ |    | |_card_maker.py
+ |    | |_image_sheet.py
+ |    | |_pdf_sheets.py
+ |    |
+ |_tests
 ```
 
-This structure is taken from [PyPA on GitHub](https://github.com/pypa/sampleproject/)
-and the associated [packaging documentation](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/).
-
-The chosen build backend is hatchling - it [seems simplest](https://www.linkedin.com/pulse/comparing-python-build-backends-setuptools-hatchling-flit-sharma-cq2cf/).
-
-We can then install it in editable mode like this:
 ```
 cd myproject
-python -m pip install -e gamehelper
+python -m pip install -e ../path/to/gamehelper
+uv add -e ../path/to/gamehelper
 ```
