@@ -1,55 +1,27 @@
-# This document compiled using
-# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
-
-[build-system]
-requires = ["hatchling >= 1.26"]
-build-backend = "hatchling.build"
-
 [project]
 name = "gamehelper"
-version = "0.1"
-authors = [
-  { name="Nik Silver" },
-]
+version = "0.1.0"
 description = "Helping create cards and tokens for board games."
-
-requires-python = ">=3.10"
-
-dependencies = [
-    "cairocffi==1.7.1",
-    "CairoSVG==2.8.2",
-    "cffi==2.0.0",
-    "cssselect2==0.8.0",
-    "defusedxml==0.7.1",
-    "et_xmlfile==2.0.0",
-    "fonttools==4.60.1",
-    "fpdf2==2.8.4",
-    "iniconfig==2.3.0",
-    "Jinja2==3.1.6",
-    "markdown2==2.5.4",
-    "MarkupSafe==3.0.3",
-    "openpyxl==3.1.5",
-    "packaging==25.0",
-    "pdf2image==1.17.0",
-    "pdoc==16.0.0",
-    "pillow==12.0.0",
-    "pluggy==1.6.0",
-    "pycparser==2.23",
-    "Pygments==2.19.2",
-    "pytest==8.4.2",
-    "tinycss2==1.5.1",
-    "webencodings==0.5.1",
-]
-
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
-]
-
 readme = "README.md"
 license = "LGPL-3.0-or-later"
 license-files = ["LICEN[CS]E*"]
+authors = [
+    { name = "Nik Silver", email = "nik@niksilver.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "cairosvg>=2.9.1",
+    "fpdf2>=2.8.8",
+    "html2image>=2.0.7",
+    "openpyxl>=3.1.5",
+    "pdoc>=16.0.0",
+    "pillow>=12.3.0",
+    "pytest>=9.1.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
 
 [project.urls]
 Homepage = "https://github.com/niksilver/game-helper"
