@@ -5,7 +5,7 @@ test:
 	uv run pytest --tb=short --capture=no
 
 docs:
-	python -m pdoc gamehelper/ -o ./docs
+	uv run pdoc src/gamehelper -o ./docs
 
 image-demo:
 	python demos/image_sheet_demo.py
