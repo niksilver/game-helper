@@ -13,18 +13,6 @@ from gamehelper.card_maker import CardMaker
 
 assets_dir  = 'demos/assets'
 
-# font_file = '/usr/share/fonts/opentype/urw-base35/URWBookman-LightItalic.otf'
-font_file = '/usr/share/fonts/opentype/urw-base35/URWBookman-Light.otf'
-font_tiny  = ImageFont.truetype(font = font_file,
-                                size = 20,    # Pixels, same as the gutter
-                                )
-font_small = ImageFont.truetype(font = font_file,
-                                size = 28,
-                                )
-font_large = ImageFont.truetype(font = font_file,
-                                size = 58,
-                                )
-
 # A CardMaker we'll use as the base, with default units px
 
 base_maker = CardMaker(width    = 400,
@@ -43,6 +31,23 @@ base_maker_mm = CardMaker(width    = 60,
                           width_px = 400,
                           )
 
+base_maker.font_family('Bookman Light',
+                       file = '/usr/share/fonts/opentype/urw-base35/URWBookman-Light.otf',
+                       )
+base_maker.font_name('Tiny',
+                     family = 'Bookman Light',
+                     size = 20,    # Pixels, same as the gutter
+                     )
+base_maker.font_name('Small',
+                     family = 'Bookman Light',
+                     size = 28,    # Pixels, same as the gutter
+                     )
+base_maker.font_name('Large',
+                     family = 'Bookman Light',
+                     size = 58,    # Pixels, same as the gutter
+                     )
+base_maker_mm.copy_fonts(base_maker)
+
 
 def simple(wording):
     """
@@ -60,12 +65,12 @@ def simple(wording):
     maker.text(text   = 'This is top left (and in a bit)',
                left = 20,
                top  = 20,
-               font   = font_tiny,
+               font   = 'Tiny',
                )
     maker.text(text   = wording,
                center = maker.width / 2,
                middle = maker.height / 2,
-               font   = font_large,
+               font   = 'Large',
                )
     return maker
 
@@ -97,51 +102,51 @@ def text_positioning():
     maker.text(text = 'Left-top',
                left = 0,
                top  = 0,
-               font = font_small,
+               font = 'Small',
                )
     maker.text(text   = 'CT',
                center = maker.width / 2,
                top    = 0,
-               font   = font_small,
+               font   = 'Small',
                )
     maker.text(text  = 'Right-top',
                right = maker.width,
                top   = 0,
-               font  = font_small,
+               font  = 'Small',
                )
 
     # Text in the middle
     maker.text(text   = 'LM',
                left   = 0,
                middle = maker.height / 2,
-               font   = font_small,
+               font   = 'Small',
                )
     maker.text(text   = 'Centre-middle.',
                center = maker.width / 2,
                middle = maker.height / 2,
-               font   = font_small,
+               font   = 'Small',
                )
     maker.text(text   = 'RM',
                right  = maker.width,
                middle = maker.height / 2,
-               font   = font_small,
+               font   = 'Small',
                )
 
     # Text on the bottom
     maker.text(text   = 'Left-bottom',
                left   = 0,
                bottom = maker.height,
-               font   = font_small,
+               font   = 'Small',
                )
     maker.text(text   = 'CB',
                center = maker.width / 2,
                bottom = maker.height,
-               font   = font_small,
+               font   = 'Small',
                )
     maker.text(text     = 'Right-bottom',
                right  = maker.width,
                bottom = maker.height,
-               font   = font_small,
+               font   = 'Small',
                )
 
     return maker
@@ -203,7 +208,7 @@ def bounding_box_demo():
     bbox  = maker.text(text          = text1,
                        left          = 10,
                        top           = 10,
-                       font          = font_tiny,
+                       font          = 'Tiny',
                        chrs_per_line = 20,
                        )
 
@@ -211,7 +216,7 @@ def bounding_box_demo():
     bbox  = maker.text(text          = text2,
                        left          = 10,
                        top           = maker.height_mm * 0.60,
-                       font          = font_tiny,
+                       font          = 'Tiny',
                        chrs_per_line = 30,
                        )
 

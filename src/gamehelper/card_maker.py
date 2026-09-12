@@ -1,5 +1,6 @@
 import copy
 import io
+from   typing import Self
 
 from   PIL        import Image
 from   PIL        import ImageDraw
@@ -113,7 +114,7 @@ class CardMaker:
                 raise ValueError(f"Cannot convert from unit '{self._unit}'")
 
 
-    def copy(self) -> 'CardMaker':
+    def copy(self) -> Self:
         """
         Create a copy of the object. Useful for when we have a base card with
         a border and we want to make lots of cards based on that
@@ -660,6 +661,7 @@ class CardMaker:
         """
         self._font_families = {**self._font_families, name: {'file': file}}
 
+
     def font_name(self,
                   name:    str,
                   *,
@@ -695,6 +697,7 @@ class CardMaker:
                              f"Call font_family() first.")
         self._font_names = {**self._font_names, name: {'family': family, 'size': size}}
 
+
     def _resolve_font_name(self, name: str) -> tuple[str, float]:
         """
         Look up a registered font preset and return `(file_path, size)`.
@@ -702,7 +705,7 @@ class CardMaker:
         Raises `ValueError` if the name or its family is not registered.
         """
         if name not in self._font_names:
-            raise ValueError(f"Font '{name}' is not registered. "
+            raise ValueError(f"Font name '{name}' is not registered. "
                              f"Call font_name() first.")
 
         preset = self._font_names[name]
@@ -727,6 +730,24 @@ class CardMaker:
             preset['font_obj'] = ImageFont.truetype(file, int(self.to_px(size)))
 
         return preset['font_obj']
+
+
+    def copy_fonts(self, cmaker: Self) -> None:
+        """
+        Set the fonts for this to be the same as those in another CardMaker.
+        Beware that this will clobber any existing fonts in this CardMaker.
+        """
+        self._font_families = copy.deepcopy(cmaker._font_families)
+        self._font_names    = copy.deepcopy(cmaker._font_names)
+        if cmaker._unit == 'px':
+            for name in self._font_names:
+                size_px = cmaker._font_names[name]['size']
+                self._font_names[name]['size'] = self.from_px(size_px)
+        else:
+            for name in self._font_names:
+                size_mm = cmaker._font_names[name]['size']
+                self._font_names[name]['size'] = self.from_mm(size_mm)
+
 
     def _get_HTML2Image(self) -> Html2Image:
         """

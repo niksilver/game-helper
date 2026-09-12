@@ -1008,6 +1008,83 @@ class TestFontName:
             maker.font_name('title', family='Test')
 
 
+    def test_copy_fonts_works_okay(self):
+        """copy_fonts() should bring fonts into a CardMaker."""
+        maker1 = CardMaker(width    = 100,
+                           height   = 100,
+                           unit     = 'mm',
+                           width_px = 200,
+                           )
+        maker1.font_family('Test', file = FONT_FILE)
+        maker1.font_name('title', family='Test', size=5)
+        assert maker1._font_families['Test']['file'] == FONT_FILE
+        assert maker1._font_names['title']['family'] == 'Test'
+        assert maker1._font_names['title']['size']   == 5
+
+        maker2 = CardMaker(width    = 300,
+                           height   = 300,
+                           unit     = 'mm',
+                           width_px = 600,
+                           )
+        maker2.copy_fonts(maker1)
+        assert maker2._font_families['Test']['file'] == FONT_FILE
+        assert maker2._font_names['title']['family'] == 'Test'
+        assert maker2._font_names['title']['size']   == 5
+
+
+    def test_copy_fonts_converts_default_sizes(self):
+        """copy_fonts() should bring fonts into a CardMaker."""
+        maker_mm_1 = CardMaker(width    = 100,
+                               height   = 100,
+                               unit     = 'mm',
+                               width_px = 200,
+                               )
+        maker_mm_2 = CardMaker(width    = 150,
+                               height   = 150,
+                               unit     = 'mm',
+                               width_px = 300,
+                               )
+        maker_mm_3 = CardMaker(width    = 200,
+                               height   = 200,
+                               unit     = 'mm',
+                               width_px = 400,
+                               )
+        maker_px_1 = CardMaker(width    = 200,
+                               height   = 200,
+                               unit     = 'px',
+                               width_mm = 100,
+                               )
+        maker_px_2 = CardMaker(width    = 300,
+                               height   = 300,
+                               unit     = 'px',
+                               width_mm = 150,
+                               )
+
+        maker_mm_1.font_family('Test', file = FONT_FILE)
+        maker_mm_1.font_name('title', family='Test', size=5)
+        assert maker_mm_1._font_names['title']['size']   == 5     # mm
+
+        # From mm to px
+
+        maker_px_1.copy_fonts(maker_mm_1)
+        assert maker_px_1._font_names['title']['size']   == 10    # px
+
+        # From mm to mm
+
+        maker_mm_2.copy_fonts(maker_mm_1)
+        assert maker_mm_2._font_names['title']['size']   == 5     # mm
+
+        # From px to px
+
+        maker_px_2.copy_fonts(maker_px_1)
+        assert maker_px_2._font_names['title']['size']   == 10    # px
+
+        # From px to mm
+
+        maker_mm_3.copy_fonts(maker_px_1)
+        assert maker_mm_3._font_names['title']['size']   == 5     # mm
+
+
 class TestText:
     """Tests for the text() method."""
 
