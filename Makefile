@@ -8,7 +8,7 @@ docs:
 	uv run pdoc src/gamehelper -o ./docs
 
 image-demo:
-	python demos/image_sheet_demo.py
+	uv run demos/image_sheet_demo.py
 
 pdf-demo:
-	python demos/pdf_sheets_demo.py
+	uv run demos/pdf_sheets_demo.py
