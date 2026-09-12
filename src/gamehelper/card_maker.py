@@ -734,19 +734,26 @@ class CardMaker:
 
     def copy_fonts(self, cmaker: Self) -> None:
         """
-        Set the fonts for this to be the same as those in another CardMaker.
-        Beware that this will clobber any existing fonts in this CardMaker.
+        Copy the fonts from another CardMaker into this.
         """
-        self._font_families = copy.deepcopy(cmaker._font_families)
-        self._font_names    = copy.deepcopy(cmaker._font_names)
+        self._font_families = {**self._font_families,
+                               **copy.deepcopy(cmaker._font_families),
+                               }
+
+        # Font names need conversion of font sizes
+
+        font_names    = copy.deepcopy(cmaker._font_names)
         if cmaker._unit == 'px':
-            for name in self._font_names:
+            for name in font_names:
                 size_px = cmaker._font_names[name]['size']
-                self._font_names[name]['size'] = self.from_px(size_px)
+                font_names[name]['size'] = self.from_px(size_px)
         else:
-            for name in self._font_names:
+            for name in font_names:
                 size_mm = cmaker._font_names[name]['size']
-                self._font_names[name]['size'] = self.from_mm(size_mm)
+                font_names[name]['size'] = self.from_mm(size_mm)
+        self._font_names    = {**self._font_names,
+                               **font_names,
+                               }
 
 
     def _get_HTML2Image(self) -> Html2Image:

@@ -1032,6 +1032,35 @@ class TestFontName:
         assert maker2._font_names['title']['size']   == 5
 
 
+    def test_copy_fonts_does_not_clobber_existing(self):
+        """copy_fonts() should not delete any fonts or families in the destination."""
+        maker1 = CardMaker(width    = 100,
+                           height   = 100,
+                           unit     = 'mm',
+                           width_px = 200,
+                           )
+        maker1.font_family('Test 1', file = FONT_FILE + '1')
+        maker1.font_name('title 1', family='Test 1', size=5)
+        assert maker1._font_families['Test 1']['file'] == FONT_FILE + '1'
+        assert maker1._font_names['title 1']['family'] == 'Test 1'
+        assert maker1._font_names['title 1']['size']   == 5
+
+        maker2 = CardMaker(width    = 300,
+                           height   = 300,
+                           unit     = 'mm',
+                           width_px = 600,
+                           )
+        maker2.font_family('Test 2', file = FONT_FILE + '2')
+        maker2.font_name('title 2', family='Test 2', size=5)
+        maker2.copy_fonts(maker1)
+        assert maker1._font_families['Test 1']['file'] == FONT_FILE + '1'
+        assert maker1._font_names['title 1']['family'] == 'Test 1'
+        assert maker1._font_names['title 1']['size']   == 5
+        assert maker2._font_families['Test 2']['file'] == FONT_FILE + '2'
+        assert maker2._font_names['title 2']['family'] == 'Test 2'
+        assert maker2._font_names['title 2']['size']   == 5
+
+
     def test_copy_fonts_converts_default_sizes(self):
         """copy_fonts() should bring fonts into a CardMaker."""
         maker_mm_1 = CardMaker(width    = 100,
