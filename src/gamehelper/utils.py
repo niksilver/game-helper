@@ -1,4 +1,5 @@
 from PIL import Image
+from PIL import ImageChops
 
 from collections.abc import Callable
 
@@ -191,3 +192,27 @@ def repeat(im: Image, count: int = 1) -> Image:
         im_out.paste(im, box = (im.width * i, 0))
 
     return im_out
+
+
+def colour_wash_image(im:     Image.Image,
+                      colour: tuple[int, int, int, int],
+                      ) -> Image.Image:
+    """
+    Give an image a wash of colour.
+    Transparency will be preserved.
+    """
+    wash_im = Image.new(mode = 'RGBA',
+                        size = im.size,
+                        color = colour,
+                        )
+    washed_im = ImageChops.add(im, wash_im, scale = 2)
+
+    base_im = Image.new(mode = 'RGBA',
+                        size = im.size,
+                        color = (0, 0, 0, 0),
+                        )
+    base_im.paste(im = washed_im,
+                  box = (0, 0),
+                  mask = im)
+
+    return base_im
