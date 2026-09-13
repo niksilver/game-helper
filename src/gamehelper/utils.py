@@ -1,3 +1,5 @@
+from PIL import Image
+
 from collections.abc import Callable
 
 
@@ -177,3 +179,15 @@ def box(left:           float | None = None,
         bottom = top + height
 
     return (left, top, right, bottom, width, height)
+
+
+def repeat(im: Image, count: int = 1) -> Image:
+    """
+    Return a new image that is the same as the given one, but repeated
+    horizontally `count` times.
+    """
+    im_out = Image.new('RGBA', (im.width * count, im.height))
+    for i in range(count):
+        im_out.paste(im, box = (im.width * i, 0))
+
+    return im_out
