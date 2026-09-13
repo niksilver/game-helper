@@ -216,3 +216,25 @@ def colour_wash_image(im:     Image.Image,
                   mask = im)
 
     return base_im
+
+
+def colour_mask_image(im:     str | Image.Image,
+                      colour: tuple[int, int, int, int],
+                      ) -> Image.Image:
+    """
+    Return an image that is the given colour, masked to the shape of the
+    given image (which will have to have some transparent areas
+    otherwise the result will be just a rectangle).
+    """
+    if isinstance(im, str):
+        mask_im = Image.open(im).convert('RGBA')
+    else:
+        mask_im = im.convert('RBGA')
+
+    col_im = Image.new('RGBA',
+                       size  = (mask_im.width, mask_im.height),
+                       color = colour,
+                       )
+    mask_im.paste(col_im, mask = mask_im)
+
+    return mask_im
