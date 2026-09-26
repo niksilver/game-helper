@@ -194,6 +194,23 @@ def repeat(im: Image, count: int = 1) -> Image:
     return im_out
 
 
+def join(*ims: Image) -> Image:
+    """
+    Return a new image that is each of the given images joined
+    horizontally. They are aligned at the top.
+    """
+    width  = sum(map(lambda im: im.width, ims))
+    height = max(map(lambda im: im.height, ims))
+
+    im_out = Image.new('RGBA', (width, height))
+    x = 0
+    for im in ims:
+        im_out.paste(im, box = (x, 0))
+        x = x + im.width
+
+    return im_out
+
+
 def colour_wash_image(im:     Image.Image,
                       colour: tuple[int, int, int, int],
                       ) -> Image.Image:
