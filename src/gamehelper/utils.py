@@ -195,19 +195,25 @@ def repeat(im: Image, count: int = 1) -> Image:
 
 
 def join(*ims: Image,
-         gap_px:int = 0,
+         gap_px: int  = 0,
+         align: float = 0.5,
          ) -> Image:
     """
     Return a new image that is each of the given images joined
-    horizontally. They are aligned at the top.
+    horizontally.
+    `align` determines vertical alignment:
+    `0.0` is top, `0.5` is middle, `1.0` is bottom.
+    Other positive values in between are acceptable.
     """
+    gap_px = int(gap_px)
     width  = sum(map(lambda im: im.width, ims)) + (len(ims)-1) * gap_px
     height = max(map(lambda im: im.height, ims))
 
     im_out = Image.new('RGBA', (width, height))
     x = 0
     for im in ims:
-        im_out.paste(im, box = (x, 0))
+        v_offset = int((height - im.height) * align)
+        im_out.paste(im, box = (x, v_offset))
         x = x + im.width + gap_px
 
     return im_out
